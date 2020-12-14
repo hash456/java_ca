@@ -1,5 +1,7 @@
 package sg.edu.iss.ca.controller;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import sg.edu.iss.ca.model.Brand;
 import sg.edu.iss.ca.model.Product;
+import sg.edu.iss.ca.repo.BrandRepository;
 import sg.edu.iss.ca.service.Productservice;
 import sg.edu.iss.ca.service.productImplement;
 
@@ -19,6 +23,9 @@ import sg.edu.iss.ca.service.productImplement;
 public class ProductController {
 	@Autowired
 	private Productservice pservice;
+	
+	@Autowired
+	private BrandRepository brandRepo;
 	
 	@Autowired
 	public void setProductservice(productImplement productimple) {
@@ -33,6 +40,7 @@ public class ProductController {
 	@RequestMapping(value = "/add")
 	public String addForm(Model model) {
 		model.addAttribute("product", new Product());
+		model.addAttribute("brandList", (ArrayList<Brand>)brandRepo.findAll());
 		return "ProductForm";
 	}
 	@RequestMapping(value = "/edit/{id}")
