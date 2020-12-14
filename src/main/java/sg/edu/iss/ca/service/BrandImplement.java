@@ -16,8 +16,8 @@ public class BrandImplement implements BrandService {
 	private BrandRepository brandRepo;
 	
 	@Transactional
-	public void addBrand(Brand brand) {
-		brandRepo.save(brand);
+	public Brand addBrand(Brand brand) {
+		return brandRepo.save(brand);
 	}
 	@Transactional
 	public void deleteBrand(Brand brand) {

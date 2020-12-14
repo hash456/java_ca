@@ -55,18 +55,25 @@ public class DatabaseSeeder {
 				"Premium Car Tire", "Black", "2x2", 
 				"Car", "Tire", new Brand("Subaru")));
 		
-		// This does not work
-//		List<Brand> brands = brandSvc.listAllBrands();
-//
-//		productSvc.addProduct(new Product("1B", "Tire", "Car Tire", 
-//				"Premium Car Tire", "Black", "2x2", 
-//				"Car", "Tire", brands.get(0)));
-//		productSvc.addProduct(new Product("2B", "Tire", "Car Tire", 
-//				"Premium Car Tire", "Red", "2x2", 
-//				"Car", "Tire", brands.get(1)));
-//		productSvc.addProduct(new Product("3B", "Tire", "Car Tire", 
-//				"Premium Car Tire", "Black", "2x2", 
-//				"Car", "Tire", brands.get(2)));
+		List<Brand> brands = brandSvc.listAllBrands();
+
+		Product p1 = productSvc.addProduct(new Product("1B", "Tire", "Car Tire", 
+				"Premium Car Tire", "Black", "2x2", 
+				"Car", "Tire"));
+		Product p2 = productSvc.addProduct(new Product("2B", "Tire", "Car Tire", 
+				"Premium Car Tire", "Red", "2x2", 
+				"Car", "Tire"));
+		Product p3 = productSvc.addProduct(new Product("3B", "Tire", "Car Tire", 
+				"Premium Car Tire", "Black", "2x2", 
+				"Car", "Tire"));
+		p1.setBrand(brands.get(0));
+		p2.setBrand(brands.get(1));
+		p3.setBrand(brands.get(2));	
+		
+		productSvc.addProduct(p1);
+		productSvc.addProduct(p2);
+		productSvc.addProduct(p3);
+
 	}
 }
 

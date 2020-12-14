@@ -16,8 +16,8 @@ public class ProductImplement implements ProductService {
 	private ProductRepository productRepo;
 	
 	@Transactional
-	public void addProduct(Product product) {
-		 productRepo.save(product);
+	public Product addProduct(Product product) {
+		 return productRepo.save(product);
 	}
 	@Transactional
 	public List<Product> listAllProducts() {

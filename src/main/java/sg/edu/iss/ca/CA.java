@@ -12,7 +12,6 @@ public class CA {
 		SpringApplication.run(CA.class, args);
 	}
 
-	// To seed data
 	@Bean
 	CommandLineRunner runner() {
 		return args -> {
