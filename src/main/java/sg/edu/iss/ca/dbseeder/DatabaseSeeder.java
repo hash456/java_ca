@@ -66,13 +66,20 @@ public class DatabaseSeeder {
 		Product p3 = productSvc.addProduct(new Product("3B", "Tire", "Car Tire", 
 				"Premium Car Tire", "Black", "2x2", 
 				"Car", "Tire"));
+		Product p4 = productSvc.addProduct(new Product("3B", "Tire", "Car Tire", 
+				"Premium Car Tire", "Black", "2x2", 
+				"Car", "Tire"));
+		
 		p1.setBrand(brands.get(0));
 		p2.setBrand(brands.get(1));
 		p3.setBrand(brands.get(2));	
+		p4.setBrand(brands.get(0));	
+
 		
 		productSvc.addProduct(p1);
 		productSvc.addProduct(p2);
 		productSvc.addProduct(p3);
+		productSvc.addProduct(p4);
 
 	}
 }

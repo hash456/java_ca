@@ -25,7 +25,7 @@ public class Product {
 	private String subCategory;
 	private String type;
 	
-	@ManyToOne(cascade = {CascadeType.ALL}) 
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	@JoinColumn(name="brand_id")
 	private Brand brand;
 	

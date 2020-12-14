@@ -55,12 +55,12 @@ public class ProductController {
 			return "ProductForm";
 		}
 		pservice.addProduct(product);
-		return "forward:/product/list";
+		return "redirect:/product/list";
 	}
 	@RequestMapping(value = "/delete/{id}")
 	public String deleteProduct(@PathVariable("id") Integer id) {
 		pservice.deleteProduct(pservice.findProductById(id));
-		return "forward:/product/list";
+		return "redirect:/product/list";
 	}
 
 }

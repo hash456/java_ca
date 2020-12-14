@@ -2,6 +2,7 @@ package sg.edu.iss.ca.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +19,7 @@ public class Brand {
 	private int id;
 	private String name;
 
-	@OneToMany(mappedBy = "brand")
+	@OneToMany(mappedBy = "brand", cascade = {CascadeType.REMOVE})
 	private List<Product> product;
 	
 	public Brand() {
