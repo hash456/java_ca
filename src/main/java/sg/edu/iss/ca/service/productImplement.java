@@ -11,26 +11,26 @@ import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.repo.ProductRepository;
 
 @Service
-public class productImplement implements Productservice {
+public class ProductImplement implements ProductService {
 	@Autowired
-	ProductRepository productrepo;
+	private ProductRepository productRepo;
 	
 	@Transactional
 	public void addProduct(Product product) {
-		 productrepo.save(product);
+		 productRepo.save(product);
 	}
 	@Transactional
-	public List<Product> listproduct() {
-		return productrepo.findAll();
+	public List<Product> listAllProducts() {
+		return productRepo.findAll();
 	}	
 	@Transactional
 	public void deleteProduct(Product product){
-		productrepo.delete(product);
+		productRepo.delete(product);
 	}
 	@Transactional
 	public Product findProductById(Integer id)
 	{
-		return productrepo.findProductById(id);
+		return productRepo.findProductById(id);
 	}
 	
 }

@@ -15,26 +15,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import sg.edu.iss.ca.model.Brand;
 import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.repo.BrandRepository;
-import sg.edu.iss.ca.service.Productservice;
-import sg.edu.iss.ca.service.productImplement;
+import sg.edu.iss.ca.service.ProductService;
+import sg.edu.iss.ca.service.ProductImplement;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
 	@Autowired
-	private Productservice pservice;
+	private ProductService pservice;
 	
 	@Autowired
 	private BrandRepository brandRepo;
 	
 	@Autowired
-	public void setProductservice(productImplement productimple) {
+	public void setProductservice(ProductImplement productimple) {
 		this.pservice = productimple;
 	}
     
 	@RequestMapping(value = "/list")
 	public String list(Model model) {
-		model.addAttribute("ProductList", pservice.listproduct());
+		model.addAttribute("ProductList", pservice.listAllProducts());
 		return "ProductList";
 	}
 	@RequestMapping(value = "/add")

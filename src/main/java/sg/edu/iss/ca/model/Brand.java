@@ -1,7 +1,6 @@
 package sg.edu.iss.ca.model;
 
 import java.util.List;
-import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,10 +8,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class Brand {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
 	private int id;
 	private String name;
 
@@ -38,12 +40,9 @@ public class Brand {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<Product> getProduct() {
-		return product;
+	@Override
+	public String toString() {
+		return "Brand [id=" + id + ", name=" + name + "]";
 	}
-	public void setProduct(List<Product> product) {
-		this.product = product;
-	}
-	
 	
 }

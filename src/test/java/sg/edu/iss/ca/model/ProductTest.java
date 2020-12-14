@@ -4,14 +4,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import sg.edu.iss.ca.repo.BrandRepository;
-import sg.edu.iss.ca.service.productImplement;
+import sg.edu.iss.ca.service.ProductImplement;
 
 @SpringBootTest
 public class ProductTest {
 
 	@Autowired
-	private productImplement productSvc;
+	private ProductImplement productSvc;
 	
 	@Test
 	void addProducts() {

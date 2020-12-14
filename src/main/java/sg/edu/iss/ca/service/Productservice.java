@@ -4,11 +4,9 @@ import java.util.List;
 
 import sg.edu.iss.ca.model.Product;
 
-public interface Productservice {
-
+public interface ProductService {
 	public void addProduct(Product product);
-	
 	public void deleteProduct(Product product);
-	public List<Product> listproduct();
+	public List<Product> listAllProducts();
 	public Product findProductById(Integer id);
 }
