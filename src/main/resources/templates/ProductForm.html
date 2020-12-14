@@ -24,9 +24,6 @@
 		Dimension:<input type="text" th:field="*{dimension}">
 		</fieldset>
 		<fieldset>
-			Manufacturer: <input type="text" th:field="*{manufacturer}">
-		</fieldset>
-		<fieldset>
 			Color: <input type="text" th:field="*{color}">
 		</fieldset>
 		<fieldset>
@@ -38,7 +35,13 @@
 		<fieldset>
 			SubCategory <input type="text" th:field="*{subCategory}">
 		</fieldset>
-		
+<!-- 		<fieldset>
+			Brand 
+			<input list="brands" th:field="*{brand}">
+			<datalist id="brands">
+				<option th:each="b:${brandList}" th:value=${b} th:text=${b.name}></option>
+			</datalist>
+		</fieldset> -->
 		<fieldset>
 			<button type="submit">Save</button>
 		</fieldset>

@@ -9,7 +9,6 @@ import javax.persistence.Id;
 public class Supplier {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-
 	private int supplierId;
 	private String supplierEmail;
 	private String supplierName;

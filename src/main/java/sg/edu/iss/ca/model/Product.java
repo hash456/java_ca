@@ -1,36 +1,43 @@
 package sg.edu.iss.ca.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-
 	private int id;
 	private String partNumber;
 	private String name;
 	private String description;
-	private String manufacturer;
 	private String color;
 	private String dimension;
 	private String category;
 	private String subCategory;
 	private String type;
+	
+	@ManyToOne(cascade = {CascadeType.ALL}) 
+	@JoinColumn(name="brand_id")
+	private Brand brand;
+	
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Product(String partNumber, String name, String description, String manufacturer, String color,
+	public Product(String partNumber, String name, String description, String color,
 			String dimension, String category, String subCategory, String type) {
 		super();
 		this.partNumber = partNumber;
 		this.name = name;
 		this.description = description;
-		this.manufacturer = manufacturer;
 		this.color = color;
 		this.dimension = dimension;
 		this.category = category;
@@ -61,12 +68,6 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getManufacturer() {
-		return manufacturer;
-	}
-	public void setManufacturer(String manufacturer) {
-		this.manufacturer = manufacturer;
-	}
 	public String getColor() {
 		return color;
 	}
@@ -96,6 +97,12 @@ public class Product {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public Brand getBrand() {
+		return brand;
+	}
+	public void setBrand(Brand brand) {
+		this.brand = brand;
 	}
 	
 }

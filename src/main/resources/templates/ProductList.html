@@ -18,10 +18,10 @@
 			<th>description</th>
 			<th>dimension</th>
 			<th>color</th>
-			<th>Manufacturer</th>
 			<th>Type</th>
 			<th>Category</th>
 			<th>SubCategory</th>
+			<th>Brand</th>
 			<th>Edit Product</th>
 			<th>Delete Product</th>
 		</tr>
@@ -32,11 +32,11 @@
 			<td th:text=${product.description}>Product Description</td>
 			<td th:text=${product.dimension}>Product Dimension</td>
 			<td th:text=${product.color}>color</td>
-			<td th:text=${product.manufacturer}>Manufacturer</td>
 			<td th:text=${product.type}>Type</td>
 			<td th:text=${product.category}>Category</td>
 			<td th:text=${product.subCategory}>SubCategory</td>
-			<td><a href="EditProduct.html"
+<!-- 			<td th:text=${product.brand.name}>Brand</td>
+ -->			<td><a href="EditProduct.html"
 				th:href="@{/product/edit/}+${product.id}">Edit</a></td>
 			<td><a href="DeleteProduct.html"
 				th:href="@{/product/delete/}+${product.id}">Delete</a></td>
