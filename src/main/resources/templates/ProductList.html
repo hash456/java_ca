@@ -38,8 +38,8 @@
 			<td th:text=${product.type}>Type</td>
 			<td th:text=${product.category}>Category</td>
 			<td th:text=${product.subCategory}>SubCategory</td>
-<!-- 			<td th:text=${product.brand.name}>Brand</td>
- -->			<td><a href="EditProduct.html"
+			<td th:text="${product.brand} ? ${product.brand.name} : 'Not Set'">Brand</td>
+ 			<td><a href="EditProduct.html"
 				th:href="@{/product/edit/}+${product.id}">Edit</a></td>
 			<td><a href="DeleteProduct.html"
 				th:href="@{/product/delete/}+${product.id}">Delete</a></td>

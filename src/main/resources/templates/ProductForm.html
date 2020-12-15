@@ -38,13 +38,15 @@
 		<fieldset>
 			SubCategory <input type="text" th:field="*{subCategory}">
 		</fieldset>
-<!-- 		<fieldset>
+ 		<fieldset>
 			Brand 
-			<input list="brands" th:field="*{brand}">
+			<input list="brands" th:field="*{brandName}">
 			<datalist id="brands">
-				<option th:each="b:${brandList}" th:value=${b} th:text=${b.name}></option>
+				<select>
+					<option th:each="b:${brandList}" th:value=${b.name}></option>
+				</select>
 			</datalist>
-		</fieldset> -->
+		</fieldset> 
 		<fieldset>
 			<button type="submit">Save</button>
 		</fieldset>
