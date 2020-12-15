@@ -7,13 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Product {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
 	private int id;
 	private String partNumber;
 	private String name;
@@ -24,7 +25,7 @@ public class Product {
 	private String subCategory;
 	private String type;
 	
-	@ManyToOne(cascade = {CascadeType.ALL}) 
+	@ManyToOne(cascade = {CascadeType.PERSIST})
 	@JoinColumn(name="brand_id")
 	private Brand brand;
 	
@@ -43,6 +44,19 @@ public class Product {
 		this.category = category;
 		this.subCategory = subCategory;
 		this.type = type;
+	}
+	public Product(String partNumber, String name, String description, String color, String dimension, String category,
+			String subCategory, String type, Brand brand) {
+		super();
+		this.partNumber = partNumber;
+		this.name = name;
+		this.description = description;
+		this.color = color;
+		this.dimension = dimension;
+		this.category = category;
+		this.subCategory = subCategory;
+		this.type = type;
+		this.brand = brand;
 	}
 	public int getId() {
 		return id;
@@ -103,6 +117,12 @@ public class Product {
 	}
 	public void setBrand(Brand brand) {
 		this.brand = brand;
+	}
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", partNumber=" + partNumber + ", name=" + name + ", description=" + description
+				+ ", color=" + color + ", dimension=" + dimension + ", category=" + category + ", subCategory="
+				+ subCategory + ", type=" + type + ", brand=" + brand + "]";
 	}
 	
 }

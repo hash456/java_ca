@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Brand Form</title>
+</head>
+<body>
+	<h2>Brand Form</h2>
+	
+	<form action="" th:object="${brand}" th:action="@{/brand/save}" method="POST">
+		<fieldset>
+			<input type="hidden" th:field="*{id}" />
+		</fieldset>
+		<fieldset>
+			Name: <input type="text" th:field="*{name}">
+		</fieldset>
+		<fieldset>
+			<button type="submit">Save</button>
+		</fieldset>
+	</form>
+</body>
+</html>
