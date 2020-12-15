@@ -13,18 +13,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.edu.iss.ca.model.Brand;
-import sg.edu.iss.ca.service.BrandImplementation;
-import sg.edu.iss.ca.service.BrandInterface;
+import sg.edu.iss.ca.service.BrandImplement;
+import sg.edu.iss.ca.service.BrandService;
+
 
 @Controller
 @RequestMapping("/brand")
 public class BrandController {
 	
 	@Autowired
-	private BrandInterface brandServ;
+	private BrandService brandServ;
 	
 	@Autowired
-	public void setBrandInterface(BrandImplementation brandimpl) {
+	public void setBrandInterface(BrandImplement brandimpl) {
 		this.brandServ = brandimpl;
 	}
 	
@@ -57,7 +58,7 @@ public class BrandController {
 		if (bindingResult.hasErrors()) {
 			return "BrandForm";
 		}
-		brandServ.updateBrand(brand);
+		brandServ.createBrand(brand);
 		return "redirect:/brand/index";
 	}
 

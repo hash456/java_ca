@@ -1,6 +1,7 @@
 package sg.edu.iss.ca.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -16,10 +17,6 @@ public class BrandImplement implements BrandService {
 	private BrandRepository brandRepo;
 	
 	@Transactional
-	public Brand addBrand(Brand brand) {
-		return brandRepo.save(brand);
-	}
-	@Transactional
 	public void deleteBrand(Brand brand) {
 		brandRepo.delete(brand);
 	}
@@ -27,9 +24,38 @@ public class BrandImplement implements BrandService {
 	public List<Brand> listAllBrands(){
 		return brandRepo.findAll();
 	}
+
+	@Override
 	@Transactional
-	public Brand findBrandById(Integer id) {
-		return brandRepo.findBrandById(id);
+	public Brand createBrand(Brand brand) {
+		return brandRepo.save(brand);
+	}
+
+	@Override
+	@Transactional
+	public Brand updateBrand(Brand brand) {
+		Brand b = this.findByBrandId(brand.getId());
+		if(b != null)
+			return brandRepo.save(brand);
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public List<Brand> findBrandByNameLike(String name) {
+		return brandRepo.findBrandByNameLike(name);
+	}
+
+
+	@Override
+	@Transactional
+	public Brand findByBrandId(Integer id) {
+		Optional<Brand> brandResponse = brandRepo.findById(id);
+		if (brandResponse.isPresent()) {
+			Brand brand = brandResponse.get();			
+			return brand;
+		}
+		return null;
 	}
 
 }

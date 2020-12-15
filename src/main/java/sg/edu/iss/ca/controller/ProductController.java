@@ -54,7 +54,7 @@ public class ProductController {
 		if (bindingResult.hasErrors()) {
 			return "ProductForm";
 		}
-		pservice.addProduct(product);
+		pservice.createProduct(product);
 		return "redirect:/product/list";
 	}
 	@RequestMapping(value = "/delete/{id}")

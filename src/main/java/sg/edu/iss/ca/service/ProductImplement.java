@@ -1,6 +1,7 @@
 package sg.edu.iss.ca.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -16,8 +17,15 @@ public class ProductImplement implements ProductService {
 	private ProductRepository productRepo;
 	
 	@Transactional
-	public Product addProduct(Product product) {
-		 return productRepo.save(product);
+	public Product createProduct(Product product) {
+		return productRepo.save(product);
+	}
+	@Transactional
+	public Product updateProduct(Product product) {
+		Product p = this.findProductById(product.getId());
+		if(p != null)
+			return productRepo.save(product);
+		return null;
 	}
 	@Transactional
 	public List<Product> listAllProducts() {
@@ -27,10 +35,20 @@ public class ProductImplement implements ProductService {
 	public void deleteProduct(Product product){
 		productRepo.delete(product);
 	}
+	@Override
 	@Transactional
-	public Product findProductById(Integer id)
-	{
-		return productRepo.findProductById(id);
+	public Product findProductById(Integer id) {
+		Optional<Product> productResponse = productRepo.findById(id);
+		if (productResponse.isPresent()) {
+			Product product = productResponse.get();			
+			return product;
+		}
+		return null;
 	}
 	
+	@Transactional
+	public List<Product> findProductByNameLike(String name) {
+		return productRepo.findProductByNameLike(name);
+	}
+
 }

@@ -39,34 +39,34 @@ public class DatabaseSeeder {
 	}
 
 	private void seedBrandTable() {
-		brandSvc.addBrand(new Brand("Ferrari"));
-		brandSvc.addBrand(new Brand("Lamborghini"));
-		brandSvc.addBrand(new Brand("Maserati"));
+		brandSvc.createBrand(new Brand("Ferrari"));
+		brandSvc.createBrand(new Brand("Lamborghini"));
+		brandSvc.createBrand(new Brand("Maserati"));
 	}
 	
 	private void seedProductTable() {		
-		productSvc.addProduct(new Product("1A", "Tire", "Car Tire", 
+		productSvc.createProduct(new Product("1A", "Tire", "Car Tire", 
 				"Premium Car Tire", "Black", "2x2", 
 				"Car", "Tire", new Brand("Toyota")));
-		productSvc.addProduct(new Product("2A", "Tire", "Car Tire", 
+		productSvc.createProduct(new Product("2A", "Tire", "Car Tire", 
 				"Premium Car Tire", "Red", "2x2", 
 				"Car", "Tire", new Brand("Honda")));
-		productSvc.addProduct(new Product("3A", "Tire", "Car Tire", 
+		productSvc.createProduct(new Product("3A", "Tire", "Car Tire", 
 				"Premium Car Tire", "Black", "2x2", 
 				"Car", "Tire", new Brand("Subaru")));
 		
 		List<Brand> brands = brandSvc.listAllBrands();
 
-		Product p1 = productSvc.addProduct(new Product("1B", "Tire", "Car Tire", 
+		Product p1 = productSvc.createProduct(new Product("1B", "Tyre", "Car Tire", 
 				"Premium Car Tire", "Black", "2x2", 
 				"Car", "Tire"));
-		Product p2 = productSvc.addProduct(new Product("2B", "Tire", "Car Tire", 
+		Product p2 = productSvc.createProduct(new Product("2B", "Tyre", "Car Tire", 
 				"Premium Car Tire", "Red", "2x2", 
 				"Car", "Tire"));
-		Product p3 = productSvc.addProduct(new Product("3B", "Tire", "Car Tire", 
+		Product p3 = productSvc.createProduct(new Product("3B", "Tyre", "Car Tire", 
 				"Premium Car Tire", "Black", "2x2", 
 				"Car", "Tire"));
-		Product p4 = productSvc.addProduct(new Product("3B", "Tire", "Car Tire", 
+		Product p4 = productSvc.createProduct(new Product("3B", "Tyre", "Car Tire", 
 				"Premium Car Tire", "Black", "2x2", 
 				"Car", "Tire"));
 		
@@ -76,10 +76,10 @@ public class DatabaseSeeder {
 		p4.setBrand(brands.get(0));	
 
 		
-		productSvc.addProduct(p1);
-		productSvc.addProduct(p2);
-		productSvc.addProduct(p3);
-		productSvc.addProduct(p4);
+		productSvc.updateProduct(p1);
+		productSvc.updateProduct(p2);
+		productSvc.updateProduct(p3);
+		productSvc.updateProduct(p4);
 
 	}
 }
