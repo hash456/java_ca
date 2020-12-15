@@ -2,9 +2,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <title>ProductList</title>
 </head>
 <body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
 <h1>Product Listing</h1>
 	<!-- Add Hyperlink -->
 	<a href="ProductForm.html" th:href="@{/product/add}">Add Product</a>
@@ -45,6 +48,7 @@
 
 	 <br/>
 
+  <div th:replace="layout/layout.html :: footer"></div>
 
 </body>
 </html>

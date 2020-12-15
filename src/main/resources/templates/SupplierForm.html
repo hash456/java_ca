@@ -3,14 +3,14 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<title>Brand Form</title>
+<title>Supplier Form</title>
 </head>
 <body>
   <header th:insert="layout/layout.html :: header"></header>
   <div th:replace="layout/layout.html :: menu" ></div>
-	<h2>Brand Form</h2>
+	<h2>Supplier Form</h2>
 	
-	<form action="" th:object="${brand}" th:action="@{/brand/save}" method="POST">
+	<form action="" th:object="${supplier}" th:action="@{/supplier/save}" method="POST">
 		<fieldset>
 			<input type="hidden" th:field="*{id}" />
 		</fieldset>
@@ -18,12 +18,15 @@
 			Name: <input type="text" th:field="*{name}">
 		</fieldset>
 		<fieldset>
+			Email: <input type="text" th:field="*{email}">
+		</fieldset>
+		<fieldset>
 			<button type="submit">Save</button>
 		</fieldset>
 	</form>
-	<a href="BrandIndex.html" th:href="@{/brand/index}">Back to Brand List</a>
+			<a href="SupplierIndex.html" th:href="@{/supplier/index}">Back to Supplier List</a>
 	
-	  <div th:replace="layout/layout.html :: footer"></div>
+		<div th:replace="layout/layout.html :: footer"></div>
 	
 </body>
 </html>
