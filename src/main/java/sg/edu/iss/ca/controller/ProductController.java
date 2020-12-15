@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.edu.iss.ca.model.Brand;
 import sg.edu.iss.ca.model.Product;
-import sg.edu.iss.ca.repo.BrandRepository;
 import sg.edu.iss.ca.service.ProductService;
+import sg.edu.iss.ca.service.BrandService;
 import sg.edu.iss.ca.service.ProductImplement;
 
 @Controller
@@ -25,7 +25,7 @@ public class ProductController {
 	private ProductService pservice;
 	
 	@Autowired
-	private BrandRepository brandRepo;
+	private BrandService brandSvc;
 	
 	@Autowired
 	public void setProductservice(ProductImplement productimple) {
@@ -40,12 +40,18 @@ public class ProductController {
 	@RequestMapping(value = "/add")
 	public String addForm(Model model) {
 		model.addAttribute("product", new Product());
-		model.addAttribute("brandList", (ArrayList<Brand>)brandRepo.findAll());
+		model.addAttribute("brandList", (ArrayList<Brand>)brandSvc.listAllBrands());
 		return "ProductForm";
 	}
 	@RequestMapping(value = "/edit/{id}")
 	public String editForm(@PathVariable("id") Integer id, Model model) {
-		model.addAttribute("product", pservice.findProductById(id));
+		Product p = pservice.findProductById(id);
+		
+		if(p.getBrand() != null)
+			p.setBrandName(p.getBrand().getName());
+		
+		model.addAttribute("product", p);
+		model.addAttribute("brandList", (ArrayList<Brand>)brandSvc.listAllBrands());
 		return "ProductForm";
 	}
 	@RequestMapping(value = "/save")
@@ -54,7 +60,19 @@ public class ProductController {
 		if (bindingResult.hasErrors()) {
 			return "ProductForm";
 		}
+				
+		// Find if the name of the brand is in the database
+		Brand b = brandSvc.findByBrandName(product.getBrandName());
+		if(b != null)
+			product.setBrand(b);
+		else if(!product.getBrandName().trim().isEmpty()) {
+			Brand newBrand = new Brand(product.getBrandName().trim());
+			brandSvc.createBrand(newBrand);
+			product.setBrand(newBrand);
+		}
+		
 		pservice.createProduct(product);
+		
 		return "redirect:/product/list";
 	}
 	@RequestMapping(value = "/delete/{id}")

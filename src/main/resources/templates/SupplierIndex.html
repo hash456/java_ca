@@ -3,37 +3,37 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<title>Brand - Index Page</title>
+<title>Supplier - Index Page</title>
 </head>
 <body>
   <header th:insert="layout/layout.html :: header"></header>
   <div th:replace="layout/layout.html :: menu" ></div>
-	<h2>Brands</h2>
+	<h2>Suppliers</h2>
 	
-	<table id="Brands" class="table table-striped">
+	<table id="Suppliers" class="table table-striped">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Brand Name</th>
+            <th>Email</th>
+            <th>Supplier Name</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
         </thead>
         <tbody>
-          <tr th:each="brand : ${brands}">
-			<td th:text="${brand.id}"/>
-        	<td th:text="${brand.name}"/>
+          <tr th:each="supplier : ${suppliers}">
+			<td th:text="${supplier.email}"/>
+        	<td th:text="${supplier.name}"/>
          	<td>
-         		<a th:href="@{/brand/edit/}+${brand.id}">Edit</a>
+         		<a th:href="@{/supplier/edit/}+${supplier.id}">Edit</a>
        		</td>
           	<td>
-         		<a th:href="@{/brand/delete/}+${brand.id}">Delete</a>
+         		<a th:href="@{/supplier/delete/}+${supplier.id}">Delete</a>
        		</td>
           </tr>
         </tbody>
     </table>
-    <a href="BrandForm.html" th:href="@{/brand/create}">Add Brand</a>
-      <div th:replace="layout/layout.html :: footer"></div>
+    <a href="SupplierForm.html" th:href="@{/supplier/create}">Add Supplier</a>
+	<div th:replace="layout/layout.html :: footer"></div>
     
 </body>
 </html>
