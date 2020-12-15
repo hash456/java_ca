@@ -9,33 +9,42 @@ import org.springframework.stereotype.Component;
 
 import sg.edu.iss.ca.model.Brand;
 import sg.edu.iss.ca.model.Product;
+import sg.edu.iss.ca.model.Supplier;
 import sg.edu.iss.ca.repo.BrandRepository;
 import sg.edu.iss.ca.repo.ProductRepository;
-import sg.edu.iss.ca.service.BrandImplement;
-import sg.edu.iss.ca.service.ProductImplement;
+import sg.edu.iss.ca.repo.SupplierRepository;
+import sg.edu.iss.ca.service.BrandService;
+import sg.edu.iss.ca.service.ProductService;
+import sg.edu.iss.ca.service.SupplierService;
 
 @Component
 public class DatabaseSeeder {
 
 	@Autowired
-	private ProductImplement productSvc;
+	private ProductService productSvc;
 	@Autowired
 	private ProductRepository productRepo;
 	@Autowired
-	private BrandImplement brandSvc;
+	private BrandService brandSvc;
 	@Autowired
 	private BrandRepository brandRepo;
+	@Autowired
+	private SupplierService supplierSvc;
+	@Autowired
+	private SupplierRepository supplierRepo;
 	
 	@EventListener
 	public void seed(ContextRefreshedEvent event) {
 		resetData();
 		seedBrandTable();
 		seedProductTable();
+		seedSupplierData();
 	}
 	
 	private void resetData() {
 		productRepo.deleteAll();
 		brandRepo.deleteAll();
+		supplierRepo.deleteAll();
 	}
 
 	private void seedBrandTable() {
@@ -74,13 +83,18 @@ public class DatabaseSeeder {
 		p2.setBrand(brands.get(1));
 		p3.setBrand(brands.get(2));	
 		p4.setBrand(brands.get(0));	
-
 		
 		productSvc.updateProduct(p1);
 		productSvc.updateProduct(p2);
 		productSvc.updateProduct(p3);
 		productSvc.updateProduct(p4);
 
+	}
+	
+	private void seedSupplierData() {
+		supplierSvc.createSupplier(new Supplier("tierone@email.com", "tier one"));
+		supplierSvc.createSupplier(new Supplier("tiertwo@email.com", "tier two"));
+		supplierSvc.createSupplier(new Supplier("tierthree@email.com", "tier three"));
 	}
 }
 
