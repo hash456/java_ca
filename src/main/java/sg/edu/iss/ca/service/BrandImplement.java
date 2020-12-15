@@ -57,5 +57,14 @@ public class BrandImplement implements BrandService {
 		}
 		return null;
 	}
+	
+	@Transactional
+	public Brand findByBrandName(String name) {
+		Brand brandResponse = brandRepo.findBrandByName(name);
+		if (brandResponse != null) {
+			return brandResponse;
+		}
+		return null;
+	}
 
 }

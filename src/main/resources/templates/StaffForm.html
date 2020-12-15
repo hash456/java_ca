@@ -2,9 +2,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <title>Insert title here</title>
 </head>
 <body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
 <h1>Form</h1>
 	<form action="" th:object="${staff}" th:action="@{/staff/save}"
 		method="POST" class="form-horizontal">
@@ -26,5 +29,8 @@
 			<button type="submit">Save</button>
 		</fieldset>
 	</form>
+	<a href="StaffList.html" th:href="@{/staff/list}">Back to Staff List</a>
+			<div th:replace="layout/layout.html :: footer"></div>
+	
 </body>
 </html>

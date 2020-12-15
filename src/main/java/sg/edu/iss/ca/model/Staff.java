@@ -4,10 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GenericGenerator(name = "native", strategy = "native")
 	private int staffId;
 	private Role role;
 	private String staffName;
