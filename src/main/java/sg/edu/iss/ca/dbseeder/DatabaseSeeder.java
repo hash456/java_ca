@@ -18,9 +18,7 @@ import sg.edu.iss.ca.repo.SupplierRepository;
 import sg.edu.iss.ca.service.BrandService;
 import sg.edu.iss.ca.service.ProductService;
 import sg.edu.iss.ca.service.SupplierService;
-import sg.edu.iss.ca.service.BrandImplement;
 import sg.edu.iss.ca.service.InventoryImplement;
-import sg.edu.iss.ca.service.ProductImplement;
 
 @Component
 public class DatabaseSeeder {
@@ -55,6 +53,7 @@ public class DatabaseSeeder {
 		productRepo.deleteAll();
 		brandRepo.deleteAll();
 		supplierRepo.deleteAll();
+		inventoryRepo.deleteAll();
 	}
 
 	private void seedBrandTable() {

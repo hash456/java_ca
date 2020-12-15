@@ -8,9 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import sg.edu.iss.ca.model.Brand;
 import sg.edu.iss.ca.model.Inventory;
-import sg.edu.iss.ca.repo.BrandRepository;
 import sg.edu.iss.ca.repo.InventoryRepository;
 
 @Service
