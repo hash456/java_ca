@@ -10,12 +10,8 @@ import org.hibernate.annotations.GenericGenerator;
 public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-<<<<<<< HEAD
 	@GenericGenerator(name = "native", strategy = "native")
-	private int staffid;
-=======
 	private int staffId;
->>>>>>> 19974d50f600667b26899bb3d63cbafa76627fca
 	private Role role;
 	private String staffName;
 	private String userName;
