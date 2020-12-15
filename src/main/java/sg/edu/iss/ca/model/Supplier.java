@@ -5,40 +5,55 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class Supplier {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int supplierId;
-	private String supplierEmail;
-	private String supplierName;
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+	private int id;
+	private String email;
+	private String name;
 	
 	public Supplier() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Supplier(String supplierEmail, String supplierName) {
+
+	public Supplier(String email, String name) {
 		super();
-		this.supplierEmail = supplierEmail;
-		this.supplierName = supplierName;
+		this.email = email;
+		this.name = name;
 	}
-	public int getSupplierId() {
-		return supplierId;
+
+	public int getId() {
+		return id;
 	}
-	public void setSupplierId(int supplierId) {
-		this.supplierId = supplierId;
+
+	public void setId(int id) {
+		this.id = id;
 	}
-	public String getSupplierEmail() {
-		return supplierEmail;
+
+	public String getEmail() {
+		return email;
 	}
-	public void setSupplierEmail(String supplierEmail) {
-		this.supplierEmail = supplierEmail;
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public String getSupplierName() {
-		return supplierName;
+
+	public String getName() {
+		return name;
 	}
-	public void setSupplierName(String supplierName) {
-		this.supplierName = supplierName;
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Supplier [id=" + id + ", email=" + email + ", name=" + name + "]";
 	}
 	
 

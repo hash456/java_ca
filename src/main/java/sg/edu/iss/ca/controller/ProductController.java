@@ -15,26 +15,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import sg.edu.iss.ca.model.Brand;
 import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.repo.BrandRepository;
-import sg.edu.iss.ca.service.Productservice;
-import sg.edu.iss.ca.service.productImplement;
+import sg.edu.iss.ca.service.ProductService;
+import sg.edu.iss.ca.service.ProductImplement;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
 	@Autowired
-	private Productservice pservice;
+	private ProductService pservice;
 	
 	@Autowired
 	private BrandRepository brandRepo;
 	
 	@Autowired
-	public void setProductservice(productImplement productimple) {
+	public void setProductservice(ProductImplement productimple) {
 		this.pservice = productimple;
 	}
     
 	@RequestMapping(value = "/list")
 	public String list(Model model) {
-		model.addAttribute("ProductList", pservice.listproduct());
+		model.addAttribute("ProductList", pservice.listAllProducts());
 		return "ProductList";
 	}
 	@RequestMapping(value = "/add")
@@ -54,13 +54,13 @@ public class ProductController {
 		if (bindingResult.hasErrors()) {
 			return "ProductForm";
 		}
-		pservice.addProduct(product);
-		return "forward:/product/list";
+		pservice.createProduct(product);
+		return "redirect:/product/list";
 	}
 	@RequestMapping(value = "/delete/{id}")
 	public String deleteProduct(@PathVariable("id") Integer id) {
 		pservice.deleteProduct(pservice.findProductById(id));
-		return "forward:/product/list";
+		return "redirect:/product/list";
 	}
 
 }
