@@ -1,5 +1,7 @@
 package sg.edu.iss.ca.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -28,6 +31,9 @@ public class Product {
 	@ManyToOne(cascade = {CascadeType.PERSIST})
 	@JoinColumn(name="brand_id")
 	private Brand brand;
+	
+	@OneToMany(mappedBy = "product", cascade = {CascadeType.REMOVE})
+	private List<Inventory> inventories;
 	
 	public Product() {
 		super();

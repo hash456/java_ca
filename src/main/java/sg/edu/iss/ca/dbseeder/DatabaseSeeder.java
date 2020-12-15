@@ -8,10 +8,13 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import sg.edu.iss.ca.model.Brand;
+import sg.edu.iss.ca.model.Inventory;
 import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.repo.BrandRepository;
+import sg.edu.iss.ca.repo.InventoryRepository;
 import sg.edu.iss.ca.repo.ProductRepository;
 import sg.edu.iss.ca.service.BrandImplement;
+import sg.edu.iss.ca.service.InventoryImplement;
 import sg.edu.iss.ca.service.ProductImplement;
 
 @Component
@@ -25,12 +28,17 @@ public class DatabaseSeeder {
 	private BrandImplement brandSvc;
 	@Autowired
 	private BrandRepository brandRepo;
+	@Autowired
+	private InventoryImplement inventorySvc;
+	@Autowired
+	private InventoryRepository inventoryRepo;
 	
 	@EventListener
 	public void seed(ContextRefreshedEvent event) {
 		resetData();
 		seedBrandTable();
 		seedProductTable();
+		seedInventoryTable();
 	}
 	
 	private void resetData() {
@@ -82,6 +90,13 @@ public class DatabaseSeeder {
 		productSvc.updateProduct(p4);
 
 	}
+	
+	private void seedInventoryTable () {
+		inventorySvc.createInventory(new Inventory(36, "A123", 10, 30, 13.0, 15.5, 14.0));
+		inventorySvc.createInventory(new Inventory(50, "B394", 40, 15, 20.0, 17.5, 16.0));
+		inventorySvc.createInventory(new Inventory(20, "B349", 60, 20, 40.0, 50.5, 45.0));
+	}
+	
 }
 
 
