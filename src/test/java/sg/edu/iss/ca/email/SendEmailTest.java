@@ -18,12 +18,12 @@ public class SendEmailTest{
 	void TestEmail() {
 		
 	    // send a simple mail
-        senderService.sendSimpleMail(new SimpleMail("sa51team2@gmail.com"));
+        senderService.sendSimpleMail(new SimpleMail("tingkai911@gmail.com"));
 
         //send an HTML mail
         
         try{
-        	senderService.sendHTMLMail(new HTMLMail("sa51team2@gmail.com"));
+        	senderService.sendHTMLMail(new HTMLMail("tingkai911@gmail.com"));
         } catch (MessagingException me) {}
 	}
 }
