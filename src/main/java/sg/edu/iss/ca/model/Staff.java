@@ -10,8 +10,12 @@ import org.hibernate.annotations.GenericGenerator;
 public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+<<<<<<< HEAD
 	@GenericGenerator(name = "native", strategy = "native")
 	private int staffid;
+=======
+	private int staffId;
+>>>>>>> 19974d50f600667b26899bb3d63cbafa76627fca
 	private Role role;
 	private String staffName;
 	private String userName;
@@ -28,11 +32,21 @@ public class Staff {
 		this.userName = userName;
 		this.password = password;
 	}
-	public int getStaffid() {
-		return staffid;
+	
+	
+	
+	public Staff(int staffId, String staffName, String userName, String password) {
+		super();
+		this.staffId=staffId;
+		this.staffName = staffName;
+		this.userName = userName;
+		this.password = password;
 	}
-	public void setStaffid(int staffid) {
-		this.staffid = staffid;
+	public int getStaffId() {
+		return staffId;
+	}
+	public void setStaffId(int staffId) {
+		this.staffId = staffId;
 	}
 	public Role getRole() {
 		return role;
