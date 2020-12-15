@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int staffid;
+	private int staffId;
 	private Role role;
 	private String staffName;
 	private String userName;
@@ -25,11 +25,21 @@ public class Staff {
 		this.userName = userName;
 		this.password = password;
 	}
-	public int getStaffid() {
-		return staffid;
+	
+	
+	
+	public Staff(int staffId, String staffName, String userName, String password) {
+		super();
+		this.staffId=staffId;
+		this.staffName = staffName;
+		this.userName = userName;
+		this.password = password;
 	}
-	public void setStaffid(int staffid) {
-		this.staffid = staffid;
+	public int getStaffId() {
+		return staffId;
+	}
+	public void setStaffId(int staffId) {
+		this.staffId = staffId;
 	}
 	public Role getRole() {
 		return role;

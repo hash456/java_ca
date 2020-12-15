@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Form</h1>
+	<form action="" th:object="${staff}" th:action="@{/staff/save}"
+		method="POST" class="form-horizontal">
+		<fieldset>
+			<input type="hidden" th:field="*{staffId}" />
+		</fieldset>
+		<fieldset>
+			Staff Name: <input type="text" th:field="*{staffName}">
+		</fieldset>
+	
+		<fieldset>
+		UserName:<input type="text" th:field="*{userName}">
+		</fieldset>
+		<fieldset>
+		Password:<input type="text" th:field="*{password}">
+		</fieldset>
+		
+		<fieldset>
+			<button type="submit">Save</button>
+		</fieldset>
+	</form>
+</body>
+</html>
