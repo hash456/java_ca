@@ -45,7 +45,13 @@ public class ProductController {
 	}
 	@RequestMapping(value = "/edit/{id}")
 	public String editForm(@PathVariable("id") Integer id, Model model) {
-		model.addAttribute("product", pservice.findProductById(id));
+		Product p = pservice.findProductById(id);
+		
+		if(p.getBrand() != null)
+			p.setBrandName(p.getBrand().getName());
+		
+		model.addAttribute("product", p);
+		model.addAttribute("brandList", (ArrayList<Brand>)brandSvc.listAllBrands());
 		return "ProductForm";
 	}
 	@RequestMapping(value = "/save")
@@ -59,8 +65,11 @@ public class ProductController {
 		Brand b = brandSvc.findByBrandName(product.getBrandName());
 		if(b != null)
 			product.setBrand(b);
-		else if(!product.getBrandName().trim().isEmpty())
-			product.setBrand(new Brand(product.getBrandName()));
+		else if(!product.getBrandName().trim().isEmpty()) {
+			Brand newBrand = new Brand(product.getBrandName().trim());
+			brandSvc.createBrand(newBrand);
+			product.setBrand(newBrand);
+		}
 		
 		pservice.createProduct(product);
 		
