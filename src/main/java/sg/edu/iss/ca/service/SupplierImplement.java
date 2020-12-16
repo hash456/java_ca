@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.model.Supplier;
 import sg.edu.iss.ca.repo.SupplierRepository;
 
@@ -47,6 +48,15 @@ public class SupplierImplement implements SupplierService{
 		Supplier s = this.findSupplierById(supplier.getId());
 		if(s != null)
 			return supplierRepo.save(supplier);
+		return null;
+	}
+	
+	@Transactional
+	public Supplier findBySupplierName(String name) {
+		Supplier supplierResponse = supplierRepo.findSupplierByName(name);
+		if (supplierResponse != null) {
+			return supplierResponse;
+		}
 		return null;
 	}
 }

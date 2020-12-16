@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -167,5 +168,27 @@ public class Inventory {
 				+ partnerPrice +  ", supplier=" + supplier.getName() + "]";
 	}
 	
+
+	// Create a field but don't add it to the table
+	@Transient
+	private String productName;
+	
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	// Create a field but don't add it to the table
+	@Transient
+	private String supplierName;
+	
+	public String getSupplierName() {
+		return supplierName;
+	}
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
 
 }

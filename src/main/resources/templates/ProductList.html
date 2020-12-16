@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="https://www.thymeleaf.org" 
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -12,7 +13,7 @@
 	<!-- Add Hyperlink -->
 	<a href="ProductForm.html" th:href="@{/product/add}">Add Product</a>
 
-	<h2 th:if="${not #lists.isEmpty(ProductList)}">product List</h2>
+	<h2 th:if="${not #lists.isEmpty(ProductList)}">Product List</h2>
 	<table th:if="${not #lists.isEmpty(ProductList)}">
 		<tr>
 			<th>Product Id</th>
@@ -25,8 +26,8 @@
 			<th>Category</th>
 			<th>SubCategory</th>
 			<th>Brand</th>
-			<th>Edit Product</th>
-			<th>Delete Product</th>
+			<th sec:authorize="hasRole(T(sg.edu.iss.ca.model.Role).ADMIN == 0 ? 'ADMIN' : 'MECHANIC')">Edit Product</th>
+			<th sec:authorize="hasRole(T(sg.edu.iss.ca.model.Role).ADMIN.toString())">Delete Product</th>
 		</tr>
 		<tr th:each="product:${ProductList}">
 			<td th:text=${product.id}>Product Id</td>
@@ -40,9 +41,9 @@
 			<td th:text=${product.subCategory}>SubCategory</td>
 			<td th:text="${product.brand} ? ${product.brand.name} : 'Not Set'">Brand</td>
  			<td><a href="EditProduct.html"
-				th:href="@{/product/edit/}+${product.id}">Edit</a></td>
+				th:href="@{/product/edit/}+${product.id}" sec:authorize="hasRole(T(sg.edu.iss.ca.model.Role).ADMIN.toString())">Edit</a></td>
 			<td><a href="DeleteProduct.html"
-				th:href="@{/product/delete/}+${product.id}">Delete</a></td>
+				th:href="@{/product/delete/}+${product.id}" sec:authorize="hasRole(T(sg.edu.iss.ca.model.Role).ADMIN.toString())">Delete</a></td>
 		</tr>
 	</table>
 

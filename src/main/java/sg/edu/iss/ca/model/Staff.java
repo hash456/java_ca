@@ -1,5 +1,6 @@
 package sg.edu.iss.ca.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,15 +12,25 @@ public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@GenericGenerator(name = "native", strategy = "native")
-	private int staffid;
+	private int staffId;
 	private Role role;
 	private String staffName;
+	@Column(name="username")
 	private String userName;
 	private String password;
+	private Boolean enabled;
 	
 	public Staff() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	public Staff(Role role, String staffName, String userName, String password, Boolean enabled) {
+		super();
+		this.role = role;
+		this.staffName = staffName;
+		this.userName = userName;
+		this.password = password;
+		this.enabled = enabled;
 	}
 	public Staff(Role role, String staffName, String userName, String password) {
 		super();
@@ -27,12 +38,13 @@ public class Staff {
 		this.staffName = staffName;
 		this.userName = userName;
 		this.password = password;
+		this.enabled = true;
 	}
-	public int getStaffid() {
-		return staffid;
+	public int getStaffId() {
+		return staffId;
 	}
-	public void setStaffid(int staffid) {
-		this.staffid = staffid;
+	public void setStaffId(int staffId) {
+		this.staffId = staffId;
 	}
 	public Role getRole() {
 		return role;
@@ -57,6 +69,12 @@ public class Staff {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public Boolean getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 
