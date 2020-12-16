@@ -10,6 +10,9 @@ public interface InventoryService {
 	
 	public Inventory createInventory(Inventory inventory);
 	public Inventory updateInventory(Inventory inventory);
-	public List<Inventory> findInventoryByNameLike(String name);
+	public List<Inventory> findInventoryByProductName(String name);
+	public List<Inventory> findInventoryByProductNameLike(String name);
+	public List<Inventory> findInventoryBySupplierName(String name);
+	public List<Inventory> findInventoryBySupplierNameLike(String name);
 	public Inventory findByInventoryId(Integer id);
 }

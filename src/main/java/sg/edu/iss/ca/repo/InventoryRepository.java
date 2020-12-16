@@ -12,8 +12,14 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 	public Inventory findInventoryById(int id);
 	
 	@Query("select i from Inventory i join i.product p where p.name = :name")
-	public List<Inventory> findInventoryByName(@Param("name") String name);
+	public List<Inventory> findInventoryByProductName(@Param("name") String name);
 	
 	@Query("Select i from Inventory i join i.product p where p.name LIKE CONCAT('%',:name,'%')")
-	public List<Inventory> findInventoryByNameLike(@Param("name") String name);
+	public List<Inventory> findInventoryByProductNameLike(@Param("name") String name);
+	
+	@Query("select i from Inventory i join i.supplier s where s.name = :name")
+	public List<Inventory> findInventoryBySupplierName(@Param("name") String name);
+	
+	@Query("Select i from Inventory i join i.supplier s where s.name LIKE CONCAT('%',:name,'%')")
+	public List<Inventory> findInventoryBySupplierNameLike(@Param("name") String name);
 }
