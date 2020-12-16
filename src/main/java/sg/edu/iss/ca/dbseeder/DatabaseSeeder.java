@@ -125,9 +125,6 @@ public class DatabaseSeeder {
 		List<Product> products = productSvc.listAllProducts();
 		List<Supplier> suppliers = supplierSvc.listAllSuppliers();
 		
-		System.out.println(products.get(0).getName());
-		System.out.println(suppliers.get(0).getName());
-		
 		Inventory i1 = inventorySvc.createInventory(new Inventory(38, "A123", 10, 40, 13.0, 16.5, 14.0));
 		Inventory i2 = inventorySvc.createInventory(new Inventory(60, "A123", 12, 30, 16.0, 16.0, 14.0));
 		Inventory i3 = inventorySvc.createInventory(new Inventory(38, "A123", 11, 50, 13.5, 18.5, 14.0));
@@ -149,9 +146,9 @@ public class DatabaseSeeder {
 	
 	private void seedStaffTable() {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); 
-		userSvc.addStaff(new Staff(Role.ADMIN, "Esther", "est", encoder.encode("123456"), true));
-		userSvc.addStaff(new Staff(Role.MECHANIC, "Yuen Kwan", "yk", encoder.encode("polymeowphism"), false));
-		userSvc.addStaff(new Staff(Role.MECHANIC, "Suria", "sr", encoder.encode("password"), true));
+		userSvc.addStaff(new Staff("ROLE_ADMIN", "Esther", "est", encoder.encode("123456"), true));
+		userSvc.addStaff(new Staff("ROLE_MECHANIC", "Yuen Kwan", "yk", encoder.encode("polymeowphism"), true));
+		userSvc.addStaff(new Staff("ROLE_MECHANIC", "Suria", "sr", encoder.encode("password"), true));
 	}
 	
 }

@@ -43,7 +43,7 @@
 			<input list="brands" th:field="*{brandName}">
 			<datalist id="brands">
 				<select>
-					<option th:each="b:${brandList}" th:value=${b.name}></option>
+					<option th:each="b:${brandList}" th:text=${b.name}></option>
 				</select>
 			</datalist>
 		</fieldset> 

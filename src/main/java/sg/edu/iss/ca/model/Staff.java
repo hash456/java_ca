@@ -13,7 +13,7 @@ public class Staff {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@GenericGenerator(name = "native", strategy = "native")
 	private int staffId;
-	private Role role;
+	private String role;
 	private String staffName;
 	@Column(name="username")
 	private String userName;
@@ -24,7 +24,7 @@ public class Staff {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Staff(Role role, String staffName, String userName, String password, Boolean enabled) {
+	public Staff(String role, String staffName, String userName, String password, Boolean enabled) {
 		super();
 		this.role = role;
 		this.staffName = staffName;
@@ -32,7 +32,7 @@ public class Staff {
 		this.password = password;
 		this.enabled = enabled;
 	}
-	public Staff(Role role, String staffName, String userName, String password) {
+	public Staff(String role, String staffName, String userName, String password) {
 		super();
 		this.role = role;
 		this.staffName = staffName;
@@ -46,10 +46,10 @@ public class Staff {
 	public void setStaffId(int staffId) {
 		this.staffId = staffId;
 	}
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 	public String getStaffName() {

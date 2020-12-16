@@ -36,13 +36,11 @@ public class UserImplement implements UserService{
 	}
 	@Transactional
 	public void changeRole(Staff staff) {
-		if(staff.getRole()==(Role.ADMIN))
-			staff.setRole(Role.MECHANIC);
+		if(staff.getRole().equals("ROLE_ADMIN"))
+			staff.setRole("ROLE_MECHANIC");
 		else
-			staff.setRole(Role.ADMIN);
-		
-		System.out.println(staff.getRole().toString());
-		
+			staff.setRole("ROLE_ADMIN");
+				
 		staffrepo.save(staff);
 	}
 }

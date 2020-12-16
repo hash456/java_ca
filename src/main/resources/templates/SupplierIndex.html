@@ -4,13 +4,17 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<title>Supplier - Index Page</title>
+<title>Suppliers</title>
 </head>
 <body>
   <header th:insert="layout/layout.html :: header"></header>
   <div th:replace="layout/layout.html :: menu" ></div>
+  	<div style="padding-left: 50px; padding-right: 50px;">
+  
 	<h2>Suppliers</h2>
-	
+	    <a href="SupplierForm.html" sec:authorize="hasRole('ADMIN')" th:href="@{/supplier/create}">
+    		<div class="btn btn-primary">
+    Add Supplier</div></a>
 	<table id="Suppliers" class="table table-striped">
         <thead>
         <tr>
@@ -33,7 +37,8 @@
           </tr>
         </tbody>
     </table>
-    <a href="SupplierForm.html" th:href="@{/supplier/create}">Add Supplier</a>
+
+    </div>
 	<div th:replace="layout/layout.html :: footer"></div>
     
 </body>

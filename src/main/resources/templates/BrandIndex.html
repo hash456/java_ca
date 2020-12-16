@@ -4,12 +4,17 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<title>Brand - Index Page</title>
+<title>Brands</title>
 </head>
 <body>
   <header th:insert="layout/layout.html :: header"></header>
   <div th:replace="layout/layout.html :: menu" ></div>
+  	<div style="padding-left: 50px; padding-right: 50px;">
+  
 	<h2>Brands</h2>
+	    <a sec:authorize="hasRole('ADMIN')" href="BrandForm.html" th:href="@{/brand/create}">
+	    		<div class="btn btn-primary">
+	    Add Brand</div></a>
 	
 	<table id="Brands" class="table table-striped">
         <thead>
@@ -33,7 +38,7 @@
           </tr>
         </tbody>
     </table>
-    <a href="BrandForm.html" th:href="@{/brand/create}">Add Brand</a>
+    </div>
       <div th:replace="layout/layout.html :: footer"></div>
     
 </body>
