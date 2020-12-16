@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<title>Inventory List</title>
+</head>
+<body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+<h1>Inventory List</h1>
+	<!-- Add Hyperlink -->
+	<a href="InventoryForm.html" th:href="@{/inventory/add}">Add Inventory Log</a>
+
+	<h2 th:if="${not #lists.isEmpty(InventoryList)}">Inventory List</h2>
+	<table th:if="${not #lists.isEmpty(InventoryList)}" class="table table-striped">
+		<thead>
+		<tr>
+			<th>Inventory Id</th>
+			<th>Product Name</th>
+			<th>Supplier</th>
+			<th>Qty in Stock</th>
+			<th>Shelf Location</th>
+			<th>Reorder Level</th>
+			<th>Reorder Qty</th>
+			<th>Wholesale Price</th>
+			<th>Retail Price</th>
+			<th>Partner Price</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+		</thead>
+		<tr th:each="inventory:${InventoryList}">
+			<td th:text=${inventory.id}>Inventory Id</td>
+			<td th:text="${inventory.product} ? ${inventory.product.name} : 'Not Set'">Product Name</td>
+			<td th:text="${inventory.supplier} ? ${inventory.supplier.name} : 'Not Set'">Supplier Name</td>
+			<td th:text=${inventory.quantity}>Qty in Stock</td>
+			<td th:text=${inventory.shelfLocation}>Shelf Location</td>
+			<td th:text=${inventory.reorderLvl}>Reorder Level</td>
+			<td th:text=${inventory.reorderQty}>Reorder Qty</td>
+			<td th:text=${inventory.wholesalePrice}>Wholesale Price</td>
+			<td th:text=${inventory.retailPrice}>Retail Price</td>
+			<td th:text=${inventory.partnerPrice}>Partner Price</td>
+ 			<td><a href="EditInventory.html"
+				th:href="@{/inventory/edit/}+${inventory.id}">Edit</a></td>
+			<td><a href="DeleteInventory.html"
+				th:href="@{/inventory/delete/}+${inventory.id}">Delete</a></td>
+		</tr>
+	</table>
+
+	 <br/>
+
+  <div th:replace="layout/layout.html :: footer"></div>
+
+</body>
+</html>

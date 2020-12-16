@@ -40,6 +40,7 @@ public class ProductController {
 	@RequestMapping(value = "/add")
 	public String addForm(Model model) {
 		model.addAttribute("product", new Product());
+		
 		model.addAttribute("brandList", (ArrayList<Brand>)brandSvc.listAllBrands());
 		return "ProductForm";
 	}
