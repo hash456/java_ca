@@ -42,10 +42,27 @@ public class InventoryImplement implements InventoryService {
 
 	@Override
 	@Transactional
-	public List<Inventory> findInventoryByNameLike(String name) {
-		return inventoryRepo.findInventoryByNameLike(name);
+	public List<Inventory> findInventoryByProductName(String name) {
+		return inventoryRepo.findInventoryByProductName(name);
 	}
 
+	@Override
+	@Transactional
+	public List<Inventory> findInventoryByProductNameLike(String name) {
+		return inventoryRepo.findInventoryByProductNameLike(name);
+	}
+
+	@Override
+	@Transactional
+	public List<Inventory> findInventoryBySupplierName(String name) {
+		return inventoryRepo.findInventoryBySupplierName(name);
+	}
+
+	@Override
+	@Transactional
+	public List<Inventory> findInventoryBySupplierNameLike(String name) {
+		return inventoryRepo.findInventoryBySupplierNameLike(name);
+	}
 
 	@Override
 	@Transactional
