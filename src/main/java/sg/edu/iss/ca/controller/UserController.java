@@ -54,7 +54,7 @@ public class UserController {
 			if (bindingResult.hasErrors()) {
 				return "StaffForm";
 			}
-			staff.setRole(Role.ADMIN);
+			staff.setRole("ROLE_ADMIN");
 			uservice.addStaff(staff);
 			return "redirect:/staff/list";
 		}
