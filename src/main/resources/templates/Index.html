@@ -9,6 +9,7 @@
   <header th:insert="layout/layout.html :: header"></header>
   <div th:replace="layout/layout.html :: menu" ></div>
   <h1>INDEX page</h1>
+  <h3 th:inline = "text">Welcome to hell, [[${#httpServletRequest.RemoteUser}]]!</h3>
   <p> Blah Blah Blah</p>
   <div th:replace="layout/layout.html :: footer"></div>
 </body>

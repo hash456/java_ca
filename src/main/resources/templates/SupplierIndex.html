@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -15,8 +16,8 @@
         <tr>
             <th>Email</th>
             <th>Supplier Name</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th sec:authorize="hasRole('ADMIN')">Edit</th>
+            <th sec:authorize="hasRole('ADMIN')">Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -24,10 +25,10 @@
 			<td th:text="${supplier.email}"/>
         	<td th:text="${supplier.name}"/>
          	<td>
-         		<a th:href="@{/supplier/edit/}+${supplier.id}">Edit</a>
+         		<a th:href="@{/supplier/edit/}+${supplier.id}" sec:authorize="hasRole('ADMIN')">Edit</a>
        		</td>
           	<td>
-         		<a th:href="@{/supplier/delete/}+${supplier.id}">Delete</a>
+         		<a th:href="@{/supplier/delete/}+${supplier.id}" sec:authorize="hasRole('ADMIN')">Delete</a>
        		</td>
           </tr>
         </tbody>
