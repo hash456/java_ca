@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import sg.edu.iss.ca.model.Brand;
@@ -123,9 +124,10 @@ public class DatabaseSeeder {
 	}
 	
 	private void seedStaffTable() {
-		userSvc.addStaff(new Staff(Role.ADMIN, "Esther", "est", "123456"));
-		userSvc.addStaff(new Staff(Role.MECHANIC, "Yuen Kwan", "yk", "polymeowphism"));
-		userSvc.addStaff(new Staff(Role.MECHANIC, "Suria", "sr", "password"));
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); 
+		userSvc.addStaff(new Staff(Role.ADMIN, "Esther", "est", encoder.encode("123456"), true));
+		userSvc.addStaff(new Staff(Role.MECHANIC, "Yuen Kwan", "yk", encoder.encode("polymeowphism"), false));
+		userSvc.addStaff(new Staff(Role.MECHANIC, "Suria", "sr", encoder.encode("password"), true));
 	}
 	
 }

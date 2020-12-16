@@ -41,6 +41,8 @@ public class UserImplement implements UserService{
 		else
 			staff.setRole(Role.ADMIN);
 		
-			staffrepo.save(staff);
+		System.out.println(staff.getRole().toString());
+		
+		staffrepo.save(staff);
 	}
 }

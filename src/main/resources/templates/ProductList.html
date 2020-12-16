@@ -26,8 +26,8 @@
 			<th>Category</th>
 			<th>SubCategory</th>
 			<th>Brand</th>
-			<th sec:authorize="hasRole('ADMIN')">Edit Product</th>
-			<th sec:authorize="hasRole('ADMIN')">Delete Product</th>
+			<th sec:authorize="hasRole(T(sg.edu.iss.ca.model.Role).ADMIN == 0 ? 'ADMIN' : 'MECHANIC')">Edit Product</th>
+			<th sec:authorize="hasRole(T(sg.edu.iss.ca.model.Role).ADMIN.toString())">Delete Product</th>
 		</tr>
 		<tr th:each="product:${ProductList}">
 			<td th:text=${product.id}>Product Id</td>
@@ -41,9 +41,9 @@
 			<td th:text=${product.subCategory}>SubCategory</td>
 			<td th:text="${product.brand} ? ${product.brand.name} : 'Not Set'">Brand</td>
  			<td><a href="EditProduct.html"
-				th:href="@{/product/edit/}+${product.id}" sec:authorize="hasRole('ADMIN')">Edit</a></td>
+				th:href="@{/product/edit/}+${product.id}" sec:authorize="hasRole(T(sg.edu.iss.ca.model.Role).ADMIN.toString())">Edit</a></td>
 			<td><a href="DeleteProduct.html"
-				th:href="@{/product/delete/}+${product.id}" sec:authorize="hasRole('ADMIN')">Delete</a></td>
+				th:href="@{/product/delete/}+${product.id}" sec:authorize="hasRole(T(sg.edu.iss.ca.model.Role).ADMIN.toString())">Delete</a></td>
 		</tr>
 	</table>
 

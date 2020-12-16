@@ -1,5 +1,6 @@
 package sg.edu.iss.ca.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,12 +15,22 @@ public class Staff {
 	private int staffId;
 	private Role role;
 	private String staffName;
+	@Column(name="username")
 	private String userName;
 	private String password;
+	private Boolean enabled;
 	
 	public Staff() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	public Staff(Role role, String staffName, String userName, String password, Boolean enabled) {
+		super();
+		this.role = role;
+		this.staffName = staffName;
+		this.userName = userName;
+		this.password = password;
+		this.enabled = enabled;
 	}
 	public Staff(Role role, String staffName, String userName, String password) {
 		super();
@@ -27,16 +38,7 @@ public class Staff {
 		this.staffName = staffName;
 		this.userName = userName;
 		this.password = password;
-	}
-	
-	
-	
-	public Staff(int staffId, String staffName, String userName, String password) {
-		super();
-		this.staffId=staffId;
-		this.staffName = staffName;
-		this.userName = userName;
-		this.password = password;
+		this.enabled = true;
 	}
 	public int getStaffId() {
 		return staffId;
@@ -67,6 +69,12 @@ public class Staff {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public Boolean getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 
