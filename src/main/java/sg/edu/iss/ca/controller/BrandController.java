@@ -3,6 +3,7 @@ package sg.edu.iss.ca.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,6 +49,7 @@ public class BrandController {
 	}
 	
 	@GetMapping("/edit/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public String editBrand(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("brand", brandServ.findByBrandId(id));
 		return "BrandForm";
