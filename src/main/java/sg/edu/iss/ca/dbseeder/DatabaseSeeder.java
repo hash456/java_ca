@@ -153,6 +153,7 @@ public class DatabaseSeeder {
 		userSvc.addStaff(new Staff("ROLE_ADMIN", "est@email.com", "Esther", "est", encoder.encode("123456"), true));
 		userSvc.addStaff(new Staff("ROLE_MECHANIC", "yl@email.com", "Yuen Kwan", "yk", encoder.encode("polymeowphism"), true));
 		userSvc.addStaff(new Staff("ROLE_MECHANIC", "sr@email.com", "Suria", "sr", encoder.encode("password"), true));
+		userSvc.addStaff(new Staff("ROLE_ADMIN", "tingkai911@gmail.com", "Ting Kai", "tk", encoder.encode("password"), true));
 	}
 	
 }

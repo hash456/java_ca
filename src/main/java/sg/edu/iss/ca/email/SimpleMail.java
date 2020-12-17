@@ -6,19 +6,11 @@ public class SimpleMail extends AbstractMail {
         super(to);
     }
 
-    @Override
     public String getSubject() {
         return "Java CA - Some stocks are running low (Simple)";
     }
 
-    @Override
     public String getContent() {
         return "One of your product is running low on stock, please place an order with the supplier soon!";
     }
-
-	@Override
-	public String getContent(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
