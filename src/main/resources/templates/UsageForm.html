@@ -1,0 +1,137 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<meta charset="ISO-8859-1">
+<title>ProductList</title>
+</head>
+<body>
+	<h1>Usage Form</h1>
+	<!-- Add Hyperlink -->
+	<h2 th:if="${not #lists.isEmpty(cartlist)}">Part List</h2>
+	<table th:if="${not #lists.isEmpty(cartList)}">
+		<tr>
+			<th>Product Id</th>
+			<th>Part Name</th>
+			<th>Part Number</th>
+			<th>description</th>
+			<th>Brand</th>
+			<th>Qty</th>
+			<th>Remove Part</th>
+			<th>Check Transaction History</th>
+		</tr>
+		<tr th:each="cart:${cartList}">
+			<td th:text=${cart.product.id}>Product Id</td>
+			<td th:text=${cart.product.name}>Part Name</td>
+			<td th:text=${cart.product.partNumber}>Part Number</td>
+			<td th:text=${cart.product.description}>Part Description</td>
+			<td th:text=${cart.product.brand.name}>Brand</td>
+			<td th:text=${cart.qty}>Qty</td>
+			<td width="50px">
+				<div class="quantitybtn">
+						<input type="button" value="-" class="minus"
+						th:attr="product_id = ${cart.product.id}" />
+						
+						<input
+						type="text" name="quantity" th:value="${cart.qty}"
+						min="1" max="" title="Qty" class="input-text"
+						onkeydown="return false" />
+						
+						<input type="button" value="+"
+						class="plus" th:attr="product_id = ${cart.product.id}"/> 
+						
+						<input type="hidden" name="productId"
+						th:value="${cart.product.id}" />
+				</div>
+			</td>
+			<td><a href="#" th:href="@{/UsageForm/remove/}+${cart.id}">Remove</a></td>
+			<td>
+				<form action="#" th:action="@{/UsageForm/checkHistory/}+${cart.product.id}" method="POST">
+				<button type="submit">Check</button>
+				</form>
+			</td>
+		</tr>
+	</table>
+	<form action="#" th:action="@{/UsageForm/addProduct}" method="POST">
+		<button type="submit">Add Product</button>
+	</form>
+	<!-- 	<a href="ProductForm.html" th:href="@{/product/list}">Add Product</a> -->
+	<form action="#" th:object="${UsageForm}"
+		th:action="@{/UsageForm/save}" method="POST">
+		<fieldset>
+			Customer: <input type="text" th:field="*{customer}">
+		</fieldset>
+		<fieldset>
+			Car registered: <input type="text" th:field="*{car}">
+		</fieldset>
+		<fieldset>
+			<div>
+				<p>Description</p>
+				<input type="text" style="width: 300px; height: 140px"
+					th:field="*{description}">
+			</div>
+		</fieldset>
+		<fieldset>
+			<button type="submit">Create Record</button>
+		</fieldset>
+	</form>
+
+
+	<script>
+    window.onload = function () {
+        let minusButtons = document.getElementsByClassName("minus");
+        for (minusButton of minusButtons) {
+            minusButton.addEventListener("click", QtyMinus);
+        }
+
+        let plusButtons = document.getElementsByClassName("plus");
+        for (plusButton of plusButtons) {
+            plusButton.addEventListener("click", QtyPlus);
+        }
+    }
+
+    function QtyMinus(event) {
+        let elem = event.currentTarget;
+        let productId = elem.getAttribute("product_id");
+        ChangeCartQty(productId, "minus");
+        console.log("QtyMinus");
+    }
+
+    function QtyPlus(event) {
+        let elem = event.currentTarget;
+        let productId = elem.getAttribute("product_id");
+        ChangeCartQty(productId, "plus");
+        console.log("QtyPlus");
+    }
+
+    function ChangeCartQty(productId, action) {
+        let xhr = new XMLHttpRequest();
+
+        xhr.open("POST", "/UsageForm/ChangeCartQty", true);
+        xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
+		
+        xhr.send(JSON.stringify({
+            productId,
+            action
+        }));
+        
+        xhr.onreadystatechange = function () {
+            if (this.readyState === XMLHttpRequest.DONE) {
+                // receive response from server
+                if (this.status === 200 || this.status === 302) {
+                    let data = JSON.parse(this.responseText);
+
+                    if (this.status === 200 && data.status == "success") {
+                        console.log("Successful operation: " + data.status);
+                        // Need to refresh current window for changes to show
+                        location.reload();
+                    }
+                }
+            } else {
+                console.log("fail");
+            }
+        };
+    }
+
+</script>
+
+
+</body>
+</html>

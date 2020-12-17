@@ -24,6 +24,7 @@
 			<th>Staff Id</th>
 			<th>Staff Name</th>
 			<th>UserName</th>
+			<th>Email</th>
 			<th>Role</th>
 			<th sec:authorize="hasRole('ADMIN')">Change Role</th>
 			<th sec:authorize="hasRole('ADMIN')">Edit Staff</th>
@@ -35,6 +36,7 @@
 			<td th:text=${staff.staffId}>Staff Id</td>
 			<td th:text=${staff.staffName}>Product Name</td>	
 			<td th:text=${staff.userName}>UserName</td>
+			<td th:text=${staff.email}>email</td>
 			<td th:text=${staff.role}>role</td>
 			<td ><a href="ChangeRole.html"
 				th:href="@{/staff/change/}+${staff.staffId}" 

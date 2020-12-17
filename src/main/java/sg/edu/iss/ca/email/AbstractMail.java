@@ -11,7 +11,4 @@ public abstract class AbstractMail {
         return this.to;
     }
 
-    public abstract String getSubject();
-
-    public abstract String getContent();
 }
