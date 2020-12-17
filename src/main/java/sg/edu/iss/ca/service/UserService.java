@@ -11,4 +11,5 @@ public interface UserService {
 	public List<Staff> liststaff();
 	public Staff findStaffById(Integer id);
 	public Staff changeRole(Staff staff);
+	public Staff findStaffByUsername(String username);
 }

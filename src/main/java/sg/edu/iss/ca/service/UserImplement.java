@@ -43,4 +43,8 @@ public class UserImplement implements UserService{
 				
 		return staffrepo.save(staff);
 	}
+	@Transactional
+	public Staff findStaffByUsername(String username) {
+		return staffrepo.findStaffByuserName(username);
+	}
 }

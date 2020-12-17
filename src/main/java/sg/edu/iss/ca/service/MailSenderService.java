@@ -40,4 +40,15 @@ public class MailSenderService {
 
         mailSender.send(message);
     }
+    
+    public void sendAccountMail(AbstractMail mail, String username, String password) {
+
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setTo(mail.getTo());
+        message.setSubject(mail.getSubject());
+        message.setText(mail.getContent(username, password));
+
+        mailSender.send(message);
+    }
 }

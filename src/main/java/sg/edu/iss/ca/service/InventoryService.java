@@ -2,6 +2,8 @@ package sg.edu.iss.ca.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import sg.edu.iss.ca.model.Inventory;
 
 public interface InventoryService {
@@ -15,4 +17,7 @@ public interface InventoryService {
 	public List<Inventory> findInventoryBySupplierName(String name);
 	public List<Inventory> findInventoryBySupplierNameLike(String name);
 	public Inventory findByInventoryId(Integer id);
+	
+	public void restockInventory(Inventory inventory, HttpServletRequest httpServletRequest);
+	public void withdrawInventory(Inventory inventory, HttpServletRequest httpServletRequest);
 }

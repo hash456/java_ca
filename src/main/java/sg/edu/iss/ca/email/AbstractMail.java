@@ -14,4 +14,7 @@ public abstract class AbstractMail {
     public abstract String getSubject();
 
     public abstract String getContent();
+    
+    public abstract String getContent(String username, String password);
+
 }
