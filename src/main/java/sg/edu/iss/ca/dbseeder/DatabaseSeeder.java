@@ -14,6 +14,7 @@ import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.model.Role;
 import sg.edu.iss.ca.model.Staff;
 import sg.edu.iss.ca.model.Supplier;
+import sg.edu.iss.ca.repo.AdminLogRepository;
 import sg.edu.iss.ca.repo.BrandRepository;
 import sg.edu.iss.ca.repo.InventoryRepository;
 import sg.edu.iss.ca.repo.ProductRepository;
@@ -48,6 +49,8 @@ public class DatabaseSeeder {
 	private StaffRepository staffRepo;
 	@Autowired
 	private UserService userSvc;
+	@Autowired
+	private AdminLogRepository adminRepo;
 	
 	@EventListener
 	public void seed(ContextRefreshedEvent event) {
@@ -60,6 +63,7 @@ public class DatabaseSeeder {
 	}
 	
 	private void resetData() {
+		adminRepo.deleteAll();
 		productRepo.deleteAll();
 		brandRepo.deleteAll();
 		supplierRepo.deleteAll();
@@ -125,9 +129,6 @@ public class DatabaseSeeder {
 		List<Product> products = productSvc.listAllProducts();
 		List<Supplier> suppliers = supplierSvc.listAllSuppliers();
 		
-		System.out.println(products.get(0).getName());
-		System.out.println(suppliers.get(0).getName());
-		
 		Inventory i1 = inventorySvc.createInventory(new Inventory(38, "A123", 10, 40, 13.0, 16.5, 14.0));
 		Inventory i2 = inventorySvc.createInventory(new Inventory(60, "A123", 12, 30, 16.0, 16.0, 14.0));
 		Inventory i3 = inventorySvc.createInventory(new Inventory(38, "A123", 11, 50, 13.5, 18.5, 14.0));
@@ -149,9 +150,10 @@ public class DatabaseSeeder {
 	
 	private void seedStaffTable() {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); 
-		userSvc.addStaff(new Staff(Role.ADMIN, "Esther", "est", encoder.encode("123456"), true));
-		userSvc.addStaff(new Staff(Role.MECHANIC, "Yuen Kwan", "yk", encoder.encode("polymeowphism"), false));
-		userSvc.addStaff(new Staff(Role.MECHANIC, "Suria", "sr", encoder.encode("password"), true));
+		userSvc.addStaff(new Staff("ROLE_ADMIN", "est@email.com", "Esther", "est", encoder.encode("123456"), true));
+		userSvc.addStaff(new Staff("ROLE_MECHANIC", "yl@email.com", "Yuen Kwan", "yk", encoder.encode("polymeowphism"), true));
+		userSvc.addStaff(new Staff("ROLE_MECHANIC", "sr@email.com", "Suria", "sr", encoder.encode("password"), true));
+		userSvc.addStaff(new Staff("ROLE_ADMIN", "tingkai911@gmail.com", "Ting Kai", "tk", encoder.encode("password"), true));
 	}
 	
 }

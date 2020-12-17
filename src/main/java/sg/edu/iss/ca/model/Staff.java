@@ -7,38 +7,48 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@GenericGenerator(name = "native", strategy = "native")
 	private int staffId;
-	private Role role;
+	private String role;
 	private String staffName;
-	@Column(name="username")
+	@Column(name="username", unique=true)
 	private String userName;
 	private String password;
+	private String email;
 	private Boolean enabled;
 	
 	public Staff() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Staff(Role role, String staffName, String userName, String password, Boolean enabled) {
+	public Staff(String role, String email, String staffName, String userName, String password, Boolean enabled) {
 		super();
 		this.role = role;
 		this.staffName = staffName;
 		this.userName = userName;
 		this.password = password;
 		this.enabled = enabled;
+		this.email = email;
 	}
-	public Staff(Role role, String staffName, String userName, String password) {
+	public Staff(String role, String email, String staffName, String userName, String password) {
 		super();
 		this.role = role;
 		this.staffName = staffName;
 		this.userName = userName;
 		this.password = password;
 		this.enabled = true;
+		this.email = email;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public int getStaffId() {
 		return staffId;
@@ -46,10 +56,10 @@ public class Staff {
 	public void setStaffId(int staffId) {
 		this.staffId = staffId;
 	}
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 	public String getStaffName() {

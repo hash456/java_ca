@@ -6,12 +6,10 @@ public class HTMLMail extends AbstractMail {
         super(to);
     }
 
-    @Override
     public String getSubject() {
         return "Java CA - Some stocks are running low (HTML)";
     }
 
-    @Override
     public String getContent() {
         return "<html>" +
                     "<body>" +
@@ -20,4 +18,5 @@ public class HTMLMail extends AbstractMail {
                     "</body>" +
                 "</html>";
     }
+
 }

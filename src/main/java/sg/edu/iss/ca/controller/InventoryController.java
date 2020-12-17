@@ -75,7 +75,7 @@ public class InventoryController {
 		model.addAttribute("supplierList", (ArrayList<Supplier>)sservice.listAllSuppliers());
 		return "InventoryForm";
 	}
-	
+		
 	@RequestMapping(value = "/save")
 	public String addInventory(@ModelAttribute("inventory") @Valid Inventory inventory, 
 			BindingResult bindingResult,  Model model) {
