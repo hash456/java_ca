@@ -5,9 +5,11 @@
 <title>ProductList</title>
 </head>
 <body>
-<h1>Product Listing</h1>
+	<h1>Product Listing</h1>
 	<!-- Add Hyperlink -->
 	<a href="ProductForm.html" th:href="@{/product/add}">Add Product</a>
+	<a href="UsageForm.html" th:href="@{/UsageForm/add}">Create Usage
+		Form</a>
 
 	<h2 th:if="${not #lists.isEmpty(ProductList)}">product List</h2>
 	<table th:if="${not #lists.isEmpty(ProductList)}">
@@ -24,6 +26,7 @@
 			<th>Brand</th>
 			<th>Edit Product</th>
 			<th>Delete Product</th>
+			<th>Check Transaction History</th>
 		</tr>
 		<tr th:each="product:${ProductList}">
 			<td th:text=${product.id}>Product Id</td>
@@ -35,15 +38,27 @@
 			<td th:text=${product.type}>Type</td>
 			<td th:text=${product.category}>Category</td>
 			<td th:text=${product.subCategory}>SubCategory</td>
-<!-- 			<td th:text=${product.brand.name}>Brand</td>
- -->			<td><a href="EditProduct.html"
+			<!-- 			<td th:text=${product.brand.name}>Brand</td>
+ -->
+			<td><a href="EditProduct.html"
 				th:href="@{/product/edit/}+${product.id}">Edit</a></td>
 			<td><a href="DeleteProduct.html"
 				th:href="@{/product/delete/}+${product.id}">Delete</a></td>
+			<td><form action="#"
+					th:action="@{/FormCart/addToForm/}+${product.id}" method="POST">
+					<button type="submit">Add to Usage Form</button>
+				</form></td>
+			<td>
+				<form action="#"
+					th:action="@{/UsageForm/checkHistory/}+${product.id}"
+					method="POST">
+					<button type="submit">Check</button>
+				</form>
+			</td>
 		</tr>
 	</table>
 
-	 <br/>
+	<br />
 
 
 </body>
