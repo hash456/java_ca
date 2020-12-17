@@ -54,7 +54,7 @@ public class UserController {
 			if (bindingResult.hasErrors()) {
 				return "StaffForm";
 			}
-			staff.setRole(Role.ADMIN);
+			staff.setRole("ROLE_ADMIN");
 			uservice.addStaff(staff);
 			return "redirect:/staff/list";
 		}
@@ -65,8 +65,11 @@ public class UserController {
 		}
 		@RequestMapping(value = "/change/{staffId}")
 		public String ChangeRole(@PathVariable("staffId") Integer staffId) {
-			uservice.changeRole(uservice.findStaffById(staffId));
-			return "redirect:/staff/list";
+			Staff s = uservice.changeRole(uservice.findStaffById(staffId));
+			if(s.getRole().equals("ROLE_ADMIN"))
+				return "redirect:/staff/list";
+			else
+				return "redirect:/logout";
 		}
 
 
