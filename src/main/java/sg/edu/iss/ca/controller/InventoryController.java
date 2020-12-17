@@ -42,7 +42,7 @@ public class InventoryController {
 	}
     
 	
-	//STOPPED HERE 15 DEC
+
 	
 	
 	@RequestMapping(value = "/list")

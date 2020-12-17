@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import sg.edu.iss.ca.email.RestockMail;
 import sg.edu.iss.ca.model.AdminLog;
 import sg.edu.iss.ca.model.Inventory;
+import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.model.Staff;
 import sg.edu.iss.ca.repo.InventoryRepository;
 
@@ -120,6 +121,17 @@ public class InventoryImplement implements InventoryService {
 			AdminLog a = new AdminLog(s, i, inventory.getQuantity(), "Damaged", LocalDate.now());
 			adminSvc.createAdminLog(a);	
 		}
+	}
+	
+	@Override
+	@Transactional
+	public Inventory findInventoryById(Integer id) {
+		Optional<Inventory> inventoryResponse = inventoryRepo.findById(id);
+		if (inventoryResponse.isPresent()) {
+			Inventory inventory = inventoryResponse.get();			
+			return inventory;
+		}
+		return null;
 	}
 
 }
