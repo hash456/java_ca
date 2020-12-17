@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/styles/forms.css}"/>
+<title>Staff From</title>
+</head>
+<body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+  	<div class="form-container">
+		<h2>Staff Form</h2>
+		<br />
+		<form action="" th:object="${staff}" th:action="@{/staff/save}"
+			method="POST" class="form-horizontal">
+			<fieldset>
+				<input type="hidden" th:field="*{staffId}" />
+			</fieldset>
+			<fieldset>
+				<input type="hidden" th:field="*{password}">
+			</fieldset>
+			<fieldset>
+				<input type="hidden" th:field="*{enabled}" />
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Role:</label>
+				<select id="role" th:field="*{role}" >
+					<option th:value="ROLE_ADMIN" th:text="ROLE_ADMIN"></option>
+					<option th:value="ROLE_MECHANIC" th:text="ROLE_MECHANIC"></option>
+				</select>
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Staff Name:</label> 
+				<input type="text" th:field="*{staffName}">
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>UserName:</label>
+				<input type="text" th:field="*{userName}">
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Email:</label>
+				<input type="text" th:field="*{email}">
+			</fieldset>
+			<br />
+			<fieldset class="button-container">
+				<div class="btn btn-danger">
+					<a href="StaffList.html" th:href="@{/staff/list}">Cancel</a>
+				</div>
+				<button class="btn btn-primary" type="submit">Save</button>
+			</fieldset>
+		</form>
+	</div>
+			<div th:replace="layout/layout.html :: footer"></div>
+	
+</body>
+</html>

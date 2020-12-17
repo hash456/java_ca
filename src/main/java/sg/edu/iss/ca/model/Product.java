@@ -1,5 +1,7 @@
 package sg.edu.iss.ca.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -28,6 +32,12 @@ public class Product {
 	@ManyToOne(cascade = {CascadeType.PERSIST})
 	@JoinColumn(name="brand_id")
 	private Brand brand;
+	
+	@OneToMany(mappedBy = "product", cascade = {CascadeType.REMOVE})
+	private List<Inventory> inventories;
+	
+	@OneToMany(mappedBy = "product")
+	private List<FormCart> formCartList;
 	
 	public Product() {
 		super();
@@ -123,6 +133,17 @@ public class Product {
 		return "Product [id=" + id + ", partNumber=" + partNumber + ", name=" + name + ", description=" + description
 				+ ", color=" + color + ", dimension=" + dimension + ", category=" + category + ", subCategory="
 				+ subCategory + ", type=" + type + ", brand=" + brand + "]";
+	}
+	
+	// Create a field but don't add it to the table
+	@Transient
+	private String brandName;
+	
+	public String getBrandName() {
+		return brandName;
+	}
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
 	}
 	
 }

@@ -11,4 +11,6 @@ public interface BrandService {
 	public Brand updateBrand(Brand brand);
 	public List<Brand> findBrandByNameLike(String name);
 	public Brand findByBrandId(Integer id);
+	public Brand findByBrandName(String name);
+
 }

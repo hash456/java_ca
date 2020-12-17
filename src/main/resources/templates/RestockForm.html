@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/styles/forms.css}"/>
+<title>Restock Form</title>
+</head>
+<body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+  <div class="form-container">
+	<h2>Restock Details</h2>
+	<form action="" th:object="${inventory}" th:action="@{/manage/restock/save}"
+		method="POST" class="form-horizontal">
+		<fieldset>
+			<input type="hidden" th:field="*{id}" />
+		</fieldset>
+		<fieldset class="form-input-container">
+			<label>Product Name:</label>
+			<input class="readonly-input" readonly type="text" th:field="*{product.name}">
+		</fieldset>
+		<fieldset class="form-input-container">
+			<label>Supplier Name:</label>
+			<input class="readonly-input" readonly type="text" th:field="*{supplier.name}">
+		</fieldset>
+		<fieldset class="form-input-container">
+			<label>Current Qty:</label>
+			<input class="readonly-input" readonly type="text" th:value="*{quantity}">
+		</fieldset>
+		<fieldset class="form-input-container">
+			<label>Restock Qty:</label>
+			<input min="0" type="number" th:value="${0}" th:name="quantity" th:id="quantity" >
+		</fieldset>
+		<fieldset class="form-input-container">
+			<label>Shelf Location:</label>
+			<input class="readonly-input" readonly type="text" th:field="*{shelfLocation}">
+		</fieldset>
+		<fieldset class="form-input-container">
+			<label>Reorder Level:</label>
+			<input class="readonly-input" readonly type="text" th:field="*{reorderLvl}">
+		</fieldset>
+		<fieldset class="form-input-container">
+			<label>Reorder Quantity:</label>
+			<input class="readonly-input" readonly type="text" th:field="*{reorderQty}">
+		</fieldset>
+		<fieldset class="form-input-container">
+			<label>Wholesale Price:</label>
+			<input class="readonly-input" readonly type="text" th:field="*{wholesalePrice}">
+		</fieldset>
+		<fieldset class="form-input-container">
+			<label>Retail Price:</label>
+			<input class="readonly-input" readonly type="text" th:field="*{retailPrice}">
+		</fieldset>
+		<fieldset class="form-input-container">
+			<label>Partner Price:</label>
+			<input class="readonly-input" readonly type="text" th:field="*{partnerPrice}">
+		</fieldset>
+		<br />
+		<fieldset class="button-container">
+			<div class="btn btn-danger">
+				<a href="InventoryList.html" th:href="@{/inventory/list}">Cancel</a>
+			</div>
+			<button class="btn btn-primary" type="submit">Save</button>
+		</fieldset>
+	</form>
+	</div>	
+  <div th:replace="layout/layout.html :: footer"></div>
+
+</body>
+</html>

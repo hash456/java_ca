@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Product Form</title>
+</head>
+<body>
+<h1>Form</h1>
+	<form action="" th:object="${product}" th:action="@{/product/save}"
+		method="POST" class="form-horizontal">
+		<fieldset>
+			<input type="hidden" th:field="*{id}" />
+		</fieldset>
+		<fieldset>
+			PartNumber: <input type="text" th:field="*{partNumber}">
+		</fieldset>
+		<fieldset>
+			Name: <input type="text" th:field="*{name}">
+		</fieldset>
+		<fieldset>
+		Description:<input type="text" th:field="*{description}">
+		</fieldset>
+		<fieldset>
+		Dimension:<input type="text" th:field="*{dimension}">
+		</fieldset>
+		<fieldset>
+			Color: <input type="text" th:field="*{color}">
+		</fieldset>
+		<fieldset>
+			Type: <input type="text" th:field="*{type}">
+		</fieldset>
+		<fieldset>
+			Category <input type="text" th:field="*{category}">
+		</fieldset>
+		<fieldset>
+			SubCategory <input type="text" th:field="*{subCategory}">
+		</fieldset>
+<!-- 		<fieldset>
+			Brand 
+			<input list="brands" th:field="*{brand}">
+			<datalist id="brands">
+				<option th:each="b:${brandList}" th:value=${b} th:text=${b.name}></option>
+			</datalist>
+		</fieldset> -->
+		<fieldset>
+			<button type="submit">Save</button>
+		</fieldset>
+	</form>
+
+</body>
+</html>

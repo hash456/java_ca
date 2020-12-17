@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<title>Product Inventory List</title>
+</head>
+<body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+	<!-- Add Hyperlink -->
+	<div style="padding-left: 50px; padding-right: 50px;">
+		<h2 th:if="${not #lists.isEmpty(InventoryList)}">Product Inventory List</h2>
+	<a href="InventoryForm.html" th:href="@{/inventory/add}" sec:authorize="hasRole('ADMIN')">
+	    		<div class="btn btn-primary">Add Inventory Log</div></a>
+
+
+	<table th:if="${not #lists.isEmpty(InventoryList)}" class="table table-striped">
+		<thead>
+		<tr>
+			<th>Inventory Id</th>
+			<th>Product Name</th>
+			<th>Supplier</th>
+			<th>Qty in Stock</th>
+			<th>Shelf Location</th>
+			<th>Reorder Level</th>
+			<th>Reorder Qty</th>
+			<th>Wholesale Price</th>
+			<th>Retail Price</th>
+			<th>Partner Price</th>
+			<th sec:authorize="hasRole('ADMIN')">Restock</th>
+			<th sec:authorize="hasRole('ADMIN')">Report Damage</th>
+			<th sec:authorize="hasRole('ADMIN')">Edit</th>
+			<th sec:authorize="hasRole('ADMIN')">Delete</th>
+		</tr>
+		</thead>
+		<tr th:each="inventory:${InventoryList}">
+			<td th:text=${inventory.id}>Inventory Id</td>
+			<td th:text="${inventory.product} ? ${inventory.product.name} : 'Not Set'">Product Name</td>
+			<td th:text="${inventory.supplier} ? ${inventory.supplier.name} : 'Not Set'">Supplier Name</td>
+			<td th:text=${inventory.quantity}>Qty in Stock</td>
+			<td th:text=${inventory.shelfLocation}>Shelf Location</td>
+			<td th:text=${inventory.reorderLvl}>Reorder Level</td>
+			<td th:text=${inventory.reorderQty}>Reorder Qty</td>
+			<td th:text=${inventory.wholesalePrice}>Wholesale Price</td>
+			<td th:text=${inventory.retailPrice}>Retail Price</td>
+			<td th:text=${inventory.partnerPrice}>Partner Price</td>
+			<td><a href="RestockForm.html"
+ 				sec:authorize="hasRole('ADMIN')"
+				th:href="@{/manage/restock/}+${inventory.id}">Restock</a></td>
+			<td><a href="RestockForm.html"
+ 				sec:authorize="hasRole('ADMIN')"
+				th:href="@{/manage/withdraw/}+${inventory.id}">Damage</a></td>
+ 			<td><a href="EditInventory.html"
+ 				sec:authorize="hasRole('ADMIN')"
+				th:href="@{/inventory/edit/}+${inventory.id}">Edit</a></td>
+			<td><a href="DeleteInventory.html"
+				sec:authorize="hasRole('ADMIN')"
+				th:href="@{/inventory/delete/}+${inventory.id}">Delete</a></td>
+		</tr>
+	</table>
+</div>
+	 <br/>
+
+  <div th:replace="layout/layout.html :: footer"></div>
+
+</body>
+</html>
