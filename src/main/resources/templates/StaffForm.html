@@ -24,6 +24,13 @@
 				<input type="hidden" th:field="*{enabled}" />
 			</fieldset>
 			<fieldset class="form-input-container">
+				<label>Role:</label>
+				<select id="role" th:field="*{role}" >
+					<option th:value="ROLE_ADMIN" th:text="ROLE_ADMIN"></option>
+					<option th:value="ROLE_MECHANIC" th:text="ROLE_MECHANIC"></option>
+				</select>
+			</fieldset>
+			<fieldset class="form-input-container">
 				<label>Staff Name:</label> 
 				<input type="text" th:field="*{staffName}">
 			</fieldset>
@@ -31,10 +38,14 @@
 				<label>UserName:</label>
 				<input type="text" th:field="*{userName}">
 			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Email:</label>
+				<input type="text" th:field="*{email}">
+			</fieldset>
 			<br />
 			<fieldset class="button-container">
 				<div class="btn btn-danger">
-					<a href="StaffList.html" th:href="@{/staff/list}">Back to Staff List</a>
+					<a href="StaffList.html" th:href="@{/staff/list}">Cancel</a>
 				</div>
 				<button class="btn btn-primary" type="submit">Save</button>
 			</fieldset>

@@ -14,6 +14,7 @@ import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.model.Role;
 import sg.edu.iss.ca.model.Staff;
 import sg.edu.iss.ca.model.Supplier;
+import sg.edu.iss.ca.repo.AdminLogRepository;
 import sg.edu.iss.ca.repo.BrandRepository;
 import sg.edu.iss.ca.repo.InventoryRepository;
 import sg.edu.iss.ca.repo.ProductRepository;
@@ -48,6 +49,8 @@ public class DatabaseSeeder {
 	private StaffRepository staffRepo;
 	@Autowired
 	private UserService userSvc;
+	@Autowired
+	private AdminLogRepository adminRepo;
 	
 	@EventListener
 	public void seed(ContextRefreshedEvent event) {
@@ -60,6 +63,7 @@ public class DatabaseSeeder {
 	}
 	
 	private void resetData() {
+		adminRepo.deleteAll();
 		productRepo.deleteAll();
 		brandRepo.deleteAll();
 		supplierRepo.deleteAll();
@@ -146,9 +150,9 @@ public class DatabaseSeeder {
 	
 	private void seedStaffTable() {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); 
-		userSvc.addStaff(new Staff("ROLE_ADMIN", "Esther", "est", encoder.encode("123456"), true));
-		userSvc.addStaff(new Staff("ROLE_MECHANIC", "Yuen Kwan", "yk", encoder.encode("polymeowphism"), true));
-		userSvc.addStaff(new Staff("ROLE_MECHANIC", "Suria", "sr", encoder.encode("password"), true));
+		userSvc.addStaff(new Staff("ROLE_ADMIN", "est@email.com", "Esther", "est", encoder.encode("123456"), true));
+		userSvc.addStaff(new Staff("ROLE_MECHANIC", "yl@email.com", "Yuen Kwan", "yk", encoder.encode("polymeowphism"), true));
+		userSvc.addStaff(new Staff("ROLE_MECHANIC", "sr@email.com", "Suria", "sr", encoder.encode("password"), true));
 	}
 	
 }

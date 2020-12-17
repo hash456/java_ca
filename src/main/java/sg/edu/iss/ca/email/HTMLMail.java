@@ -20,4 +20,10 @@ public class HTMLMail extends AbstractMail {
                     "</body>" +
                 "</html>";
     }
+
+	@Override
+	public String getContent(String username, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

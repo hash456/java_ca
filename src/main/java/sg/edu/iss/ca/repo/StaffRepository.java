@@ -7,4 +7,5 @@ import sg.edu.iss.ca.model.Staff;
 
 public interface StaffRepository extends JpaRepository<Staff, Integer>{
 	public Staff findStaffBystaffId(int staffId);
+	public Staff findStaffByuserName(String username);
 }
