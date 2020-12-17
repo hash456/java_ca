@@ -18,8 +18,8 @@ public class UserImplement implements UserService{
 	public StaffRepository staffrepo;
 	
 	@Transactional
-	public void addStaff(Staff staff) {
-		 staffrepo.save(staff);
+	public Staff addStaff(Staff staff) {
+		 return staffrepo.save(staff);
 	}
 	@Transactional
 	public List<Staff> liststaff() {
@@ -35,12 +35,12 @@ public class UserImplement implements UserService{
 		return staffrepo.findStaffBystaffId(staffId);
 	}
 	@Transactional
-	public void changeRole(Staff staff) {
+	public Staff changeRole(Staff staff) {
 		if(staff.getRole().equals("ROLE_ADMIN"))
 			staff.setRole("ROLE_MECHANIC");
 		else
 			staff.setRole("ROLE_ADMIN");
 				
-		staffrepo.save(staff);
+		return staffrepo.save(staff);
 	}
 }
