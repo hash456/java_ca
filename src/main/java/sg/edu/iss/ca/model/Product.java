@@ -36,6 +36,9 @@ public class Product {
 	@OneToMany(mappedBy = "product", cascade = {CascadeType.REMOVE})
 	private List<Inventory> inventories;
 	
+	@OneToMany(mappedBy = "product")
+	private List<FormCart> formCartList;
+	
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub

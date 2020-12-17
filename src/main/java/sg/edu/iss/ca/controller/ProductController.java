@@ -28,8 +28,8 @@ public class ProductController {
 	private BrandService brandSvc;
 	
 	@Autowired
-	public void setProductservice(ProductImplement productimple) {
-		this.pservice = productimple;
+	public void setProductService(ProductImplement productImple) {
+		this.pservice = productImple;
 	}
     
 	@RequestMapping(value = "/list")
