@@ -16,10 +16,12 @@ import sg.edu.iss.ca.model.Staff;
 import sg.edu.iss.ca.model.Supplier;
 import sg.edu.iss.ca.repo.AdminLogRepository;
 import sg.edu.iss.ca.repo.BrandRepository;
+import sg.edu.iss.ca.repo.FormCartRepository;
 import sg.edu.iss.ca.repo.InventoryRepository;
 import sg.edu.iss.ca.repo.ProductRepository;
 import sg.edu.iss.ca.repo.StaffRepository;
 import sg.edu.iss.ca.repo.SupplierRepository;
+import sg.edu.iss.ca.repo.UsageFormRepository;
 import sg.edu.iss.ca.service.BrandService;
 import sg.edu.iss.ca.service.ProductService;
 import sg.edu.iss.ca.service.SupplierService;
@@ -51,6 +53,10 @@ public class DatabaseSeeder {
 	private UserService userSvc;
 	@Autowired
 	private AdminLogRepository adminRepo;
+	@Autowired
+	private FormCartRepository fromCartRepo;
+	@Autowired
+	private UsageFormRepository useFormRepo;
 	
 	@EventListener
 	public void seed(ContextRefreshedEvent event) {
@@ -63,6 +69,8 @@ public class DatabaseSeeder {
 	}
 	
 	private void resetData() {
+		fromCartRepo.deleteAll();
+		useFormRepo.deleteAll();
 		adminRepo.deleteAll();
 		productRepo.deleteAll();
 		brandRepo.deleteAll();

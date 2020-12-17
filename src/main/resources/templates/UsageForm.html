@@ -26,13 +26,18 @@
 			<td th:text=${cart.qty}>Qty</td>
 			<td width="50px">
 				<div class="quantitybtn">
-					<input type="button" value="-" class="minus"
-						th:attr="product_id = ${cart.product.id}" id="item_minus" /><input
-						type="text" name="quantity" th:value="${cart.qty}" id="item_input"
+						<input type="button" value="-" class="minus"
+						th:attr="product_id = ${cart.product.id}" />
+						
+						<input
+						type="text" name="quantity" th:value="${cart.qty}"
 						min="1" max="" title="Qty" class="input-text"
-						onkeydown="return false" /><input type="button" value="+"
-						class="plus" th:attr="product_id = ${cart.product.id}"
-						id="item_plus" /> <input type="hidden" name="productId"
+						onkeydown="return false" />
+						
+						<input type="button" value="+"
+						class="plus" th:attr="product_id = ${cart.product.id}"/> 
+						
+						<input type="hidden" name="productId"
 						th:value="${cart.product.id}" />
 				</div>
 			</td>
@@ -86,12 +91,14 @@
         let elem = event.currentTarget;
         let productId = elem.getAttribute("product_id");
         ChangeCartQty(productId, "minus");
+        console.log("QtyMinus");
     }
 
     function QtyPlus(event) {
         let elem = event.currentTarget;
         let productId = elem.getAttribute("product_id");
         ChangeCartQty(productId, "plus");
+        console.log("QtyPlus");
     }
 
     function ChangeCartQty(productId, action) {
@@ -101,8 +108,8 @@
         xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
 		
         xhr.send(JSON.stringify({
-            "productId": productId,
-            "action": action
+            productId,
+            action
         }));
         
         xhr.onreadystatechange = function () {
@@ -116,11 +123,9 @@
                         // Need to refresh current window for changes to show
                         location.reload();
                     }
-                    else {
-                        // Redirect user to login page if user not yet login
-                        window.location.assign(window.location.href + "Login/Index");
-                    }
                 }
+            } else {
+                console.log("fail");
             }
         };
     }

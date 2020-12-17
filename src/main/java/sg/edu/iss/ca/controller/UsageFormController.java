@@ -122,8 +122,8 @@ public class UsageFormController {
 		UsageForm uf = (UsageForm) session.getAttribute("UsageForm");
 		int id = uf.getId();
 		
-		int productIdNum = changeQtyInput.getProductId();
-		List<FormCart> fcl = ufservice.listAllItems(ufrepo.findById(id).get());
+		int productIdNum = Integer.parseInt(changeQtyInput.getProductId());
+//		List<FormCart> fcl = ufservice.listAllItems(ufrepo.findById(id).get());
 		FormCart fc = fcservice.findFormCartByProductIdAndFormId(productIdNum, id);
 		
 		if (changeQtyInput.getAction().equals("minus") && fc.getQty() > 1) {
