@@ -1,5 +1,12 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <meta charset="ISO-8859-1">
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<!-- ... -->
 <title>ProductList</title>
 </head>
 <body>
@@ -18,41 +25,40 @@
 			<th>Check Transaction History</th>
 		</tr>
 		<tr th:each="cart:${cartList}">
-			<td th:text=${cart.product.id}>Product Id</td>
-			<td th:text=${cart.product.name}>Part Name</td>
-			<td th:text=${cart.product.partNumber}>Part Number</td>
-			<td th:text=${cart.product.description}>Part Description</td>
-			<td th:text=${cart.product.brand.name}>Brand</td>
+			<td th:text=${cart.inventory.id}>inventory Id</td>
+			<td th:text=${cart.inventory.product.name}>Part Name</td>
+			<td th:text=${cart.inventory.product.partNumber}>Part Number</td>
+			<td th:text=${cart.inventory.product.description}>Part Description</td>
+			<td th:text="${cart.inventory.product.brand} ? ${cart.inventory.product.brand.name} : 'Not Set'">Brand</td> 
 			<td th:text=${cart.qty}>Qty</td>
 			<td width="50px">
 				<div class="quantitybtn">
-						<input type="button" value="-" class="minus"
-						th:attr="product_id = ${cart.product.id}" />
-						
-						<input
-						type="text" name="quantity" th:value="${cart.qty}"
+					<input type="button" value="-" class="minus"
+						th:attr="inventory_id = ${cart.inventory.id}" id="item_minus" />
+					<input
+						type="text" name="quantity" th:value="${cart.qty}" id="item_input"
 						min="1" max="" title="Qty" class="input-text"
 						onkeydown="return false" />
-						
-						<input type="button" value="+"
-						class="plus" th:attr="product_id = ${cart.product.id}"/> 
-						
-						<input type="hidden" name="productId"
-						th:value="${cart.product.id}" />
+					<input type="button" value="+"
+						class="plus" th:attr="inventory_id = ${cart.inventory.id}"
+						id="item_plus" /> 
+					
+					<input type="hidden" name="inventoryId"
+						th:value="${cart.inventory.id}" />
 				</div>
 			</td>
 			<td><a href="#" th:href="@{/UsageForm/remove/}+${cart.id}">Remove</a></td>
 			<td>
-				<form action="#" th:action="@{/UsageForm/checkHistory/}+${cart.product.id}" method="POST">
+				<form action="#" th:action="@{/UsageForm/checkHistory/}+${cart.inventory.id}" method="POST">
 				<button type="submit">Check</button>
 				</form>
 			</td>
 		</tr>
 	</table>
-	<form action="#" th:action="@{/UsageForm/addProduct}" method="POST">
-		<button type="submit">Add Product</button>
+	<form action="#" th:action="@{/UsageForm/addInventory}" method="POST">
+		<button type="submit">Add Inventory Log</button>
 	</form>
-	<!-- 	<a href="ProductForm.html" th:href="@{/product/list}">Add Product</a> -->
+	<!-- 	<a href="InventoryForm.html" th:href="@{/inventory/list}">Add Inventory</a> -->
 	<form action="#" th:object="${UsageForm}"
 		th:action="@{/UsageForm/save}" method="POST">
 		<fieldset>
@@ -72,9 +78,13 @@
 			<button type="submit">Create Record</button>
 		</fieldset>
 	</form>
+	<form action="#" th:action="@{/UsageForm/cancel}" method="POST">
+		<button type="submit">Cancel</button>
+	</form>
 
 
 	<script>
+    
     window.onload = function () {
         let minusButtons = document.getElementsByClassName("minus");
         for (minusButton of minusButtons) {
@@ -89,28 +99,25 @@
 
     function QtyMinus(event) {
         let elem = event.currentTarget;
-        let productId = elem.getAttribute("product_id");
-        ChangeCartQty(productId, "minus");
-        console.log("QtyMinus");
+        let inventoryId = elem.getAttribute("inventory_id");
+        ChangeCartQty(inventoryId, "minus");
     }
 
     function QtyPlus(event) {
         let elem = event.currentTarget;
-        let productId = elem.getAttribute("product_id");
-        ChangeCartQty(productId, "plus");
-        console.log("QtyPlus");
+        let inventoryId = elem.getAttribute("inventory_id");
+        ChangeCartQty(inventoryId, "plus");
     }
-
-    function ChangeCartQty(productId, action) {
-        let xhr = new XMLHttpRequest();
+    
+    function ChangeCartQty(inventoryId, action) {
+        
+    	var xhr = new XMLHttpRequest();
+		var token = document.querySelector('meta[name="_csrf"]').content;
+		var header = document.querySelector('meta[name="_csrf_header"]').content;
 
         xhr.open("POST", "/UsageForm/ChangeCartQty", true);
-        xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
-		
-        xhr.send(JSON.stringify({
-            productId,
-            action
-        }));
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf8')
+        xhr.setRequestHeader(header, token);
         
         xhr.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE) {
@@ -128,6 +135,11 @@
                 console.log("fail");
             }
         };
+        
+        xhr.send(JSON.stringify({
+            "inventoryId": inventoryId,
+            "action": action
+        }));
     }
 
 </script>
