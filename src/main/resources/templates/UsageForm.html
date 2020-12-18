@@ -44,7 +44,7 @@
 			</td>
 			<td><a href="#" th:href="@{/UsageForm/remove/}+${cart.id}">Remove</a></td>
 			<td>
-				<form action="#" th:action="@{/UsageForm/checkHistory/}+${cart.product.id}" method="POST">
+				<form action="#" th:action="@{/UsageForm/checkHistory/}+${cart.inventory.id}" method="POST">
 				<button type="submit">Check</button>
 				</form>
 			</td>
