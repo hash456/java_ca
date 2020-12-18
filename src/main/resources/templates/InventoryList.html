@@ -18,8 +18,8 @@
 	<a href="UsageForm.html" th:if="${session.UsageForm != null}" th:href="@{/UsageForm/add}">View Usage
 		Form Draft</a>
 	<table th:if="${not #lists.isEmpty(InventoryList)}" class="table table-striped">
-		<thead>
-		<tr>
+		<thead >
+		<tr style="text-align:center;">
 			<th>Inventory Id</th>
 			<th>Product Name</th>
 			<th>Supplier</th>
@@ -65,15 +65,15 @@
 				<form action="#"
 					th:action="@{/UsageForm/checkHistory/}+${inventory.id}"
 					method="POST">
-					<button type="submit">Check</button>
+					<button style="margin:auto; display:block;" class="btn btn-primary" type="submit">Check</button>
 				</form>
 			</td>
 			<td th:if="${session.UsageForm != null}">
 			<!--  <div th:if="${session.containsKey('UsageForm')}"> -->
-			<form action="#" th:action="@{/FormCart/addToForm/}+${inventory.id}" method="POST">
-					<button type="submit">Add to Usage Form</button>
+				<form action="#" th:action="@{/FormCart/addToForm/}+${inventory.id}" method="POST">
+					<button style="margin:auto; display:block;"  class="btn btn-primary" type="submit">Add to Usage Form</button>
 				</form>
-				</td>
+			</td>
 			
 		</tr>
 	</table>
