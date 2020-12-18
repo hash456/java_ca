@@ -6,6 +6,9 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import sg.edu.iss.ca.model.Product;
@@ -58,5 +61,10 @@ public class SupplierImplement implements SupplierService{
 			return supplierResponse;
 		}
 		return null;
+	}
+	@Override
+	public Page<Supplier> findPaginated(int pageNo, int pageSize) {
+		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
+		return supplierRepo.findAll(pageable);
 	}
 }
