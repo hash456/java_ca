@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Usage Form</title>
+</head>
+<body>
+	<h2>A new record has been created successfully!</h2>
+	<p></p>
+	<h3>Summary</h3>
+	<table>
+		<tr>
+			<th>Record ID</th>
+			<td th:text=${UsageForm.id}>Customer</td>
+		</tr>
+		<tr>
+			<th>Customer</th>
+			<td th:text=${UsageForm.customer}>Customer</td>
+		</tr>
+		<tr>
+			<th>Car Registered</th>
+			<td th:text=${UsageForm.car}></td>
+		</tr>
+		<tr>
+			<th>Usage</th>
+			<td>
+				<table>
+					<tr>
+						<th>Inventory ID</th>
+						<th>Product Name</th>
+						<th>Brand</th>
+						<th>Qty</th>
+					</tr>
+					<tr th:each="cart:${cartList}">
+						<td th:text=${cart.inventory.id}></td>
+  						<td th:text=${cart.inventory.product.name}></td>
+						<td th:text="${cart.inventory.product.brand} ? ${cart.inventory.product.brand.name} : 'Not Set'"></td> 
+						<td th:text=${cart.qty}></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<th>Description</th>
+			<td th:text=${UsageForm.description}>Description</td>
+		</tr>
+		<tr>
+			<th>Date</th>
+			<td th:text=${UsageForm.creationDate}>Creation Date</td>
+		</tr>
+	</table>
+	<a href="#" th:href="@{/inventory/list}">Go back to inventory list</a>
+</body>
+</html>
