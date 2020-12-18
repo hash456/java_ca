@@ -13,11 +13,12 @@
 		<h2 th:if="${not #lists.isEmpty(InventoryList)}">Product Inventory List</h2>
 	<a href="InventoryForm.html" th:href="@{/inventory/add}" sec:authorize="hasRole('ADMIN')">
 	    		<div class="btn btn-primary">Add Inventory Log</div></a>
-	<a href="UsageForm.html" th:if="${session.UsageForm == null}" th:href="@{/UsageForm/add}">Create Usage
-		Form</a>
-	<a href="UsageForm.html" th:if="${session.UsageForm != null}" th:href="@{/UsageForm/add}">View Usage
-		Form Draft</a>
-	<table th:if="${not #lists.isEmpty(InventoryList)}" class="table table-striped">
+	
+	<a href="UsageForm.html" th:if="${session.UsageForm == null}" th:href="@{/UsageForm/add}">
+		<div class="btn btn-primary">Create Usage Form</div></a>
+	<a href="UsageForm.html" th:if="${session.UsageForm != null}" th:href="@{/UsageForm/add}">
+		<div class="btn btn-primary">View Usage Form Draft</div></a>
+	<table th:if="${not #lists.isEmpty(InventoryList)}" class="table table-striped" style="text-align:center;">
 		<thead >
 		<tr style="text-align:center;">
 			<th>Inventory Id</th>
