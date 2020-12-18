@@ -93,6 +93,16 @@ public class InventoryController {
 		if (bindingResult.hasErrors()) {
 			return "InventoryForm";
 		}
+		
+		if (inventory.getProductName()==null || inventory.getProductName().trim().length()==0)
+		{
+			return "InventoryForm";
+		}
+		
+		if (inventory.getSupplierName()==null || inventory.getSupplierName().trim().length()==0)
+		{
+			return "InventoryForm";
+		}
 				
 		// Find if the name of the brand is in the database
 		Product p = pservice.findByProductName(inventory.getProductName());

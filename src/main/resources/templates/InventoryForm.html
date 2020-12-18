@@ -16,9 +16,10 @@
 		<fieldset>
 			<input type="hidden" th:field="*{id}" />
 		</fieldset>
+		
 		<fieldset class="form-input-container">
 			<label>Product Name:</label>
-			<input list="products" th:field="*{productName}">
+			<input list="products" th:field="*{productName}" required pattern=".*\S+.*" title="This field is required">
 			<datalist id="products">
 				<select>
 					<option th:each="p:${productList}" th:text=${p.name}>You will never see this who cares</option>
@@ -27,7 +28,7 @@
 		</fieldset>
 		<fieldset class="form-input-container">
 			<label>Supplier Name:</label>
-			<input list="suppliers" th:field="*{supplierName}">
+			<input list="suppliers" th:field="*{supplierName}" required pattern=".*\S+.*" title="This field is required">
 			<datalist id="suppliers">
 				<select>
 					<option th:each="s:${supplierList}" th:text=${s.name}>_1_</option>
