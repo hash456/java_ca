@@ -16,10 +16,12 @@ import sg.edu.iss.ca.model.Staff;
 import sg.edu.iss.ca.model.Supplier;
 import sg.edu.iss.ca.repo.AdminLogRepository;
 import sg.edu.iss.ca.repo.BrandRepository;
+import sg.edu.iss.ca.repo.FormCartRepository;
 import sg.edu.iss.ca.repo.InventoryRepository;
 import sg.edu.iss.ca.repo.ProductRepository;
 import sg.edu.iss.ca.repo.StaffRepository;
 import sg.edu.iss.ca.repo.SupplierRepository;
+import sg.edu.iss.ca.repo.UsageFormRepository;
 import sg.edu.iss.ca.service.BrandService;
 import sg.edu.iss.ca.service.ProductService;
 import sg.edu.iss.ca.service.SupplierService;
@@ -51,6 +53,10 @@ public class DatabaseSeeder {
 	private UserService userSvc;
 	@Autowired
 	private AdminLogRepository adminRepo;
+	@Autowired
+	private FormCartRepository fromCartRepo;
+	@Autowired
+	private UsageFormRepository useFormRepo;
 	
 	@EventListener
 	public void seed(ContextRefreshedEvent event) {
@@ -63,6 +69,8 @@ public class DatabaseSeeder {
 	}
 	
 	private void resetData() {
+		fromCartRepo.deleteAll();
+		useFormRepo.deleteAll();
 		adminRepo.deleteAll();
 		productRepo.deleteAll();
 		brandRepo.deleteAll();
@@ -88,6 +96,7 @@ public class DatabaseSeeder {
 				"Premium Car Tire", "Black", "2x2", 
 				"Car", "Tire", new Brand("Subaru")));
 		
+		
 		List<Brand> brands = brandSvc.listAllBrands();
 
 		Product p1 = productSvc.createProduct(new Product("1B", "Tyre1", "Car Tire", 
@@ -102,16 +111,31 @@ public class DatabaseSeeder {
 		Product p4 = productSvc.createProduct(new Product("3B", "Tyre4", "Car Tire", 
 				"Premium Car Tire", "Black", "2x2", 
 				"Car", "Tire"));
+		Product p5 = productSvc.createProduct(new Product("1B", "ABC Window", "ABC", 
+				"Transparent", "3x3", "Car Window", "Premium Car Window", 
+				"Window"));
+		Product p6 = productSvc.createProduct(new Product("2B", "ABC Window", "ABC", 
+				"Transparent", "3x3", "Car Window", "Premium Car Window", 
+				"Window"));
+		Product p7 = productSvc.createProduct(new Product("3B", "ABC Window", "ABC", 
+				"Transparent", "3x3", "Car Window", "Premium Car Window", 
+				"Window"));
 		
 		p1.setBrand(brands.get(0));
 		p2.setBrand(brands.get(1));
 		p3.setBrand(brands.get(2));	
 		p4.setBrand(brands.get(0));	
+		p5.setBrand(brands.get(0));
+		p6.setBrand(brands.get(1));
+		p7.setBrand(brands.get(2));	
 		
 		productSvc.updateProduct(p1);
 		productSvc.updateProduct(p2);
 		productSvc.updateProduct(p3);
 		productSvc.updateProduct(p4);
+		productSvc.updateProduct(p5);
+		productSvc.updateProduct(p6);
+		productSvc.updateProduct(p7);
 
 	}
 	
@@ -122,9 +146,9 @@ public class DatabaseSeeder {
 	}
 	
 	private void seedInventoryTable () {
-		inventorySvc.createInventory(new Inventory(36, "A123", 10, 30, 13.0, 15.5, 14.0));
-		inventorySvc.createInventory(new Inventory(50, "B394", 40, 15, 20.0, 17.5, 16.0));
-		inventorySvc.createInventory(new Inventory(20, "B349", 60, 20, 40.0, 50.5, 45.0));
+//		inventorySvc.createInventory(new Inventory(36, "A123", 10, 30, 13.0, 15.5, 14.0));
+//		inventorySvc.createInventory(new Inventory(50, "B394", 40, 15, 20.0, 17.5, 16.0));
+//		inventorySvc.createInventory(new Inventory(20, "B349", 60, 20, 40.0, 50.5, 45.0));
 		
 		List<Product> products = productSvc.listAllProducts();
 		List<Supplier> suppliers = supplierSvc.listAllSuppliers();
