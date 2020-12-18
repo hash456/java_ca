@@ -81,13 +81,23 @@ public class UsageFormController {
 	
 	@RequestMapping(value = "/add")
 	public String createForm(Model model, HttpSession session) {
+		UsageForm UF = (UsageForm) session.getAttribute("UsageForm");
+		if (UF != null) {
+			int id = UF.getId();
+			model.addAttribute("UsageForm", UF);
+			model.addAttribute("cartList", ufservice.listAllItems(ufrepo.findById(id).get()));
+			return "UsageForm";
+		}
+		
+		else {
 		UsageForm usageForm = new UsageForm();
 		ufrepo.save(usageForm);
 		session.setAttribute("UsageForm", usageForm);
 		//model.addAttribute("session", session);
 		model.addAttribute("UsageForm", usageForm);
-		model.addAttribute("cartList", new ArrayList<FormCart>());
+		model.addAttribute("cartList", new ArrayList<FormCart>()); }
 		return "UsageForm";
+		
 	}
 	
 	@RequestMapping(value = "/details")
@@ -162,6 +172,7 @@ public class UsageFormController {
 		uf.setCar(usageForm.getCar());
 		uf.setDescription(usageForm.getDescription());
 		uf.setCreationDate(date);
+		uf.setSubmitted(true);
 		ufrepo.save(uf);
 		List<FormCart> fcl = ufservice.listAllItems(ufrepo.findById(id).get());
 		
@@ -180,11 +191,31 @@ public class UsageFormController {
 	@RequestMapping(value = "/checkHistory/{id}")
 	public String checkHistory(@PathVariable("id") int iid, Model model) {
 		Inventory inventory = irepo.findInventoryById(iid);
-		List<FormCart> fcl = fcservice.findFormCartsByInventoryId(iid);
-		List<UsageForm> ufl = ufservice.findUsageFormsByInventoryId(iid);
+		List<FormCart> fcl_draft = fcservice.findFormCartsByInventoryId(iid);
+		List<UsageForm> ufl_draft = ufservice.findUsageFormsByInventoryId(iid);
 		
-		if (fcl == null) {
+		if (ufl_draft == null) {
 			return "NoTransHistory";
+		}
+		
+		List<UsageForm> ufl = new ArrayList<>();
+		
+		for (UsageForm uf : ufl_draft)
+		{
+			if (uf.isSubmitted() == true)
+			{
+				ufl.add(uf);
+			}
+		}
+		
+		List<FormCart> fcl = new ArrayList<>();
+		
+		for (FormCart fc : fcl_draft)
+		{
+			if (fc.getUsageForm().isSubmitted() == true)
+			{
+				fcl.add(fc);
+			}
 		}
 		
 		model.addAttribute("Inventory", inventory);
