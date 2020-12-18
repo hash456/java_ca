@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 
 import sg.edu.iss.ca.model.Inventory;
+import sg.edu.iss.ca.model.Product;
 
 public interface InventoryService {
 	public void deleteInventory(Inventory inventory);
@@ -19,6 +20,7 @@ public interface InventoryService {
 	public List<Inventory> findInventoryBySupplierName(String name);
 	public List<Inventory> findInventoryBySupplierNameLike(String name);
 	public Inventory findByInventoryId(Integer id);
+	public Inventory findInventoryById(Integer id);
 	public Page<Inventory> findPaginated(int pageNo,int pageSize);
 	public void restockInventory(Inventory inventory, HttpServletRequest httpServletRequest);
 	public void withdrawInventory(Inventory inventory, HttpServletRequest httpServletRequest);
