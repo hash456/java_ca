@@ -1,8 +1,13 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <meta charset="ISO-8859-1">
-<meta name="_csrf" content="${_csrf.token}" />
-<meta name="_csrf_header" content="${_csrf.headerName}" />
-<title>InventoryList</title>
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<!-- ... -->
+<title>ProductList</title>
 </head>
 <body>
 	<h1>Usage Form</h1>
@@ -11,10 +16,10 @@
 	<table th:if="${not #lists.isEmpty(cartList)}">
 		<tr>
 			<th>Product Id</th>
-	 		<th>Part Name</th>
+			<th>Part Name</th>
 			<th>Part Number</th>
 			<th>description</th>
-			<th>Brand</th> 
+			<th>Brand</th>
 			<th>Qty</th>
 			<th>Remove Part</th>
 			<th>Check Transaction History</th>
@@ -73,17 +78,15 @@
 			<button type="submit">Create Record</button>
 		</fieldset>
 	</form>
+	<form action="#" th:action="@{/UsageForm/cancel}" method="POST">
+		<button type="submit">Cancel</button>
+	</form>
 
 
-<script>
-// var token = $("meta[name='_csrf']").attr("content");
-// var header = $("meta[name='_csrf_header']").attr("content");
-// $(document).ajaxSend(function(e, xhr, options) {xhr.setRequestHeader(header, token);});
-
+	<script>
+    
     window.onload = function () {
-    	
-    	
-    	let minusButtons = document.getElementsByClassName("minus");
+        let minusButtons = document.getElementsByClassName("minus");
         for (minusButton of minusButtons) {
             minusButton.addEventListener("click", QtyMinus);
         }
@@ -105,18 +108,16 @@
         let inventoryId = elem.getAttribute("inventory_id");
         ChangeCartQty(inventoryId, "plus");
     }
-
+    
     function ChangeCartQty(inventoryId, action) {
-        let xhr = new XMLHttpRequest();
+        
+    	var xhr = new XMLHttpRequest();
+		var token = document.querySelector('meta[name="_csrf"]').content;
+		var header = document.querySelector('meta[name="_csrf_header"]').content;
 
         xhr.open("POST", "/UsageForm/ChangeCartQty", true);
-        //xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
-        xhr.setRequestHeader("XSRF-TOKEN", "<%=csrfToken&>");
-
-        xhr.send(JSON.stringify({
-            "inventoryId": inventoryId,
-            "action": action
-        }));
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf8')
+        xhr.setRequestHeader(header, token);
         
         xhr.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE) {
@@ -129,13 +130,16 @@
                         // Need to refresh current window for changes to show
                         location.reload();
                     }
-                    //else {
-                        // Redirect user to login page if user not yet login
-                        //window.location.assign(window.location.href + "Login/Index");
-                    //}
                 }
+            } else {
+                console.log("fail");
             }
         };
+        
+        xhr.send(JSON.stringify({
+            "inventoryId": inventoryId,
+            "action": action
+        }));
     }
 
 </script>
