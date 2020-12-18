@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<title>Suppliers</title>
+</head>
+<body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+  	<div style="padding-left: 50px; padding-right: 50px;">
+  
+	<h2>Suppliers</h2>
+	    <a href="SupplierForm.html" sec:authorize="hasRole('ADMIN')" th:href="@{/supplier/create}">
+    		<div class="btn btn-primary">
+    Add Supplier</div></a>
+	<table id="Suppliers" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Email</th>
+            <th>Supplier Name</th>
+            <th sec:authorize="hasRole('ADMIN')">Edit</th>
+            <th sec:authorize="hasRole('ADMIN')">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr th:each="supplier : ${suppliers}">
+			<td th:text="${supplier.email}"/>
+        	<td th:text="${supplier.name}"/>
+         	<td>
+         		<a th:href="@{/supplier/edit/}+${supplier.id}" sec:authorize="hasRole('ADMIN')">Edit</a>
+       		</td>
+          	<td>
+         		<a th:href="@{/supplier/delete/}+${supplier.id}" sec:authorize="hasRole('ADMIN')">Delete</a>
+       		</td>
+          </tr>
+        </tbody>
+    </table>
+
+    </div>
+    
+     <div th:if="${totalPages >1}">
+<div class="row col-sm-10">
+<div class="col-sm-2">
+Total rows:[[${totalItems}]]
+
+
+</div>
+<div class="col-sm-1">
+<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+<a th:if="${currentPage !=i}" th:href="@{'/supplier/page/'+${i}}">[[${i}]]</a>
+<span th:unless="${currentPage !=i}">[[${i}]]</span> &nbsp; &nbsp;
+</span>
+</div>
+<div class="col-sm-1">
+<a th:if="${currentPage < totalPages}" th:href="@{'/supplier/page/'+${currentPage+1}}">Next</a>
+<span th:unless="${currentPage < totalPages}">Next</span>
+</div>
+<div class="col-sm-1">
+<a th:if="${currentPage < totalPages}" th:href="@{'/supplier/page/'+${totalPages}}">Last</a>
+<span th:unless="${currentPage < totalPages}">Last</span>
+</div>
+</div>
+</div>
+
+	 <br/>
+    
+	<div th:replace="layout/layout.html :: footer"></div>
+    
+</body>
+</html>

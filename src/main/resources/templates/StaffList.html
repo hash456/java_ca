@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<title>Staff</title>
+</head>
+<body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+  	<div style="padding-left: 50px; padding-right: 50px;">
+  
+<h2>Staff</h2>
+	<!-- Add Hyperlink -->
+	<a href="StaffForm.html" th:href="@{/staff/add}" sec:authorize="hasRole('ADMIN')">
+		<div class="btn btn-primary">
+	Add Staff
+	</div>
+	</a>
+
+	<table th:if="${not #lists.isEmpty(StaffList)}" class="table table-striped">
+	<thead>
+		<tr>
+			<th>Staff Id</th>
+			<th>Staff Name</th>
+			<th>UserName</th>
+			<th>Email</th>
+			<th>Role</th>
+			<th sec:authorize="hasRole('ADMIN')">Change Role</th>
+			<th sec:authorize="hasRole('ADMIN')">Edit Staff</th>
+			<th sec:authorize="hasRole('ADMIN')">Delete Staff</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="staff:${StaffList}">
+			<td th:text=${staff.staffId}>Staff Id</td>
+			<td th:text=${staff.staffName}>Product Name</td>	
+			<td th:text=${staff.userName}>UserName</td>
+			<td th:text=${staff.email}>email</td>
+			<td th:text=${staff.role}>role</td>
+			<td ><a href="ChangeRole.html"
+				th:href="@{/staff/change/}+${staff.staffId}" 
+				sec:authorize="hasRole('ADMIN')"
+				>Change</a></td>	
+ 			<td><a href="EditStaff.html"
+				th:href="@{/staff/edit/}+${staff.staffId}" sec:authorize="hasRole('ADMIN')">Edit</a></td>
+			<td><a href="DeleteStaff.html"
+				th:href="@{/staff/delete/}+${staff.staffId}" sec:authorize="hasRole('ADMIN')">Delete</a></td>
+		</tr>
+		</tbody>
+	</table>
+	<br/>
+	</div>
+	
+	<div th:if="${totalPages >1}">
+<div class="row col-sm-10">
+<div class="col-sm-2">
+Total rows:[[${totalItems}]]
+
+
+</div>
+<div class="col-sm-1">
+<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+<a th:if="${currentPage !=i}" th:href="@{'/staff/page/'+${i}}">[[${i}]]</a>
+<span th:unless="${currentPage !=i}">[[${i}]]</span> &nbsp; &nbsp;
+</span>
+</div>
+<div class="col-sm-1">
+<a th:if="${currentPage < totalPages}" th:href="@{'/staff/page/'+${currentPage+1}}">Next</a>
+<span th:unless="${currentPage < totalPages}">Next</span>
+</div>
+<div class="col-sm-1">
+<a th:if="${currentPage < totalPages}" th:href="@{'/staff/page/'+${totalPages}}">Last</a>
+<span th:unless="${currentPage < totalPages}">Last</span>
+</div>
+</div>
+</div>
+	
+	
+		<div th:replace="layout/layout.html :: footer"></div>
+
+</body>
+</html>

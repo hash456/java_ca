@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/styles/forms.css}"/>
+<title>Supplier Form</title>
+</head>
+<body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+  	<div class="form-container">
+		<h2>Supplier Form</h2>
+		<br />
+		<form action="" th:object="${supplier}" th:action="@{/supplier/save}" method="POST">
+			<fieldset class="form-input-container">
+				<input type="hidden" th:field="*{id}" />
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Name:</label>
+				<input type="text" th:field="*{name}">
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Email:</label>
+				<input type="text" th:field="*{email}">
+			</fieldset>
+			<br />
+			<fieldset class="button-container">
+				<div class="btn btn-danger">
+					<a href="SupplierIndex.html" th:href="@{/supplier/index}">Cancel</a>
+				</div>
+				<button class="btn btn-primary" type="submit">Save</button>
+			</fieldset>
+		</form>
+				
+	</div>
+		<div th:replace="layout/layout.html :: footer"></div>
+	
+</body>
+</html>

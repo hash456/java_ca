@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<div th:fragment="header" id="header">
+</div>
+<div th:fragment="menu" id="menu">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" th:href="@{/}">Team 2</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="#" th:href="@{/}">Home</a></li>
+      <li><a href="#" th:href="@{/product/list}">Catalogue</a></li>
+      <li><a href="#" th:href="@{/brand/index}">Brands</a></li>
+      <li><a href="#" th:href="@{/supplier/index}">Suppliers</a></li>
+      <li><a href="#" th:href="@{/inventory/list}">Product Inventory</a></li>
+      <li><a href="#" th:href="@{/staff/list}" sec:authorize="hasRole('ADMIN')" >Staff</a></li>
+      <li><a href="#" th:href="@{/logout}">Logout</a></li> 
+    </ul>
+  </div>
+</nav>
+</div>
+<footer style="position:fixed; bottom:0; width: 100%; padding-left: 20px; padding-bottom: 10px; padding-top: 10px; background-color: black;" th:fragment="footer">
+		<a href="Home" th:href="@{/}">Back to Home</a>
+		<br/>
+		 <small style="color: white;">Now is: <b
+			th:text="${execInfo.now.time}"></b></small> <br /> 
+			<small style="color: white;">(c) ISS, NUS 2020 <small style="color:black;">I hate Thymeleaf movement</small></small>
+</footer>
+
+</body>
+</html>

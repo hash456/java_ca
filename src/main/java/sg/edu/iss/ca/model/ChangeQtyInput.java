@@ -13,14 +13,14 @@ public class ChangeQtyInput {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
 	private int id;
-	private int productId;
+	private int inventoryId;
 	private String action;
 	public ChangeQtyInput() {
 		super();
 	}
-	public ChangeQtyInput(int productId, String action) {
+	public ChangeQtyInput(int inventoryId, String action) {
 		super();
-		this.productId = productId;
+		this.inventoryId = inventoryId;
 		this.action = action;
 	}
 	public int getId() {
@@ -29,11 +29,11 @@ public class ChangeQtyInput {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getProductId() {
-		return productId;
+	public int getInventoryId() {
+		return inventoryId;
 	}
-	public void setProductId(int productId) {
-		this.productId = productId;
+	public void setInventoryId(int inventoryId) {
+		this.inventoryId = inventoryId;
 	}
 	public String getAction() {
 		return action;

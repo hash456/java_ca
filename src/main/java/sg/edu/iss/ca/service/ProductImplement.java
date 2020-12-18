@@ -6,8 +6,12 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import sg.edu.iss.ca.model.Brand;
 import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.repo.ProductRepository;
 
@@ -49,6 +53,20 @@ public class ProductImplement implements ProductService {
 	@Transactional
 	public List<Product> findProductByNameLike(String name) {
 		return productRepo.findProductByNameLike(name);
+	}
+	
+	@Transactional
+	public Product findByProductName(String name) {
+		Product productResponse = productRepo.findProductByName(name);
+		if (productResponse != null) {
+			return productResponse;
+		}
+		return null;
+	}
+	@Override
+	public Page<Product> findPaginated(int pageNo, int pageSize) {
+		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
+		return productRepo.findAll(pageable);
 	}
 
 }

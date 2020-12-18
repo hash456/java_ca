@@ -6,8 +6,12 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.model.Supplier;
 import sg.edu.iss.ca.repo.SupplierRepository;
 
@@ -48,5 +52,19 @@ public class SupplierImplement implements SupplierService{
 		if(s != null)
 			return supplierRepo.save(supplier);
 		return null;
+	}
+	
+	@Transactional
+	public Supplier findBySupplierName(String name) {
+		Supplier supplierResponse = supplierRepo.findSupplierByName(name);
+		if (supplierResponse != null) {
+			return supplierResponse;
+		}
+		return null;
+	}
+	@Override
+	public Page<Supplier> findPaginated(int pageNo, int pageSize) {
+		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
+		return supplierRepo.findAll(pageable);
 	}
 }

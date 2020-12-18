@@ -1,8 +1,12 @@
 package sg.edu.iss.ca.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.edu.iss.ca.model.Brand;
+import sg.edu.iss.ca.model.Inventory;
 import sg.edu.iss.ca.service.BrandImplement;
 import sg.edu.iss.ca.service.BrandService;
 
@@ -31,8 +36,7 @@ public class BrandController {
 	
 	@GetMapping("/index")
 	public String index(Model model) {
-		model.addAttribute("brands", brandServ.listAllBrands());
-		return "BrandIndex";
+		return findPaginated(1,model);
 	}
 	
 	@GetMapping("/create")
@@ -48,6 +52,7 @@ public class BrandController {
 	}
 	
 	@GetMapping("/edit/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public String editBrand(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("brand", brandServ.findByBrandId(id));
 		return "BrandForm";
@@ -60,6 +65,18 @@ public class BrandController {
 		}
 		brandServ.createBrand(brand);
 		return "redirect:/brand/index";
+	}
+	@GetMapping("/page/{pageNo}")
+	public String findPaginated(@PathVariable (value= "pageNo") int pageNo,Model model)
+	{
+		int pageSize=5;
+		Page<Brand> page=brandServ.findPaginated(pageNo, pageSize);
+		List<Brand> brandList=page.getContent();
+		model.addAttribute("currentPage",pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems",page.getTotalElements());
+		model.addAttribute("brands", brandList);
+		return "BrandIndex";
 	}
 
 
