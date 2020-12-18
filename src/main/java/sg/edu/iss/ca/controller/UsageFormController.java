@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,45 +42,45 @@ import sg.edu.iss.ca.service.UsageFormService;
 public class UsageFormController {
 	@Autowired
 	private InventoryRepository irepo;
-	
+
 	@Autowired
 	private UsageFormRepository ufrepo;
-	
+
 	@Autowired
 	private FormCartRepository fcrepo;
-	
+
 	@Autowired
 	private UsageFormService ufservice;
-	
+
 	@Autowired
 	public void setUsageFormService(UsageFormImplement ufimp) {
 		this.ufservice = ufimp;
 	}
-	
+
 	@Autowired
 	private FormCartService fcservice;
-	
+
 	@Autowired
 	public void setFormCartService(FormCartImplement fcimp) {
 		this.fcservice = fcimp;
 	}
-	
+
 //	String sessionId = "123";
 //	int userid = 456;
-	
+
 //	@RequestMapping(value = "/details/{id}")
 //	public String showDetails(@PathVariable("id") int id, Model model) {
 //		model.addAttribute("cartList", ufservice.listAllItems(ufrepo.findById(id).get()));
 //		return "UsageForm";
 //	}
-	
+
 	@RequestMapping(value = "/addInventory")
 	public String addInventory(Model model, HttpSession session) {
 		UsageForm uf = (UsageForm) session.getAttribute("UsageForm");
 		model.addAttribute("UsageForm", uf);
 		return "redirect:/inventory/list";
 	}
-	
+
 	@RequestMapping(value = "/add")
 	public String createForm(Model model, HttpSession session) {
 		UsageForm UF = (UsageForm) session.getAttribute("UsageForm");
@@ -89,18 +90,19 @@ public class UsageFormController {
 			model.addAttribute("cartList", ufservice.listAllItems(ufrepo.findById(id).get()));
 			return "UsageForm";
 		}
-		
+
 		else {
-		UsageForm usageForm = new UsageForm();
-		ufrepo.save(usageForm);
-		session.setAttribute("UsageForm", usageForm);
-		//model.addAttribute("session", session);
-		model.addAttribute("UsageForm", usageForm);
-		model.addAttribute("cartList", new ArrayList<FormCart>()); }
+			UsageForm usageForm = new UsageForm();
+			ufrepo.save(usageForm);
+			session.setAttribute("UsageForm", usageForm);
+			// model.addAttribute("session", session);
+			model.addAttribute("UsageForm", usageForm);
+			model.addAttribute("cartList", new ArrayList<FormCart>());
+		}
 		return "UsageForm";
-		
+
 	}
-	
+
 	@RequestMapping(value = "/details")
 	public String viewForm(Model model, HttpSession session) {
 		// hard coded formId
@@ -110,63 +112,69 @@ public class UsageFormController {
 		UsageForm uf = (UsageForm) session.getAttribute("UsageForm");
 		int id = uf.getId();
 		// int id = usageForm.getId();
-		
+
 //		if (ufrepo.existsById(id) == false)
 //			ufservice.createForm();
-		//model.addAttribute("session", session);
+		// model.addAttribute("session", session);
 		model.addAttribute("UsageForm", uf);
 		model.addAttribute("cartList", ufservice.listAllItems(ufrepo.findById(id).get()));
 		return "UsageForm";
 	}
-	
+
 	@RequestMapping(value = "/remove/{id}")
 	public String removeItem(@PathVariable("id") int id) {
 		fcservice.deleteCart(fcservice.findFormCartById(id));
 		return "redirect:/UsageForm/details";
 	}
-	
-	
+
 	@PostMapping(value = "/ChangeCartQty", produces = "application/json")
 	@ResponseBody
 	public Map ChangeCartQty(@RequestBody ChangeQtyInput changeQtyInput, HttpSession session) {
 		// hard coded formId
 		// int id = 1;
-		
+
 		UsageForm uf = (UsageForm) session.getAttribute("UsageForm");
 		int id = uf.getId();
-		
+
 		int inventoryIdNum = changeQtyInput.getInventoryId();
 		List<FormCart> fcl = ufservice.listAllItems(ufrepo.findById(id).get());
 		FormCart fc = fcservice.findFormCartByInventoryIdAndFormId(inventoryIdNum, id);
-		
+
 		if (changeQtyInput.getAction().equals("minus") && fc.getQty() > 1) {
 			int qty = fc.getQty();
-			fc.setQty(qty-1);
+			fc.setQty(qty - 1);
 			fcrepo.save(fc);
 		}
-		
+
 		// need to implement validation on stock count
 		else if (changeQtyInput.getAction().equals("plus")) {
 			int qty = fc.getQty();
-			fc.setQty(qty+1);
+			if (qty == fc.getInventory().getQuantity()) {
+				return Collections.singletonMap("message", "Reached maximum stock");
+//				Map<String, String> json = new HashMap<String, String>();
+//				json.put("message", "Reached maximum stock");
+//				json.put("status", "success");
+//				return json;
+			}
+
+			fc.setQty(qty + 1);
 			fcrepo.save(fc);
 		}
-		
+
 		return Collections.singletonMap("status", "success");
 	}
-	
-	
+
 	@PostMapping(value = "/save")
-	public String transactionSave(@ModelAttribute("UsageForm") @Valid UsageForm usageForm, 
-			BindingResult bindingResult, Model model, HttpSession session) {
+	public String transactionSave(@ModelAttribute("UsageForm") @Valid UsageForm usageForm, BindingResult bindingResult,
+			Model model, HttpSession session) {
 		if (bindingResult.hasErrors())
 			return "redirect:/UsageForm/details";
-		
+
 		// hard coded formId
 		// int id = 1;
 		UsageForm uf = (UsageForm) session.getAttribute("UsageForm");
 		int id = uf.getId();
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = sdf.format(new Date());
 		uf.setCustomer(usageForm.getCustomer());
@@ -176,59 +184,61 @@ public class UsageFormController {
 		uf.setSubmitted(true);
 		ufrepo.save(uf);
 		List<FormCart> fcl = ufservice.listAllItems(ufrepo.findById(id).get());
-		
+		for (FormCart fc : fcl) {
+			int qty = fc.getQty();
+			Inventory inv = fc.getInventory();
+			inv.setQuantity(inv.getQuantity() - qty);
+			irepo.save(inv);
+		}
+
 //		model.addAttribute("date", date);
 //		model.addAttribute("description", uf.getDescription());
 //		model.addAttribute("customer", uf.getCustomer());
 		model.addAttribute("UsageForm", uf);
 		model.addAttribute("cartList", fcl);
-		
+
 		session.removeAttribute("UsageForm");
-		
+
 		return "TransactionSummary";
 	}
-	
-	@PostMapping(value="cancel")
+
+	@PostMapping(value = "cancel")
 	public String cancelForm(Model model, HttpSession session) {
 		return null;
 	}
-	
+
 	@RequestMapping(value = "/checkHistory/{id}")
 	public String checkHistory(@PathVariable("id") int iid, Model model) {
 		Inventory inventory = irepo.findInventoryById(iid);
 		List<FormCart> fcl_draft = fcservice.findFormCartsByInventoryId(iid);
 		List<UsageForm> ufl_draft = ufservice.findUsageFormsByInventoryId(iid);
-		
+
 		if (ufl_draft == null) {
 			return "NoTransHistory";
 		}
-		
+
 		List<UsageForm> ufl = new ArrayList<>();
-		
-		for (UsageForm uf : ufl_draft)
-		{
-			if (uf.isSubmitted() == true)
-			{
+
+		for (UsageForm uf : ufl_draft) {
+			if (uf.isSubmitted() == true) {
 				ufl.add(uf);
 			}
 		}
-		
+
 		List<FormCart> fcl = new ArrayList<>();
-		
-		for (FormCart fc : fcl_draft)
-		{
-			if (fc.getUsageForm().isSubmitted() == true)
-			{
+
+		for (FormCart fc : fcl_draft) {
+			if (fc.getUsageForm().isSubmitted() == true) {
 				fcl.add(fc);
 			}
 		}
-		
+
 		model.addAttribute("Inventory", inventory);
 		model.addAttribute("UsageForm", ufl);
 		model.addAttribute("cartList", fcl);
 		return "PartTransHistory";
 	}
-	
+
 //	@RequestMapping(value = "/ChangeCartQty")
 //	public String ChangeCartQty(@RequestBody ChangeQtyInput changeQtyInput) {
 //		int id = 1;
@@ -251,5 +261,5 @@ public class UsageFormController {
 //		
 //		return "UsageForm";
 //	}
-	
+
 }
