@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import sg.edu.iss.ca.model.ChangeQtyInput;
 import sg.edu.iss.ca.model.FormCart;
+import sg.edu.iss.ca.model.Inventory;
 import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.model.UsageForm;
 import sg.edu.iss.ca.repo.FormCartRepository;
+import sg.edu.iss.ca.repo.InventoryRepository;
 import sg.edu.iss.ca.repo.ProductRepository;
 import sg.edu.iss.ca.repo.UsageFormRepository;
 import sg.edu.iss.ca.service.FormCartImplement;
@@ -37,7 +39,7 @@ import sg.edu.iss.ca.service.UsageFormService;
 @RequestMapping("/UsageForm")
 public class UsageFormController {
 	@Autowired
-	private ProductRepository prepo;
+	private InventoryRepository irepo;
 	
 	@Autowired
 	private UsageFormRepository ufrepo;
@@ -70,11 +72,11 @@ public class UsageFormController {
 //		return "UsageForm";
 //	}
 	
-	@RequestMapping(value = "/addProduct")
-	public String addProduct(Model model, HttpSession session) {
+	@RequestMapping(value = "/addInventory")
+	public String addInventory(Model model, HttpSession session) {
 		UsageForm uf = (UsageForm) session.getAttribute("UsageForm");
 		model.addAttribute("UsageForm", uf);
-		return "redirect:/product/list";
+		return "redirect:/inventory/list";
 	}
 	
 	@RequestMapping(value = "/add")
@@ -122,9 +124,9 @@ public class UsageFormController {
 		UsageForm uf = (UsageForm) session.getAttribute("UsageForm");
 		int id = uf.getId();
 		
-		int productIdNum = Integer.parseInt(changeQtyInput.getProductId());
-//		List<FormCart> fcl = ufservice.listAllItems(ufrepo.findById(id).get());
-		FormCart fc = fcservice.findFormCartByProductIdAndFormId(productIdNum, id);
+		int inventoryIdNum = changeQtyInput.getInventoryId();
+		List<FormCart> fcl = ufservice.listAllItems(ufrepo.findById(id).get());
+		FormCart fc = fcservice.findFormCartByInventoryIdAndFormId(inventoryIdNum, id);
 		
 		if (changeQtyInput.getAction().equals("minus") && fc.getQty() > 1) {
 			int qty = fc.getQty();
@@ -176,16 +178,16 @@ public class UsageFormController {
 	
 	
 	@RequestMapping(value = "/checkHistory/{id}")
-	public String checkHistory(@PathVariable("id") int pid, Model model) {
-		Product product = prepo.findProductById(pid);
-		List<FormCart> fcl = fcservice.findFormCartsByProductId(pid);
-		List<UsageForm> ufl = ufservice.findUsageFormsByProductId(pid);
+	public String checkHistory(@PathVariable("id") int iid, Model model) {
+		Inventory inventory = irepo.findInventoryById(iid);
+		List<FormCart> fcl = fcservice.findFormCartsByInventoryId(iid);
+		List<UsageForm> ufl = ufservice.findUsageFormsByInventoryId(iid);
 		
 		if (fcl == null) {
 			return "NoTransHistory";
 		}
 		
-		model.addAttribute("Product", product);
+		model.addAttribute("Inventory", inventory);
 		model.addAttribute("UsageForm", ufl);
 		model.addAttribute("cartList", fcl);
 		return "PartTransHistory";

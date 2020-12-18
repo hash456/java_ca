@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sg.edu.iss.ca.model.FormCart;
-import sg.edu.iss.ca.model.Product;
+import sg.edu.iss.ca.model.Inventory;
 import sg.edu.iss.ca.model.UsageForm;
 import sg.edu.iss.ca.repo.FormCartRepository;
 import sg.edu.iss.ca.repo.UsageFormRepository;
@@ -32,12 +32,12 @@ public class FormCartImplement implements FormCartService {
 	}
 	
 	@Transactional
-	public FormCart findFormCartByProductIdAndFormId(int pid, int fid) {
+	public FormCart findFormCartByInventoryIdAndFormId(int iid, int fid) {
 		List<FormCart> fcl = fcrepo.findAllByFormId(fid);
 		FormCart fc = null;
 		if (fcl.size() > 0) {
 			for (int i = 0; i < fcl.size(); i++) {
-				if (fcl.get(i).getProduct().getId() == pid)
+				if (fcl.get(i).getInventory().getId() == iid)
 					fc = fcl.get(i);
 			}
 		}
@@ -45,25 +45,25 @@ public class FormCartImplement implements FormCartService {
 	}
 
 	@Transactional
-	public void addtoForm(Product product, int fid) {
+	public void addtoForm(Inventory inventory, int fid) {
 		// need to dynamically get the UsageForm id, through userid/sessionid?
 		// int id = 1;
 		
 		UsageForm uf = ufrepo.findById(fid).get();
-		FormCart fc = this.findFormCartByProductIdAndFormId(product.getId(), fid);
+		FormCart fc = this.findFormCartByInventoryIdAndFormId(inventory.getId(), fid);
 		if (fc != null) {
 			int qty = fc.getQty();
 			fc.setQty(qty+1);
 			fcrepo.save(fc);
 		}
 		else {
-			FormCart formCart = new FormCart(product, 1, uf);
+			FormCart formCart = new FormCart(inventory, 1, uf);
 			fcrepo.save(formCart);
 		}		
 	}
 
 	@Transactional
-	public List<FormCart> findFormCartsByProductId(int pid) {
-		return fcrepo.findAllByProductId(pid);
+	public List<FormCart> findFormCartsByInventoryId(int iid) {
+		return fcrepo.findAllByInventoryId(iid);
 	}
 }

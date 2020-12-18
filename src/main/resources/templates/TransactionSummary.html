@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Brand Form</title>
+<title>Usage Form</title>
 </head>
 <body>
 	<h2>A new record has been created successfully!</h2>
@@ -26,15 +26,15 @@
 			<td>
 				<table>
 					<tr>
-						<th>Product ID</th>
+						<th>Inventory ID</th>
 						<th>Product Name</th>
 						<th>Brand</th>
 						<th>Qty</th>
 					</tr>
 					<tr th:each="cart:${cartList}">
-						<td th:text=${cart.product.id}></td>
-						<td th:text=${cart.product.name}></td>
-						<td th:text=${cart.product.brand.name}></td>
+						<td th:text=${cart.inventory.id}></td>
+  						<td th:text=${cart.inventory.product.name}></td>
+						<td th:text="${cart.inventory.product.brand} ? ${cart.inventory.product.brand.name} : 'Not Set'"></td> 
 						<td th:text=${cart.qty}></td>
 					</tr>
 				</table>
@@ -49,6 +49,6 @@
 			<td th:text=${UsageForm.creationDate}>Creation Date</td>
 		</tr>
 	</table>
-	<a href="#" th:href="@{/product/list}">Go back to product list</a>
+	<a href="#" th:href="@{/inventory/list}">Go back to inventory list</a>
 </body>
 </html>
