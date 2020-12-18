@@ -15,6 +15,6 @@ public interface FormCartRepository extends JpaRepository<FormCart, Integer> {
 	@Query("SELECT fc FROM FormCart fc WHERE fc.usageForm.id = :id")
 	public List<FormCart> findAllByFormId(@Param("id") int id);
 	
-	@Query("SELECT fc FROM FormCart fc WHERE fc.product.id = :id")
-	public List<FormCart> findAllByProductId(@Param("id") int pid);
+	@Query("SELECT fc FROM FormCart fc WHERE fc.inventory.id = :id")
+	public List<FormCart> findAllByInventoryId(@Param("id") int iid);
 }

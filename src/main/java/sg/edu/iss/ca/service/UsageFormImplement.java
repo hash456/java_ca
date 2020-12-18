@@ -36,8 +36,8 @@ public class UsageFormImplement implements UsageFormService {
 
 	@Override
 	@Transactional
-	public List<UsageForm> findUsageFormsByProductId(int pid) {
-		List<FormCart> fcl = fcrepo.findAllByProductId(pid);
+	public List<UsageForm> findUsageFormsByInventoryId(int iid) {
+		List<FormCart> fcl = fcrepo.findAllByInventoryId(iid);
 		List<UsageForm> ufl = ufrepo.findAll();
 		List<UsageForm> ufl_found = new ArrayList<UsageForm>();
 		for (UsageForm uf : ufl) {

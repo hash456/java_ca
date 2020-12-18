@@ -1,16 +1,27 @@
 package sg.edu.iss.ca.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import sg.edu.iss.ca.model.Brand;
 import sg.edu.iss.ca.model.Inventory;
@@ -42,13 +53,13 @@ public class InventoryController {
 	}
     
 	
-	//STOPPED HERE 15 DEC
+
 	
 	
 	@RequestMapping(value = "/list")
 	public String list(Model model) {
-		model.addAttribute("InventoryList", inservice.listAllInventories());
-		return "InventoryList";
+		return findPaginated(1,model);
+
 	}
 	
 	@RequestMapping(value = "/add")
@@ -117,5 +128,17 @@ public class InventoryController {
 		inservice.deleteInventory(inservice.findByInventoryId(id));
 		return "redirect:/inventory/list";
 	}
-
+	
+	@GetMapping("/page/{pageNo}")
+	public String findPaginated(@PathVariable (value= "pageNo") int pageNo,Model model)
+	{
+		int pageSize=5;
+		Page<Inventory> page=inservice.findPaginated(pageNo, pageSize);
+		List<Inventory> listInventories=page.getContent();
+		model.addAttribute("currentPage",pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems",page.getTotalElements());
+		model.addAttribute("InventoryList", listInventories);
+		return "InventoryList";
+	}
 }

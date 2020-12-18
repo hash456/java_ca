@@ -5,8 +5,12 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.model.Role;
 import sg.edu.iss.ca.model.Staff;
 
@@ -46,5 +50,10 @@ public class UserImplement implements UserService{
 	@Transactional
 	public Staff findStaffByUsername(String username) {
 		return staffrepo.findStaffByuserName(username);
+	}
+	@Override
+	public Page<Staff> findPaginated(int pageNo, int pageSize) {
+		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
+		return staffrepo.findAll(pageable);
 	}
 }
