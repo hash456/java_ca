@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -23,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import sg.edu.iss.ca.email.RestockMail;
 import sg.edu.iss.ca.model.ChangeQtyInput;
 import sg.edu.iss.ca.model.FormCart;
 import sg.edu.iss.ca.model.Inventory;
 import sg.edu.iss.ca.model.Product;
+import sg.edu.iss.ca.model.Staff;
 import sg.edu.iss.ca.model.UsageForm;
 import sg.edu.iss.ca.repo.FormCartRepository;
 import sg.edu.iss.ca.repo.InventoryRepository;
@@ -34,8 +37,10 @@ import sg.edu.iss.ca.repo.ProductRepository;
 import sg.edu.iss.ca.repo.UsageFormRepository;
 import sg.edu.iss.ca.service.FormCartImplement;
 import sg.edu.iss.ca.service.FormCartService;
+import sg.edu.iss.ca.service.MailSenderService;
 import sg.edu.iss.ca.service.UsageFormImplement;
 import sg.edu.iss.ca.service.UsageFormService;
+import sg.edu.iss.ca.service.UserService;
 
 @Controller
 @RequestMapping("/UsageForm")
@@ -51,6 +56,12 @@ public class UsageFormController {
 
 	@Autowired
 	private UsageFormService ufservice;
+	
+	@Autowired
+	private UserService uSvc;
+	
+	@Autowired
+	private MailSenderService senderService;
 
 	@Autowired
 	public void setUsageFormService(UsageFormImplement ufimp) {
@@ -166,7 +177,7 @@ public class UsageFormController {
 
 	@PostMapping(value = "/save")
 	public String transactionSave(@ModelAttribute("UsageForm") @Valid UsageForm usageForm, BindingResult bindingResult,
-			Model model, HttpSession session) {
+			Model model, HttpSession session, HttpServletRequest httpServletRequest) {
 		if (bindingResult.hasErrors())
 			return "redirect:/UsageForm/details";
 
@@ -188,6 +199,14 @@ public class UsageFormController {
 			int qty = fc.getQty();
 			Inventory inv = fc.getInventory();
 			inv.setQuantity(inv.getQuantity() - qty);
+			if(inv.getQuantity() <= inv.getReorderLvl()) {
+				Staff s = uSvc.findStaffByUsername(httpServletRequest.getRemoteUser());
+				senderService.sendRestockMail(
+						new RestockMail(s.getEmail()),
+						inv.getProduct().getName(),
+						inv.getSupplier().getName()
+						);	
+			}
 			irepo.save(inv);
 		}
 
