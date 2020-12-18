@@ -27,14 +27,14 @@
 				<table>
 					<tr>
 						<th>Inventory ID</th>
-<!-- 						<th>Product Name</th> -->
-<!-- 						<th>Brand</th> -->
+						<th>Product Name</th>
+						<th>Brand</th>
 						<th>Qty</th>
 					</tr>
 					<tr th:each="cart:${cartList}">
 						<td th:text=${cart.inventory.id}></td>
-<!--  						<td th:text=${cart.inventory.product.name}></td>
-						<td th:text=${cart.inventory.product.brand.name}></td> -->
+  						<td th:text=${cart.inventory.product.name}></td>
+						<td th:text="${cart.inventory.product.brand} ? ${cart.inventory.product.brand.name} : 'Not Set'"></td> 
 						<td th:text=${cart.qty}></td>
 					</tr>
 				</table>
