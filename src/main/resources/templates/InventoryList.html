@@ -34,7 +34,7 @@
 			<th sec:authorize="hasRole('ADMIN')">Report Damage</th>
 			<th sec:authorize="hasRole('ADMIN')">Edit</th>
 			<th sec:authorize="hasRole('ADMIN')">Delete</th>
-			<th sec:authorize="hasRole('ADMIN')">Check Transaction History</th>
+			<th>Check Transaction History</th>
 			<th th:if="${session.UsageForm != null}"></th>
 		</tr>
 		</thead>
@@ -49,16 +49,16 @@
 			<td th:text=${inventory.wholesalePrice}>Wholesale Price</td>
 			<td th:text=${inventory.retailPrice}>Retail Price</td>
 			<td th:text=${inventory.partnerPrice}>Partner Price</td>
-			<td><a href="RestockForm.html"
- 				sec:authorize="hasRole('ADMIN')"
+			<td sec:authorize="hasRole('ADMIN')"><a href="RestockForm.html"
+				sec:authorize="hasRole('ADMIN')"
 				th:href="@{/manage/restock/}+${inventory.id}">Restock</a></td>
-			<td><a href="RestockForm.html"
+			<td sec:authorize="hasRole('ADMIN')"><a href="RestockForm.html"
  				sec:authorize="hasRole('ADMIN')"
 				th:href="@{/manage/withdraw/}+${inventory.id}">Damage</a></td>
- 			<td><a href="EditInventory.html"
+ 			<td sec:authorize="hasRole('ADMIN')"><a href="EditInventory.html"
  				sec:authorize="hasRole('ADMIN')"
 				th:href="@{/inventory/edit/}+${inventory.id}">Edit</a></td>
-			<td><a href="DeleteInventory.html"
+			<td sec:authorize="hasRole('ADMIN')"><a href="DeleteInventory.html"
 				sec:authorize="hasRole('ADMIN')"
 				th:href="@{/inventory/delete/}+${inventory.id}">Delete</a></td>
 			<td>
