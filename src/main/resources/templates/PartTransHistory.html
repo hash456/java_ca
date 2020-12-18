@@ -9,7 +9,11 @@
 	<table>
 		<tr>
 			<th>You are checking part:</th>
-			<td th:text=${Inventory.id}>Inventory ID</td>
+			<td th:text=${Inventory.product.name}>Product Name</td>
+		</tr>
+		<tr>
+			<th>Supplier Name:</th>
+			<td th:text=${Inventory.supplier.name}>Supplier Name</td>
 		</tr>
 	</table>
 
