@@ -13,12 +13,13 @@
 		<h2 th:if="${not #lists.isEmpty(InventoryList)}">Product Inventory List</h2>
 	<a href="InventoryForm.html" th:href="@{/inventory/add}" sec:authorize="hasRole('ADMIN')">
 	    		<div class="btn btn-primary">Add Inventory Log</div></a>
-	<a href="UsageForm.html" th:href="@{/UsageForm/add}">Create Usage
+	<a href="UsageForm.html" th:if="${session.UsageForm == null}" th:href="@{/UsageForm/add}">Create Usage
 		Form</a>
-
+	<a href="UsageForm.html" th:if="${session.UsageForm != null}" th:href="@{/UsageForm/add}">View Usage
+		Form Draft</a>
 	<table th:if="${not #lists.isEmpty(InventoryList)}" class="table table-striped">
-		<thead>
-		<tr>
+		<thead >
+		<tr style="text-align:center;">
 			<th>Inventory Id</th>
 			<th>Product Name</th>
 			<th>Supplier</th>
@@ -34,7 +35,7 @@
 			<th sec:authorize="hasRole('ADMIN')">Edit</th>
 			<th sec:authorize="hasRole('ADMIN')">Delete</th>
 			<th sec:authorize="hasRole('ADMIN')">Check Transaction History</th>
-			<th></th>
+			<th th:if="${session.UsageForm != null}"></th>
 		</tr>
 		</thead>
 		<tr th:each="inventory:${InventoryList}">
@@ -64,13 +65,15 @@
 				<form action="#"
 					th:action="@{/UsageForm/checkHistory/}+${inventory.id}"
 					method="POST">
-					<button type="submit">Check</button>
+					<button style="margin:auto; display:block;" class="btn btn-primary" type="submit">Check</button>
 				</form>
 			</td>
-			<td><form action="#"
-					th:action="@{/FormCart/addToForm/}+${inventory.id}" method="POST">
-					<button type="submit">Add to Usage Form</button>
-				</form></td>
+			<td th:if="${session.UsageForm != null}">
+			<!--  <div th:if="${session.containsKey('UsageForm')}"> -->
+				<form action="#" th:action="@{/FormCart/addToForm/}+${inventory.id}" method="POST">
+					<button style="margin:auto; display:block;"  class="btn btn-primary" type="submit">Add to Usage Form</button>
+				</form>
+			</td>
 			
 		</tr>
 	</table>
