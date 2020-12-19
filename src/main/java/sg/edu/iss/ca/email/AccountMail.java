@@ -10,12 +10,10 @@ public class AccountMail extends AbstractMail {
         return "Your new Account";
     }
 
-    @Override
     public String getContent(String username, String password) {
         return "Username: " + username + "\n" + "Password: " + password;
     }
 
-	@Override
 	public String getContent() {
 		// TODO Auto-generated method stub
 		return null;

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/styles/forms.css}"/>
+<title>Product Form</title>
+</head>
+<body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+  <div class="form-container">
+	<h2>Product Form</h2>
+	<br />
+	<form action="" th:object="${product}" th:action="@{/product/save}"
+		method="POST" class="form-horizontal">
+			<fieldset>
+				<input type="hidden" th:field="*{id}" />
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>PartNumber:</label>
+				<input type="text" th:field="*{partNumber}">
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Name:</label>
+				<input type="text" th:field="*{name}">
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Description:</label>
+				<input type="text" th:field="*{description}">
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Dimension:</label>
+				<input type="text" th:field="*{dimension}">
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Color:</label>
+				<input type="text" th:field="*{color}">
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Type:</label>
+				<input type="text" th:field="*{type}">
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Category:</label>
+				<input type="text" th:field="*{category}">
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>SubCategory:</label>
+				<input type="text" th:field="*{subCategory}">
+			</fieldset>
+	 		<fieldset class="form-input-container">
+	 		<label>Brand:</label>
+				<input list="brands" th:field="*{brandName}">
+				<datalist id="brands">
+					<select>
+						<option th:each="b:${brandList}" th:text=${b.name}></option>
+					</select>
+				</datalist>
+			</fieldset> 
+			<br />
+			<div class="button-container">
+				<div class="btn btn-danger">
+					<a href="ProductList.html" th:href="@{/product/list}">Cancel</a>
+				</div>
+				<fieldset>
+					<button class="btn btn-primary" type="submit">Save</button>
+				</fieldset>	
+			</div>
+		</form>
+	</div>
+	
+  <div th:replace="layout/layout.html :: footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" 
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<title>Catalogue</title>
+</head>
+<body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+
+
+	<div style="padding-left: 50px; padding-right: 50px;">
+	<h2>Catalogue</h2>
+	<!-- Add Hyperlink -->
+	<a href="ProductForm.html" sec:authorize="hasRole('ADMIN')" th:href="@{/product/add}">
+	<div class="btn btn-primary">
+		Add to Catalogue
+	</div>
+	</a>
+	<table th:if="${not #lists.isEmpty(ProductList)}" class="table table-striped">
+	<thead>
+		<tr>
+			<th>Product Id</th>
+			<th>Product Name</th>
+			<th>Part Number</th>
+			<th>Description</th>
+			<th>Dimension</th>
+			<th>Color</th>
+			<th>Type</th>
+			<th>Category</th>
+			<th>SubCategory</th>
+			<th>Brand</th>
+			<th sec:authorize="hasRole('ADMIN')">Edit Product</th>
+			<th sec:authorize="hasRole('ADMIN')">Delete Product</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="product:${ProductList}">
+			<td th:text=${product.id}>Product Id</td>
+			<td th:text=${product.name}>Product Name</td>
+			<td th:text=${product.partNumber}>Part Number</td>
+			<td th:text=${product.description}>Product Description</td>
+			<td th:text=${product.dimension}>Product Dimension</td>
+			<td th:text=${product.color}>color</td>
+			<td th:text=${product.type}>Type</td>
+			<td th:text=${product.category}>Category</td>
+			<td th:text=${product.subCategory}>SubCategory</td>
+			<td th:text="${product.brand} ? ${product.brand.name} : 'Not Set'">Brand</td>
+ 			<td><a href="EditProduct.html"
+				th:href="@{/product/edit/}+${product.id}" sec:authorize="hasRole('ADMIN')">Edit</a></td>
+			<td><a href="DeleteProduct.html"
+				th:href="@{/product/delete/}+${product.id}" sec:authorize="hasRole('ADMIN')">Delete</a></td>
+		</tr>
+		</tbody>
+	</table>
+	</div>
+
+	<br />
+
+  <div th:replace="layout/layout.html :: footer"></div>
+
+</body>
+</html>

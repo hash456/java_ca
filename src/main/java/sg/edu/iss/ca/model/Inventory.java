@@ -1,5 +1,7 @@
 package sg.edu.iss.ca.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -32,6 +35,9 @@ public class Inventory {
 	@ManyToOne(cascade = {CascadeType.PERSIST})
 	@JoinColumn(name="supplier_id")
 	private Supplier supplier;
+	
+	@OneToMany(mappedBy = "inventory")
+	private List<FormCart> formCartList;
 
 	public Inventory() {
 		super();

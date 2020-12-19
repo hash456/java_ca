@@ -53,7 +53,7 @@ public class InventoryController {
 	}
     
 	
-	//STOPPED HERE 15 DEC
+
 	
 	
 	@RequestMapping(value = "/list")
@@ -91,6 +91,16 @@ public class InventoryController {
 	public String addInventory(@ModelAttribute("inventory") @Valid Inventory inventory, 
 			BindingResult bindingResult,  Model model) {
 		if (bindingResult.hasErrors()) {
+			return "InventoryForm";
+		}
+		
+		if (inventory.getProductName()==null || inventory.getProductName().trim().length()==0)
+		{
+			return "InventoryForm";
+		}
+		
+		if (inventory.getSupplierName()==null || inventory.getSupplierName().trim().length()==0)
+		{
 			return "InventoryForm";
 		}
 				

@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.form-container {
+	padding-left: 50px; 
+	padding-right: 50px; 
+	display:flex; 
+	flex-direction: column;
+}
+
+.form-input-container {
+	display: flex;
+	width: 50%;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-top: 5px;
+}
+
+.form-input-container > input {
+	width: 70%;
+}
+
+.form-input-container > select {
+	width: 70%;
+}
+
+.button-container {
+	display:flex; 
+	flex-direction:row; 
+	width:30%; 
+	justify-content: space-between;
+}
+
+.button-container > div > a {
+	color: white; 
+	text-decoration:none; 
+}
+
+.readonly-input {
+	border:none;
+}

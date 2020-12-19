@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<title>Usage History</title>
+<style>
+
+th, td {
+  padding: 5px;
+  text-align: center;
+}
+
+</style>
+</head>
+<body>
+<header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+  <div style="padding-left: 50px; padding-right: 50px;">
+	<h2>Usage History</h2>
+	<br>
+	<table>
+		<tr align="left">
+			<th style="padding:10px">Product Name:</th>
+			<td th:text=${Inventory.product.name} style="padding:10px">Product Name</td>
+		</tr>
+		<tr align="left">
+			<th style="padding:10px">Supplier Name:</th>
+			<td th:text=${Inventory.supplier.name} style="padding:10px">Supplier Name</td>
+		</tr>
+	</table>
+	<p th:if="${#lists.isEmpty(cartList)}"><br>No Transaction History Found</p>
+<hr />
+		<div>
+			<table class="table table-striped">
+				<col width="10%">
+				<col width="20%">
+				<col width="20%">
+				<col width="20%">
+				<col width="20%">
+				<tr>
+					<th>Record ID</th>
+					<th>Customer</th>
+					<th>Car</th>
+					<th>Transaction Date</th>
+					<th>Quantity Consumed</th>
+				</tr>
+				<!-- 				<tr th:each="usageForm:${UsageForm}"> -->
+				<tr th:each="cart:${cartList}">
+					<td th:text=${cart.usageForm.id}>ID</td>
+					<td th:text=${cart.usageForm.customer}>Customer</td>
+					<td th:text=${cart.usageForm.car}>Car</td>
+					<td th:text=${cart.usageForm.creationDate}>Date</td>
+					<td th:text="${cart.qty}">Consumed Quantity</td>
+				</tr>
+			</table>
+		</div>
+	
+	<a href="#" th:href="@{/inventory/list}">Go back to inventory list</a>
+	<!-- 	<table> -->
+	<!-- 		<tr> -->
+	<!-- 			<th>Record ID</th> -->
+	<!-- 			<th>Customer</th> -->
+	<!-- 			<th>Car</th> -->
+	<!-- 			<th>Qty</th> -->
+	<!-- 			<th>Transaction Date</th> -->
+	<!-- 		</tr> -->
+	<!-- 		<tr th:each="usageForm:${UsageForm}"> -->
+	<!-- 			<td th:text=${usageForm.id}>Record ID</td> -->
+	<!-- 		</tr> -->
+	<!-- 	</table> -->
+	<!-- 	<h4>You are</h4> -->
+</div>
+
+<br/>
+
+<div th:replace="layout/layout.html :: footer"></div>
+
+</body>
+</html>

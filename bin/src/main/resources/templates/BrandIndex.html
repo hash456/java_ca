@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<title>Brands</title>
+</head>
+<body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+  	<div style="padding-left: 50px; padding-right: 50px;">
+  
+	<h2>Brands</h2>
+	    <a sec:authorize="hasRole('ADMIN')" href="BrandForm.html" th:href="@{/brand/create}">
+	    		<div class="btn btn-primary">
+	    Add Brand</div></a>
+	
+	<table id="Brands" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Brand Name</th>
+            <th sec:authorize="hasRole('ADMIN')">Edit</th>
+            <th sec:authorize="hasRole('ADMIN')">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr th:each="brand : ${brands}">
+			<td th:text="${brand.id}"/>
+        	<td th:text="${brand.name}"/>
+         	<td sec:authorize="hasRole('ADMIN')">
+         		<a th:href="@{/brand/edit/}+${brand.id}">Edit</a>
+       		</td>
+          	<td sec:authorize="hasRole('ADMIN')">
+         		<a th:href="@{/brand/delete/}+${brand.id}">Delete</a>
+       		</td>
+          </tr>
+        </tbody>
+    </table>
+    </div>
+    
+    
+    <div th:if="${totalPages >1}">
+<div class="row col-sm-10">
+<div class="col-sm-2">
+Total rows:[[${totalItems}]]
+
+
+</div>
+<div class="col-sm-1">
+<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+<a th:if="${currentPage !=i}" th:href="@{'/brand/page/'+${i}}">[[${i}]]</a>
+<span th:unless="${currentPage !=i}">[[${i}]]</span> &nbsp; &nbsp;
+</span>
+</div>
+<div class="col-sm-1">
+<a th:if="${currentPage < totalPages}" th:href="@{'/brand/page/'+${currentPage+1}}">Next</a>
+<span th:unless="${currentPage < totalPages}">Next</span>
+</div>
+<div class="col-sm-1">
+<a th:if="${currentPage < totalPages}" th:href="@{'/brand/page/'+${totalPages}}">Last</a>
+<span th:unless="${currentPage < totalPages}">Last</span>
+</div>
+</div>
+</div>
+
+	 <br/>
+    
+    
+      <div th:replace="layout/layout.html :: footer"></div>
+    
+</body>
+</html>
