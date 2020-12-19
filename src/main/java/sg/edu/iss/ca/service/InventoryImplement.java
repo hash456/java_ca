@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,7 @@ import sg.edu.iss.ca.model.AdminLog;
 import sg.edu.iss.ca.model.Inventory;
 import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.model.Staff;
+import sg.edu.iss.ca.model.Supplier;
 import sg.edu.iss.ca.repo.InventoryRepository;
 
 @Service
@@ -39,6 +41,8 @@ public class InventoryImplement implements InventoryService {
 	private AdminLogService adminSvc;
 	@Autowired
 	private MailSenderService senderService;
+	@Autowired
+	private SupplierService supplierSvc;
 	
 	@Transactional
 	public void deleteInventory(Inventory inventory) {
@@ -141,18 +145,20 @@ public class InventoryImplement implements InventoryService {
 		return inventoryRepo.findAll(pageable);
 	}
 	@Override
-	public void ReorderReportGenerate(int id) {
+	public File ReorderReportGenerate(int id) {
 		// TODO Auto-generated method stub
 		 BufferedWriter bw = null;
+		 File file = null;
 	      try {
 		 List<Inventory> mycontent = inventoryRepo.ReorderReport(id);
-	        if(mycontent.size()==0) {
-	        	return;
-	        }
 	        
+		 Supplier s = supplierSvc.findSupplierById(id);
+		 LocalDateTime date = LocalDateTime.now();
+		 String dateStr = date.toString();
+		 
 	        // Create a new folder inside the project to store myfile.dat
 			Path currentPath = Paths.get(System.getProperty("user.dir"));
-			Path filePath = Paths.get(currentPath.toString(), "report");
+			Path filePath = Paths.get(currentPath.toString(), "report", s.getName());
 	        if (!Files.exists(filePath)) { 
 	            Files.createDirectory(filePath);
 	            System.out.println("Directory created");
@@ -160,8 +166,7 @@ public class InventoryImplement implements InventoryService {
 	            System.out.println("Directory already exists");
 	        }
 	       // Create myfile.dat inside the report folder inside the project directory
-		 File file = new File(Paths.get(filePath.toString(), "myfile.dat").toString());
-
+		 file = new File(Paths.get(filePath.toString(), dateStr +  ".dat").toString());
 		 
 		 if (!file.exists()) {
 		     file.createNewFile();
@@ -170,7 +175,7 @@ public class InventoryImplement implements InventoryService {
 		  FileWriter fw = new FileWriter(file);
 		  bw = new BufferedWriter(fw);
 		  double total=0;
-		  bw.write("\n\n----------------------Inventory Reorder Report for the Products-----------------------          \n");
+		  bw.write("\n\n----------------------Inventory Reorder Report for the Supplier-----------------------          \n");
 		  bw.write("--------------------------------------------------------------------------------------       \n\n");
 		  bw.write("======================================================================================\n");
 		  bw.write("\tid\t  quantity\t  ReorderLvl\t ReorderQty\t  UnitPrice\t   Price\n\n");
@@ -191,10 +196,12 @@ public class InventoryImplement implements InventoryService {
 		   try{
 		      if(bw!=null)
 			 bw.close();
+		      return file;
 		   }catch(Exception ex){
 		       System.out.println("Error in closing the BufferedWriter"+ex);
 		    }
-		}	
+		}
+		return file;
 	}
 	
 	
