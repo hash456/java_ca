@@ -12,9 +12,12 @@
   	<div style="padding-left: 50px; padding-right: 50px;">
   
 	<h2>Suppliers</h2>
+	<br />
 	    <a href="SupplierForm.html" sec:authorize="hasRole('ADMIN')" th:href="@{/supplier/create}">
     		<div class="btn btn-primary">
     Add Supplier</div></a>
+    <p></p>
+	<p></p>
 	<table id="Suppliers" class="table table-striped">
         <thead>
         <tr>
