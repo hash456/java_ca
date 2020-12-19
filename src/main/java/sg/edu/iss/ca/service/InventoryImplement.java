@@ -1,8 +1,14 @@
 package sg.edu.iss.ca.service;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+//import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -130,6 +136,52 @@ public class InventoryImplement implements InventoryService {
 		// TODO Auto-generated method stub
 		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
 		return inventoryRepo.findAll(pageable);
+	}
+	@Override
+	public void ReorderReportGenerate() {
+		// TODO Auto-generated method stub
+		 BufferedWriter bw = null;
+	      try {
+		 List<Inventory> mycontent = inventoryRepo.ReorderReport();
+	        if(mycontent.size()==0) {
+	        	return;
+	        }
+	        
+		 File file = new File("C:\\Users\\User\\Downloads\\myfile.dat");
+
+		 
+		 if (!file.exists()) {
+		     file.createNewFile();
+		  }
+
+		  FileWriter fw = new FileWriter(file);
+		  bw = new BufferedWriter(fw);
+		  double total=0;
+		  bw.write("\n\n----------------------Inventory Reorder Report for the Products-----------------------          \n");
+		  bw.write("--------------------------------------------------------------------------------------       \n\n");
+		  bw.write("======================================================================================\n");
+		  bw.write("\tid\t  quantity\t  ReorderLvl\t ReorderQty\t  UnitPrice\t   Price\n\n");
+		  bw.write("======================================================================================\n");
+		  for(Inventory i:mycontent)
+		  {
+		  double price=i.getReorderQty()*i.getWholesalePrice();
+		  total+=price;
+		  bw.write("\t"+i.getId()+"\t\t"+i.getQuantity()+"\t\t\t"+i.getReorderLvl()+"\t\t\t\t"+i.getReorderQty()+"\t\t\t"+i.getWholesalePrice()+"\t\t" +price+"\n\n");   
+		  }
+		  bw.write("=======================================================================================\n");
+		  bw.write("\t\t\t\t\t\t\t\t\t\t\t\t\t Total:\t\t$"+total);
+	      } catch (IOException ioe) {
+		   ioe.printStackTrace();
+		}
+		finally
+		{ 
+		   try{
+		      if(bw!=null)
+			 bw.close();
+		   }catch(Exception ex){
+		       System.out.println("Error in closing the BufferedWriter"+ex);
+		    }
+		}	
 	}
 	
 	
