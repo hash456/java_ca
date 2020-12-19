@@ -1,4 +1,4 @@
-package sg.edu.iss.ca.model;
+package sg.edu.iss.ca.authentication;
 
 import javax.sql.DataSource;
 
