@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/styles/forms.css}"/>
+<title>Brand Form</title>
+</head>
+<body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+  <div class="form-container">
+		<h2>Brand Form</h2>
+		<br />
+		<form action="" th:object="${brand}" th:action="@{/brand/save}" method="POST">
+			<fieldset>
+				<input type="hidden" th:field="*{id}" />
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Name:</label>
+				<input type="text" th:field="*{name}">
+			</fieldset>
+			<br />
+			<div class="button-container">
+				<div class="btn btn-danger">
+					<a href="BrandIndex.html" th:href="@{/brand/index}">Cancel</a>
+				</div>
+				<fieldset>
+					<button class="btn btn-primary" type="submit">Save</button>
+				</fieldset>
+			</div>
+		</form>
+	</div>
+	  <div th:replace="layout/layout.html :: footer"></div>
+	
+</body>
+</html>
