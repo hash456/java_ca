@@ -22,4 +22,6 @@ public interface InventoryService {
 	public Page<Inventory> findPaginated(int pageNo,int pageSize);
 	public void restockInventory(Inventory inventory, HttpServletRequest httpServletRequest);
 	public void withdrawInventory(Inventory inventory, HttpServletRequest httpServletRequest);
+	
+	public void ReorderReportGenerate();
 }

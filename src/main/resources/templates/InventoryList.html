@@ -60,6 +60,14 @@
 		</tr>
 	</table>
 </div>
+
+
+  <a href="ReportGenerate.html" th:href="@{/inventory/generate}" sec:authorize="hasRole('ADMIN')">
+	    		<div class="btn btn-primary">GenerateReport</div></a>
+
+
+
+
 <div th:if="${totalPages >1}">
 <div class="row col-sm-10">
 <div class="col-sm-2">

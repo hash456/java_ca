@@ -122,16 +122,16 @@ public class DatabaseSeeder {
 	}
 	
 	private void seedInventoryTable () {
-		inventorySvc.createInventory(new Inventory(36, "A123", 10, 30, 13.0, 15.5, 14.0));
-		inventorySvc.createInventory(new Inventory(50, "B394", 40, 15, 20.0, 17.5, 16.0));
-		inventorySvc.createInventory(new Inventory(20, "B349", 60, 20, 40.0, 50.5, 45.0));
+//		inventorySvc.createInventory(new Inventory(36, "A123", 10, 30, 13.0, 15.5, 14.0));
+//		inventorySvc.createInventory(new Inventory(50, "B394", 40, 15, 20.0, 17.5, 16.0));
+//		inventorySvc.createInventory(new Inventory(20, "B349", 60, 20, 40.0, 50.5, 45.0));
 		
 		List<Product> products = productSvc.listAllProducts();
 		List<Supplier> suppliers = supplierSvc.listAllSuppliers();
 		
 		Inventory i1 = inventorySvc.createInventory(new Inventory(38, "A123", 10, 40, 13.0, 16.5, 14.0));
-		Inventory i2 = inventorySvc.createInventory(new Inventory(60, "A123", 12, 30, 16.0, 16.0, 14.0));
-		Inventory i3 = inventorySvc.createInventory(new Inventory(38, "A123", 11, 50, 13.5, 18.5, 14.0));
+		Inventory i2 = inventorySvc.createInventory(new Inventory(10, "A123", 12, 30, 16.0, 16.0, 14.0));
+		Inventory i3 = inventorySvc.createInventory(new Inventory(3, "A123", 11, 50, 13.5, 18.5, 14.0));
 		
 		i1.setProduct(products.get(0));
 		i1.setSupplier(suppliers.get(0));
