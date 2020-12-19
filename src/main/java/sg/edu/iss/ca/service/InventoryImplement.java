@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -157,7 +158,7 @@ public class InventoryImplement implements InventoryService {
 		 Supplier s = supplierSvc.findSupplierById(id);
 //		 LocalDateTime date = LocalDateTime.now();
 //		 String dateStr = date.toString();
-		 String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+		 String date = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		 
 	        // Create a new folder inside the project to store myfile.dat
 			Path currentPath = Paths.get(System.getProperty("user.dir"));
