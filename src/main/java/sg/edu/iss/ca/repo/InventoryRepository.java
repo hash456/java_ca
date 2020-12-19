@@ -20,6 +20,9 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 	@Query("select i from Inventory i join i.supplier s where s.name = :name")
 	public List<Inventory> findInventoryBySupplierName(@Param("name") String name);
 	
+	@Query("select i from Inventory i  where i.quantity < i.reorderLvl")
+	public List<Inventory> ReorderReport();
+	
 	@Query("Select i from Inventory i join i.supplier s where s.name LIKE CONCAT('%',:name,'%')")
 	public List<Inventory> findInventoryBySupplierNameLike(@Param("name") String name);
 }

@@ -154,8 +154,8 @@ public class DatabaseSeeder {
 		List<Supplier> suppliers = supplierSvc.listAllSuppliers();
 		
 		Inventory i1 = inventorySvc.createInventory(new Inventory(38, "A123", 10, 40, 13.0, 16.5, 14.0));
-		Inventory i2 = inventorySvc.createInventory(new Inventory(60, "A123", 12, 30, 16.0, 16.0, 14.0));
-		Inventory i3 = inventorySvc.createInventory(new Inventory(38, "A123", 11, 50, 13.5, 18.5, 14.0));
+		Inventory i2 = inventorySvc.createInventory(new Inventory(10, "A123", 12, 30, 16.0, 16.0, 14.0));
+		Inventory i3 = inventorySvc.createInventory(new Inventory(3, "A123", 11, 50, 13.5, 18.5, 14.0));
 		
 		i1.setProduct(products.get(0));
 		i1.setSupplier(suppliers.get(0));

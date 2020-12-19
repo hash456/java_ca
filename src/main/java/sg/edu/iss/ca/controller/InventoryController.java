@@ -151,4 +151,11 @@ public class InventoryController {
 		model.addAttribute("InventoryList", listInventories);
 		return "InventoryList";
 	}
+	
+	@RequestMapping(value = "/generate")
+	public String generateReport()
+	{
+		inservice.ReorderReportGenerate();
+	return "redirect:/inventory/list";
+	}
 }

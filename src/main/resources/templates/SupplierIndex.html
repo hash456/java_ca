@@ -20,6 +20,7 @@
         <tr>
             <th>Email</th>
             <th>Supplier Name</th>
+            
             <th sec:authorize="hasRole('ADMIN')">Edit</th>
             <th sec:authorize="hasRole('ADMIN')">Delete</th>
         </tr>
@@ -28,6 +29,7 @@
           <tr th:each="supplier : ${suppliers}">
 			<td th:text="${supplier.email}"/>
         	<td th:text="${supplier.name}"/>
+        	
          	<td>
          		<a th:href="@{/supplier/edit/}+${supplier.id}" sec:authorize="hasRole('ADMIN')">Edit</a>
        		</td>
