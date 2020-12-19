@@ -25,5 +25,5 @@ public interface InventoryService {
 	public void restockInventory(Inventory inventory, HttpServletRequest httpServletRequest);
 	public void withdrawInventory(Inventory inventory, HttpServletRequest httpServletRequest);
 	
-	public void ReorderReportGenerate();
+	public void ReorderReportGenerate(int id);
 }
