@@ -174,9 +174,9 @@ public class DatabaseSeeder {
 	
 	private void seedStaffTable() {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); 
-		userSvc.addStaff(new Staff("ROLE_ADMIN", "est@email.com", "Esther", "est", encoder.encode("123456"), true));
-		userSvc.addStaff(new Staff("ROLE_MECHANIC", "yl@email.com", "Yuen Kwan", "yk", encoder.encode("polymeowphism"), true));
-		userSvc.addStaff(new Staff("ROLE_MECHANIC", "sr@email.com", "Suria", "sr", encoder.encode("password"), true));
+		userSvc.addStaff(new Staff("ROLE_ADMIN", "estherfakeemail@nus.edu.sg", "Esther", "est", encoder.encode("123456"), true));
+		userSvc.addStaff(new Staff("ROLE_MECHANIC", "ykfakeemail@nus.edu.sg", "Yuen Kwan", "yk", encoder.encode("polymeowphism"), true));
+		userSvc.addStaff(new Staff("ROLE_MECHANIC", "suriafakeemail@nus.edu.sg", "Suria", "sr", encoder.encode("password"), true));
 		userSvc.addStaff(new Staff("ROLE_ADMIN", "tingkai911@gmail.com", "Ting Kai", "tk", encoder.encode("password"), true));
 	}
 	
