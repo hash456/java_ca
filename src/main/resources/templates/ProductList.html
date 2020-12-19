@@ -13,12 +13,15 @@
 
 	<div style="padding-left: 50px; padding-right: 50px;">
 	<h2>Catalogue</h2>
+	<br />
 	<!-- Add Hyperlink -->
 	<a href="ProductForm.html" sec:authorize="hasRole('ADMIN')" th:href="@{/product/add}">
 	<div class="btn btn-primary">
 		Add to Catalogue
 	</div>
 	</a>
+	<p></p>
+	<p></p>
 	<table th:if="${not #lists.isEmpty(ProductList)}" class="table table-striped">
 	<thead>
 		<tr>

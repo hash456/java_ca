@@ -11,13 +11,15 @@
 	<!-- Add Hyperlink -->
 	<div style="padding-left: 50px; padding-right: 50px;">
 		<h2 th:if="${not #lists.isEmpty(InventoryList)}">Product Inventory List</h2>
+		<br />
 	<a href="InventoryForm.html" th:href="@{/inventory/add}" sec:authorize="hasRole('ADMIN')">
-	    		<div class="btn btn-primary">Add Inventory Log</div></a>
-	
+	    		<div class="btn btn-primary" style="margin-right: 15px">Add Inventory Log</div></a>
 	<a href="UsageForm.html" th:if="${session.UsageForm == null}" th:href="@{/UsageForm/add}">
 		<div class="btn btn-primary">Create Usage Form</div></a>
 	<a href="UsageForm.html" th:if="${session.UsageForm != null}" th:href="@{/UsageForm/add}">
 		<div class="btn btn-primary">View Usage Form Draft</div></a>
+		<p></p>
+		<p></p>
 	<table th:if="${not #lists.isEmpty(InventoryList)}" class="table table-striped" style="text-align:center;">
 		<thead >
 		<tr style="text-align:center;">
