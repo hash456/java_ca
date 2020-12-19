@@ -55,7 +55,7 @@
 				th:href="@{/manage/restock/}+${inventory.id}">Restock</a></td>
 			<td sec:authorize="hasRole('ADMIN')"><a href="RestockForm.html"
  				sec:authorize="hasRole('ADMIN')"
-				th:href="@{/manage/withdraw/}+${inventory.id}">Damage</a></td>
+				th:href="@{/manage/withdraw/}+${inventory.id}">Report</a></td>
  			<td sec:authorize="hasRole('ADMIN')"><a href="EditInventory.html"
  				sec:authorize="hasRole('ADMIN')"
 				th:href="@{/inventory/edit/}+${inventory.id}">Edit</a></td>
