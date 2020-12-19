@@ -12,6 +12,7 @@ import java.util.Scanner;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import sg.edu.iss.ca.model.Brand;
 import sg.edu.iss.ca.model.Inventory;
@@ -153,9 +155,11 @@ public class InventoryController {
 	}
 	
 	@RequestMapping(value = "/generate/{id}")
-	public String generateReport(@PathVariable ("id") int id)
+	public @ResponseBody FileSystemResource generateReport(@PathVariable ("id") int id)
 	{
-		inservice.ReorderReportGenerate(id);
-	return "redirect:/supplier/index";
+		File file = inservice.ReorderReportGenerate(id);
+		return new FileSystemResource(file.toPath());
+//		return "redirect:/supplier/index";
 	}
+	
 }

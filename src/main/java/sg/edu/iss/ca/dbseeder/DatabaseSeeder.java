@@ -1,5 +1,9 @@
 package sg.edu.iss.ca.dbseeder;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,13 +63,25 @@ public class DatabaseSeeder {
 	private UsageFormRepository useFormRepo;
 	
 	@EventListener
-	public void seed(ContextRefreshedEvent event) {
+	public void seed(ContextRefreshedEvent event) throws IOException {
+		createReportDir();
 		resetData();
 		seedBrandTable();
 		seedProductTable();
 		seedSupplierData();
 		seedInventoryTable();
 		seedStaffTable();
+	}
+	
+	private void createReportDir() throws IOException {
+		Path currentPath = Paths.get(System.getProperty("user.dir"));
+		Path filePath = Paths.get(currentPath.toString(), "report");
+        if (!Files.exists(filePath)) { 
+            Files.createDirectory(filePath);
+            System.out.println("Directory created");
+        } else {   
+            System.out.println("Directory already exists");
+        }
 	}
 	
 	private void resetData() {
