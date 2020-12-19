@@ -21,6 +21,7 @@ public class UsageForm {
 	private String car;
 	private String description;
 	private String creationDate;
+	private boolean submitted;
 	@OneToMany(mappedBy="usageForm")
 	private List<FormCart> formCartList;
 	
@@ -29,6 +30,7 @@ public class UsageForm {
 	
 	public UsageForm() {
 		super();
+		submitted = false;
 	}
 	public String getCar() {
 		return car;
@@ -70,6 +72,13 @@ public class UsageForm {
 
 	public void setFormCartList(List<FormCart> formCartList) {
 		this.formCartList = formCartList;
+	}
+	
+	public boolean isSubmitted() {
+		return submitted;
+	}
+	public void setSubmitted(boolean submitted) {
+		this.submitted = submitted;
 	}
 
 

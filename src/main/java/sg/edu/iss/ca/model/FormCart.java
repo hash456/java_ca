@@ -20,13 +20,13 @@ public class FormCart {
 	@ManyToOne
 	private UsageForm usageForm;
 	@ManyToOne
-	private Product product;
+	private Inventory inventory;
 	public FormCart() {
 		super();
 	}
-	public FormCart(Product product, int qty, UsageForm usageForm) {
+	public FormCart(Inventory inventory, int qty, UsageForm usageForm) {
 		super();
-		this.product = product;
+		this.inventory = inventory;
 		this.qty = qty;
 		this.usageForm = usageForm;
 	}
@@ -42,11 +42,11 @@ public class FormCart {
 	public void setUsageForm(UsageForm usageForm) {
 		this.usageForm = usageForm;
 	}
-	public Product getProduct() {
-		return product;
+	public Inventory getInventory() {
+		return inventory;
 	}
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
 	}
 	public int getQty() {
 		return qty;

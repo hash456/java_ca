@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<title>Product Inventory List</title>
+</head>
+<body>
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+	<!-- Add Hyperlink -->
+	<div style="padding-left: 50px; padding-right: 50px;">
+		<h2 th:if="${not #lists.isEmpty(InventoryList)}">Product Inventory List</h2>
+	<a href="InventoryForm.html" th:href="@{/inventory/add}" sec:authorize="hasRole('ADMIN')">
+	    		<div class="btn btn-primary">Add Inventory Log</div></a>
+	<a href="UsageForm.html" th:if="${session.UsageForm == null}" th:href="@{/UsageForm/add}">Create Usage
+		Form</a>
+	<a href="UsageForm.html" th:if="${session.UsageForm != null}" th:href="@{/UsageForm/add}">View Usage
+		Form Draft</a>
+	<table th:if="${not #lists.isEmpty(InventoryList)}" class="table table-striped">
+		<thead >
+		<tr style="text-align:center;">
+			<th>Inventory Id</th>
+			<th>Product Name</th>
+			<th>Supplier</th>
+			<th>Qty in Stock</th>
+			<th>Shelf Location</th>
+			<th>Reorder Level</th>
+			<th>Reorder Qty</th>
+			<th>Wholesale Price</th>
+			<th>Retail Price</th>
+			<th>Partner Price</th>
+			<th sec:authorize="hasRole('ADMIN')">Restock</th>
+			<th sec:authorize="hasRole('ADMIN')">Report Damage</th>
+			<th sec:authorize="hasRole('ADMIN')">Edit</th>
+			<th sec:authorize="hasRole('ADMIN')">Delete</th>
+			<th>Check Transaction History</th>
+			<th th:if="${session.UsageForm != null}"></th>
+		</tr>
+		</thead>
+		<tr th:each="inventory:${InventoryList}">
+			<td th:text=${inventory.id}>Inventory Id</td>
+			<td th:text="${inventory.product} ? ${inventory.product.name} : 'Not Set'">Product Name</td>
+			<td th:text="${inventory.supplier} ? ${inventory.supplier.name} : 'Not Set'">Supplier Name</td>
+			<td th:text=${inventory.quantity}>Qty in Stock</td>
+			<td th:text=${inventory.shelfLocation}>Shelf Location</td>
+			<td th:text=${inventory.reorderLvl}>Reorder Level</td>
+			<td th:text=${inventory.reorderQty}>Reorder Qty</td>
+			<td th:text=${inventory.wholesalePrice}>Wholesale Price</td>
+			<td th:text=${inventory.retailPrice}>Retail Price</td>
+			<td th:text=${inventory.partnerPrice}>Partner Price</td>
+			<td sec:authorize="hasRole('ADMIN')"><a href="RestockForm.html"
+				sec:authorize="hasRole('ADMIN')"
+				th:href="@{/manage/restock/}+${inventory.id}">Restock</a></td>
+			<td sec:authorize="hasRole('ADMIN')"><a href="RestockForm.html"
+ 				sec:authorize="hasRole('ADMIN')"
+				th:href="@{/manage/withdraw/}+${inventory.id}">Damage</a></td>
+ 			<td sec:authorize="hasRole('ADMIN')"><a href="EditInventory.html"
+ 				sec:authorize="hasRole('ADMIN')"
+				th:href="@{/inventory/edit/}+${inventory.id}">Edit</a></td>
+			<td sec:authorize="hasRole('ADMIN')"><a href="DeleteInventory.html"
+				sec:authorize="hasRole('ADMIN')"
+				th:href="@{/inventory/delete/}+${inventory.id}">Delete</a></td>
+			<td>
+				<form action="#"
+					th:action="@{/UsageForm/checkHistory/}+${inventory.id}"
+					method="POST">
+					<button style="margin:auto; display:block;" class="btn btn-primary" type="submit">Check</button>
+				</form>
+			</td>
+			<td th:if="${session.UsageForm != null}">
+			<!--  <div th:if="${session.containsKey('UsageForm')}"> -->
+				<form action="#" th:action="@{/FormCart/addToForm/}+${inventory.id}" method="POST">
+					<button style="margin:auto; display:block;"  class="btn btn-primary" type="submit">Add to Usage Form</button>
+				</form>
+			</td>
+			
+		</tr>
+	</table>
+</div>
+<div th:if="${totalPages >1}">
+<div class="row col-sm-10">
+<div class="col-sm-2">
+Total rows:[[${totalItems}]]
+
+
+</div>
+<div class="col-sm-1">
+<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+<a th:if="${currentPage !=i}" th:href="@{'/inventory/page/'+${i}}">[[${i}]]</a>
+<span th:unless="${currentPage !=i}">[[${i}]]</span> &nbsp; &nbsp;
+</span>
+</div>
+<div class="col-sm-1">
+<a th:if="${currentPage < totalPages}" th:href="@{'/inventory/page/'+${currentPage+1}}">Next</a>
+<span th:unless="${currentPage < totalPages}">Next</span>
+</div>
+<div class="col-sm-1">
+<a th:if="${currentPage < totalPages}" th:href="@{'/inventory/page/'+${totalPages}}">Last</a>
+<span th:unless="${currentPage < totalPages}">Last</span>
+</div>
+</div>
+</div>
+
+	 <br/>
+
+  <div th:replace="layout/layout.html :: footer"></div>
+
+</body>
+</html>

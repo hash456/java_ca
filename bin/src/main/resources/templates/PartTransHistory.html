@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>PartTransHitory</title>
+</head>
+<body>
+	<h2>Part TransHistory</h2>
+	<table>
+		<tr>
+			<th>You are checking part:</th>
+			<td th:text=${Inventory.product.name}>Product Name</td>
+		</tr>
+		<tr>
+			<th>Supplier Name:</th>
+			<td th:text=${Inventory.supplier.name}>Supplier Name</td>
+		</tr>
+	</table>
+
+	<div th:each="cart:${cartList}">
+		<div>
+			<span th:text="${'Consumed Qty: ' + cart.qty}"></span>
+		</div>
+		<hr />
+		<div>
+			<table>
+				<tr>
+					<th>Record ID</th>
+					<th>Customer</th>
+					<th>Car</th>
+					<th>Transaction Date</th>
+				</tr>
+				<!-- 				<tr th:each="usageForm:${UsageForm}"> -->
+				<tr>
+					<td th:text=${cart.usageForm.id}>ID</td>
+					<td th:text=${cart.usageForm.customer}>Customer</td>
+					<td th:text=${cart.usageForm.car}>Car</td>
+					<td th:text=${cart.usageForm.creationDate}>Date</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<a href="#" th:href="@{/inventory/list}">Go back to inventory list</a>
+	<!-- 	<table> -->
+	<!-- 		<tr> -->
+	<!-- 			<th>Record ID</th> -->
+	<!-- 			<th>Customer</th> -->
+	<!-- 			<th>Car</th> -->
+	<!-- 			<th>Qty</th> -->
+	<!-- 			<th>Transaction Date</th> -->
+	<!-- 		</tr> -->
+	<!-- 		<tr th:each="usageForm:${UsageForm}"> -->
+	<!-- 			<td th:text=${usageForm.id}>Record ID</td> -->
+	<!-- 		</tr> -->
+	<!-- 	</table> -->
+	<!-- 	<h4>You are</h4> -->
+
+</body>
+</html>

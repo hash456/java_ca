@@ -2,13 +2,24 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>Brand Form</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<title>Usage Form</title>
+<style>
+
+th, td {
+  padding: 5px;
+}
+
+</style>
 </head>
 <body>
+<header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+  <div style="padding-left: 50px; padding-right: 50px;">
 	<h2>A new record has been created successfully!</h2>
 	<p></p>
 	<h3>Summary</h3>
-	<table>
+	<table class="hello">
 		<tr>
 			<th>Record ID</th>
 			<td th:text=${UsageForm.id}>Customer</td>
@@ -22,24 +33,6 @@
 			<td th:text=${UsageForm.car}></td>
 		</tr>
 		<tr>
-			<th>Usage</th>
-			<td>
-				<table>
-					<tr>
-						<th>Product ID</th>
-						<th>Product Name</th>
-						<th>Brand</th>
-						<th>Qty</th>
-					</tr>
-					<tr th:each="cart:${cartList}">
-						<td th:text=${cart.product.id}></td>
-						<td th:text=${cart.product.name}></td>
-						<td th:text=${cart.product.brand.name}></td>
-						<td th:text=${cart.qty}></td>
-					</tr>
-				</table>
-			</td>
-		</tr>
 		<tr>
 			<th>Description</th>
 			<td th:text=${UsageForm.description}>Description</td>
@@ -49,6 +42,31 @@
 			<td th:text=${UsageForm.creationDate}>Creation Date</td>
 		</tr>
 	</table>
-	<a href="#" th:href="@{/product/list}">Go back to product list</a>
+	<br>
+			<p><b>Parts Used</b></p>
+			
+				<table class="table table-striped hello2">
+					<tr>
+						<th>Inventory ID</th>
+						<th>Product Name</th>
+						<th>Brand</th>
+						<th>Qty</th>
+					</tr>
+					<tr th:each="cart:${cartList}">
+						<td th:text=${cart.inventory.id}></td>
+  						<td th:text=${cart.inventory.product.name}></td>
+						<td th:text="${cart.inventory.product.brand} ? ${cart.inventory.product.brand.name} : 'Not Set'"></td> 
+						<td th:text=${cart.qty}></td>
+					</tr>
+				</table>
+			
+		
+		
+	<a href="#" th:href="@{/inventory/list}">Go back to inventory list</a>
+</div>
+
+<br/>
+
+<div th:replace="layout/layout.html :: footer"></div>
 </body>
 </html>

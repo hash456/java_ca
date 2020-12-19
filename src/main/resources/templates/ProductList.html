@@ -34,7 +34,6 @@
 			<th>Brand</th>
 			<th sec:authorize="hasRole('ADMIN')">Edit Product</th>
 			<th sec:authorize="hasRole('ADMIN')">Delete Product</th>
-			<th>Check Transaction History</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -53,17 +52,6 @@
 				th:href="@{/product/edit/}+${product.id}" sec:authorize="hasRole('ADMIN')">Edit</a></td>
 			<td><a href="DeleteProduct.html"
 				th:href="@{/product/delete/}+${product.id}" sec:authorize="hasRole('ADMIN')">Delete</a></td>
-			<td><form action="#"
-					th:action="@{/FormCart/addToForm/}+${product.id}" method="POST">
-					<button type="submit">Add to Usage Form</button>
-				</form></td>
-			<td>
-				<form action="#"
-					th:action="@{/UsageForm/checkHistory/}+${product.id}"
-					method="POST">
-					<button type="submit">Check</button>
-				</form>
-			</td>
 		</tr>
 		</tbody>
 	</table>

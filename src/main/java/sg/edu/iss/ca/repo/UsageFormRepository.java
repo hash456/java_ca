@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import sg.edu.iss.ca.model.Inventory;
 import sg.edu.iss.ca.model.Product;
 import sg.edu.iss.ca.model.UsageForm;
 
@@ -27,6 +28,5 @@ public interface UsageFormRepository extends JpaRepository<UsageForm, Integer> {
 	
 //	@Query("SELECT uf from UsageForm uf JOIN FormCart fc ")
 //	public List<UsageForm> findUsagebyProductId();
-	
 	
 }
