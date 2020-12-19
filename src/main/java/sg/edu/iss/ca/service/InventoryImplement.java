@@ -182,13 +182,14 @@ public class InventoryImplement implements InventoryService {
 		  bw.write("\n\n----------------------Inventory Reorder Report for the Supplier-----------------------          \n");
 		  bw.write("--------------------------------------------------------------------------------------       \n\n");
 		  bw.write("======================================================================================\n");
-		  bw.write("\tid\t  quantity\t  ReorderLvl\t ReorderQty\t  UnitPrice\t   Price\n\n");
+		  bw.write("\tid\t  quantity\t Product Description\t ReorderLvl\t ReorderQty\t  UnitPrice\t   Price\n\n");
 		  bw.write("======================================================================================\n");
 		  for(Inventory i:mycontent)
 		  {
 		  double price=i.getReorderQty()*i.getWholesalePrice();
 		  total+=price;
-		  bw.write("\t"+i.getId()+"\t\t"+i.getQuantity()+"\t\t\t"+i.getReorderLvl()+"\t\t\t\t"+i.getReorderQty()+"\t\t\t"+i.getWholesalePrice()+"\t\t" +price+"\n\n");   
+		  
+		  bw.write("\t"+i.getId()+"\t\t"+i.getQuantity()+"\t\t\t"+i.getProduct().getDescription()+"\t\t\t"+i.getReorderLvl()+"\t\t\t\t"+i.getReorderQty()+"\t\t\t"+i.getWholesalePrice()+"\t\t" +price+"\n\n");   
 		  }
 		  bw.write("=======================================================================================\n");
 		  bw.write("\t\t\t\t\t\t\t\t\t\t\t\t\t Total:\t\t$"+total);
