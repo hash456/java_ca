@@ -167,6 +167,9 @@ public class Inventory {
 		this.supplier = supplier;
 	}
 	
+
+	
+
 	@Override
 	public String toString() {
 		return "Inventory [id=" + id + ", Product=" + product.getName() + ", quantity=" + quantity + ", shelfLocation=" + shelfLocation + ", reorderLvl=" + reorderLvl
@@ -174,6 +177,8 @@ public class Inventory {
 				+ partnerPrice +  ", supplier=" + supplier.getName() + "]";
 	}
 	
+
+
 
 	// Create a field but don't add it to the table
 	@Transient

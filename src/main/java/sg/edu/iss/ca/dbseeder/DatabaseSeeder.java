@@ -1,5 +1,9 @@
 package sg.edu.iss.ca.dbseeder;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,13 +63,25 @@ public class DatabaseSeeder {
 	private UsageFormRepository useFormRepo;
 	
 	@EventListener
-	public void seed(ContextRefreshedEvent event) {
+	public void seed(ContextRefreshedEvent event) throws IOException {
+		createReportDir();
 		resetData();
 		seedBrandTable();
 		seedProductTable();
 		seedSupplierData();
 		seedInventoryTable();
 		seedStaffTable();
+	}
+	
+	private void createReportDir() throws IOException {
+		Path currentPath = Paths.get(System.getProperty("user.dir"));
+		Path filePath = Paths.get(currentPath.toString(), "report");
+        if (!Files.exists(filePath)) { 
+            Files.createDirectory(filePath);
+            System.out.println("Directory created");
+        } else {   
+            System.out.println("Directory already exists");
+        }
 	}
 	
 	private void resetData() {
@@ -154,8 +170,8 @@ public class DatabaseSeeder {
 		List<Supplier> suppliers = supplierSvc.listAllSuppliers();
 		
 		Inventory i1 = inventorySvc.createInventory(new Inventory(38, "A123", 10, 40, 13.0, 16.5, 14.0));
-		Inventory i2 = inventorySvc.createInventory(new Inventory(60, "A123", 12, 30, 16.0, 16.0, 14.0));
-		Inventory i3 = inventorySvc.createInventory(new Inventory(38, "A123", 11, 50, 13.5, 18.5, 14.0));
+		Inventory i2 = inventorySvc.createInventory(new Inventory(10, "A123", 12, 30, 16.0, 16.0, 14.0));
+		Inventory i3 = inventorySvc.createInventory(new Inventory(3, "A123", 11, 50, 13.5, 18.5, 14.0));
 		
 		i1.setProduct(products.get(0));
 		i1.setSupplier(suppliers.get(0));
@@ -174,9 +190,9 @@ public class DatabaseSeeder {
 	
 	private void seedStaffTable() {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); 
-		userSvc.addStaff(new Staff("ROLE_ADMIN", "est@email.com", "Esther", "est", encoder.encode("123456"), true));
-		userSvc.addStaff(new Staff("ROLE_MECHANIC", "yl@email.com", "Yuen Kwan", "yk", encoder.encode("polymeowphism"), true));
-		userSvc.addStaff(new Staff("ROLE_MECHANIC", "sr@email.com", "Suria", "sr", encoder.encode("password"), true));
+		userSvc.addStaff(new Staff("ROLE_ADMIN", "estherfakeemail@nus.edu.sg", "Esther", "est", encoder.encode("123456"), true));
+		userSvc.addStaff(new Staff("ROLE_MECHANIC", "ykfakeemail@nus.edu.sg", "Yuen Kwan", "yk", encoder.encode("polymeowphism"), true));
+		userSvc.addStaff(new Staff("ROLE_MECHANIC", "suriafakeemail@nus.edu.sg", "Suria", "sr", encoder.encode("password"), true));
 		userSvc.addStaff(new Staff("ROLE_ADMIN", "tingkai911@gmail.com", "Ting Kai", "tk", encoder.encode("password"), true));
 	}
 	

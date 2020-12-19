@@ -1,5 +1,6 @@
 package sg.edu.iss.ca.service;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,4 +25,6 @@ public interface InventoryService {
 	public Page<Inventory> findPaginated(int pageNo,int pageSize);
 	public void restockInventory(Inventory inventory, HttpServletRequest httpServletRequest);
 	public void withdrawInventory(Inventory inventory, HttpServletRequest httpServletRequest);
+	
+	public File ReorderReportGenerate(int id);
 }
