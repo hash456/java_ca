@@ -4,6 +4,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
@@ -147,7 +150,17 @@ public class InventoryImplement implements InventoryService {
 	        	return;
 	        }
 	        
-		 File file = new File("C:\\Users\\User\\Downloads\\myfile.dat");
+	        // Create a new folder inside the project to store myfile.dat
+			Path currentPath = Paths.get(System.getProperty("user.dir"));
+			Path filePath = Paths.get(currentPath.toString(), "report");
+	        if (!Files.exists(filePath)) { 
+	            Files.createDirectory(filePath);
+	            System.out.println("Directory created");
+	        } else {   
+	            System.out.println("Directory already exists");
+	        }
+	       // Create myfile.dat inside the report folder inside the project directory
+		 File file = new File(Paths.get(filePath.toString(), "myfile.dat").toString());
 
 		 
 		 if (!file.exists()) {
