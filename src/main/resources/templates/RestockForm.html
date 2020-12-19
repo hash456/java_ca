@@ -11,6 +11,7 @@
   <div th:replace="layout/layout.html :: menu" ></div>
   <div class="form-container">
 	<h2>Restock Details</h2>
+	<br />
 	<form action="" th:object="${inventory}" th:action="@{/manage/restock/save}"
 		method="POST" class="form-horizontal">
 		<fieldset>
