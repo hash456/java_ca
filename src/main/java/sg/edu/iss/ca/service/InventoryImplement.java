@@ -138,11 +138,11 @@ public class InventoryImplement implements InventoryService {
 		return inventoryRepo.findAll(pageable);
 	}
 	@Override
-	public void ReorderReportGenerate() {
+	public void ReorderReportGenerate(int id) {
 		// TODO Auto-generated method stub
 		 BufferedWriter bw = null;
 	      try {
-		 List<Inventory> mycontent = inventoryRepo.ReorderReport();
+		 List<Inventory> mycontent = inventoryRepo.ReorderReport(id);
 	        if(mycontent.size()==0) {
 	        	return;
 	        }

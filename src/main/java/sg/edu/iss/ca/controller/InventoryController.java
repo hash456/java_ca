@@ -152,10 +152,10 @@ public class InventoryController {
 		return "InventoryList";
 	}
 	
-	@RequestMapping(value = "/generate")
-	public String generateReport()
+	@RequestMapping(value = "/generate/{id}")
+	public String generateReport(@PathVariable ("id") int id)
 	{
-		inservice.ReorderReportGenerate();
-	return "redirect:/inventory/list";
+		inservice.ReorderReportGenerate(id);
+	return "redirect:/supplier/index";
 	}
 }
