@@ -20,11 +20,14 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+
 
 import sg.edu.iss.ca.email.RestockMail;
 import sg.edu.iss.ca.model.AdminLog;
@@ -150,63 +153,89 @@ public class InventoryImplement implements InventoryService {
 	@Override
 	public File ReorderReportGenerate(int id) {
 		// TODO Auto-generated method stub
-		 BufferedWriter bw = null;
-		 File file = null;
-	      try {
-		 List<Inventory> mycontent = inventoryRepo.ReorderReport(id);
+		BufferedWriter bw = null;
+	 	File file = null;
+	 	try {
+	 		List<Inventory> mycontent = inventoryRepo.ReorderReport(id);
 	        
-		 Supplier s = supplierSvc.findSupplierById(id);
-//		 LocalDateTime date = LocalDateTime.now();
-//		 String dateStr = date.toString();
-		 String date = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+	 		Supplier s = supplierSvc.findSupplierById(id);
+//		 	LocalDateTime date = LocalDateTime.now();
+//		 	String dateStr = date.toString();
+	 		String date = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		 
-	        // Create a new folder inside the project to store myfile.dat
-			Path currentPath = Paths.get(System.getProperty("user.dir"));
-			Path filePath = Paths.get(currentPath.toString(), "report", s.getName());
-	        if (!Files.exists(filePath)) { 
-	            Files.createDirectory(filePath);
-	            System.out.println("Directory created");
-	        } else {   
-	            System.out.println("Directory already exists");
-	        }
-	       // Create myfile.dat inside the report folder inside the project directory
-		 file = new File(Paths.get(filePath.toString(), date + ".dat").toString());
+//		 	Create a new folder inside the project to store myfile.dat
+	 		Path currentPath = Paths.get(System.getProperty("user.dir"));
+	 		Path filePath = Paths.get(currentPath.toString(), "report", s.getName());
+	 		if (!Files.exists(filePath)) { 
+	 			Files.createDirectory(filePath);
+	 			System.out.println("Directory created");
+ 			} else {   
+	 			System.out.println("Directory already exists");
+ 			}
+//		 	Create myfile.dat inside the report folder inside the project directory
+	 		file = new File(Paths.get(filePath.toString(), date + ".dat").toString());
 		 
-		 if (!file.exists()) {
-		     file.createNewFile();
-		  }
-
-		  FileWriter fw = new FileWriter(file);
-		  bw = new BufferedWriter(fw);
-		  double total=0;
-		  bw.write("\n\n----------------------Inventory Reorder Report for the Supplier-----------------------          \n");
-		  bw.write("--------------------------------------------------------------------------------------       \n\n");
-		  bw.write("======================================================================================\n");
-		  bw.write("\tid\t  quantity\t Product Description\t ReorderLvl\t ReorderQty\t  UnitPrice\t   Price\n\n");
-		  bw.write("======================================================================================\n");
-		  for(Inventory i:mycontent)
-		  {
-		  double price=i.getReorderQty()*i.getWholesalePrice();
-		  total+=price;
+	 		if (!file.exists()) {
+	 			file.createNewFile();
+	 		}
+		 
+//	 		template start
+	 		String title = "Inventory Reorder Report for the Supplier";
+	 		String tableHeader = "id   Qty   ProductDescription   ReorderLvl  ReorderQty  UnitPrice  Price";
+	 		char ch1 = '-';
+	 		char ch2 = '=';
+	 		char ch3 = ' ';
+	 		int L = 72;
+		 
+	 		FileWriter fw = new FileWriter(file);
+	 		bw = new BufferedWriter(fw);
+	 		double total=0;
+	 		bw.write("\n\n");
+			bw.write(StringUtils.center(title, L, ch1));
+			bw.write("\n");
+			bw.write(StringUtils.center("-", L, ch1));
+			bw.write("\n\n");
+			bw.write(StringUtils.center("=", L, ch2));
+			bw.write("\n");
+			bw.write(StringUtils.center(tableHeader, L, ch3));
+			bw.write("\n\n");
+			bw.write(StringUtils.center("=", L, ch2));
+			bw.write("\n");
 		  
-		  bw.write("\t"+i.getId()+"\t\t"+i.getQuantity()+"\t\t\t"+i.getProduct().getDescription()+"\t\t\t"+i.getReorderLvl()+"\t\t\t\t"+i.getReorderQty()+"\t\t\t"+i.getWholesalePrice()+"\t\t" +price+"\n\n");   
-		  }
-		  bw.write("=======================================================================================\n");
-		  bw.write("\t\t\t\t\t\t\t\t\t\t\t\t\t Total:\t\t$"+total);
-	      } catch (IOException ioe) {
-		   ioe.printStackTrace();
-		}
-		finally
-		{ 
-		   try{
-		      if(bw!=null)
-			 bw.close();
-		      return file;
-		   }catch(Exception ex){
-		       System.out.println("Error in closing the BufferedWriter"+ex);
+//			 Dynamic Data
+			for(Inventory i:mycontent)
+			{
+				double price=i.getReorderQty()*i.getWholesalePrice();
+				total+=price;
+				bw.write(StringUtils.rightPad(Integer.toString(i.getId()), 5, ch3));
+				bw.write(StringUtils.rightPad(Integer.toString(i.getQuantity()), 6, ch3));
+				bw.write(StringUtils.rightPad(i.getProduct().getDescription(), 21, ch3));
+				bw.write(StringUtils.rightPad(Integer.toString(i.getReorderLvl()), 12, ch3));
+				bw.write(StringUtils.rightPad(Integer.toString(i.getReorderQty()), 12, ch3));
+				bw.write(StringUtils.rightPad(Double.toString(i.getWholesalePrice()), 11, ch3));
+				bw.write(StringUtils.rightPad(Double.toString(price), 5, ch3));
+				bw.write("\n");
+			}
+		 
+//			 Template end
+			String totalDisplay = "Total: " + total;
+			bw.write(StringUtils.center("=", L, ch2));
+			bw.write("\n");
+			bw.write(StringUtils.rightPad(totalDisplay, L, ch3));
+		    } catch (IOException ioe) {
+		    	ioe.printStackTrace();
 		    }
-		}
-		return file;
+	      	finally
+	      	{ 
+	      		try{
+	      			if(bw!=null)
+	      				bw.close();
+      			return file;
+	      		}catch(Exception ex){
+	      			System.out.println("Error in closing the BufferedWriter"+ex);
+	      		}
+	      	}
+ 		return file;
 	}
 	
 	
