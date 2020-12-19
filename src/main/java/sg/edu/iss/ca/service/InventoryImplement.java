@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -153,8 +155,9 @@ public class InventoryImplement implements InventoryService {
 		 List<Inventory> mycontent = inventoryRepo.ReorderReport(id);
 	        
 		 Supplier s = supplierSvc.findSupplierById(id);
-		 LocalDateTime date = LocalDateTime.now();
-		 String dateStr = date.toString();
+//		 LocalDateTime date = LocalDateTime.now();
+//		 String dateStr = date.toString();
+		 String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 		 
 	        // Create a new folder inside the project to store myfile.dat
 			Path currentPath = Paths.get(System.getProperty("user.dir"));
@@ -166,7 +169,7 @@ public class InventoryImplement implements InventoryService {
 	            System.out.println("Directory already exists");
 	        }
 	       // Create myfile.dat inside the report folder inside the project directory
-		 file = new File(Paths.get(filePath.toString(), dateStr +  ".dat").toString());
+		 file = new File(Paths.get(filePath.toString(), date + ".dat").toString());
 		 
 		 if (!file.exists()) {
 		     file.createNewFile();
