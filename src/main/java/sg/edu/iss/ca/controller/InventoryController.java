@@ -1,6 +1,7 @@
 package sg.edu.iss.ca.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,9 +157,31 @@ public class InventoryController {
 	}
 	
 	@RequestMapping(value = "/generate/{id}")
-	public @ResponseBody FileSystemResource generateReport(@PathVariable ("id") int id)
+	@ResponseBody
+	public FileSystemResource generateReport(@PathVariable ("id") int id, HttpServletResponse response)
 	{
 		File file = inservice.ReorderReportGenerate(id);
+		FileInputStream inputStream;
+        try {
+            inputStream = new FileInputStream(file);
+            try {
+                int c;
+                while ((c = inputStream.read()) != -1) {
+                response.getWriter().write(c);
+                }
+            } finally {
+                if (inputStream != null)
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    response.getWriter().close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
 		return new FileSystemResource(file.toPath());
 //		return "redirect:/supplier/index";
 	}

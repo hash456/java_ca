@@ -33,7 +33,7 @@
 			<td th:text="${supplier.email}"/>
         	<td th:text="${supplier.name}"/>
         	<td>
-         		<a th:href="@{/inventory/generate/}+${supplier.id}" sec:authorize="hasRole('ADMIN')">Generate</a>
+         		<a download="report.dat" th:href="@{|/inventory/generate/${supplier.id}|}" sec:authorize="hasRole('ADMIN')">Generate</a>
        		</td>
          	<td>
          		<a th:href="@{/supplier/edit/}+${supplier.id}" sec:authorize="hasRole('ADMIN')">Edit</a>
