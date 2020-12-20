@@ -86,13 +86,17 @@ th, td {
 						th:field="*{description}" style="resize: none"></textarea>
 			</fieldset>
 			<br />
-			<fieldset>
+			<fieldset class="button-container">
+<!-- 				<div class="btn btn-danger"> -->
+<!-- 					<a href="InventoryList.html" th:href="@{/UsageForm/cancel}">Cancel</a> -->
+<!-- 				</div> -->
 				<button type="submit" class="btn btn-primary">Create Record</button>
+				<button type="submit" class="btn btn-danger" th:formaction="@{/UsageForm/cancel}">Cancel</button>
 			</fieldset>
 		</form>
-		<form action="#" th:action="@{/UsageForm/cancel}" method="POST">
-			<button type="submit" class="btn btn-danger">Cancel</button>
-		</form>
+<!-- 		<form action="#" th:action="@{/UsageForm/cancel}" method="POST"> -->
+<!-- 			<button type="submit" class="btn btn-danger">Cancel</button> -->
+<!-- 		</form> -->
 	</div>
 	<br />
 	<div th:replace="layout/layout.html :: footer"></div>

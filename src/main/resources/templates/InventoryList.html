@@ -73,9 +73,10 @@
 			</td>
 			<td th:if="${session.UsageForm != null}">
 			<!--  <div th:if="${session.containsKey('UsageForm')}"> -->
-				<form action="#" th:action="@{/FormCart/addToForm/}+${inventory.id}" method="POST">
+				<form action="#" th:action="@{/FormCart/addToForm/}+${inventory.id}" method="POST" th:if="${inventory.quantity > 0}">
 					<button style="margin:auto; display:block;"  class="btn btn-primary" type="submit">Add to Usage Form</button>
 				</form>
+				<button class="btn btn-danger" th:if="${inventory.quantity == 0}" disabled>Out of stock</button>
 			</td>
 			
 		</tr>
