@@ -259,5 +259,16 @@ public class InventoryImplement implements InventoryService {
 		return inventoryRepo.findAll();
 
 	}
+	
+	@Override
+	public Page<Inventory> findPaginatedSearch(int pageNo, int pageSize, String keyword) {
+		// TODO Auto-generated method stub
+		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
+		System.out.println(keyword);
+		if(keyword!=null) {
+		return inventoryRepo.searchPageable(keyword.trim(), pageable);
+		}
+		return inventoryRepo.findAll(pageable);
+	}
 
 }

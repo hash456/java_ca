@@ -179,9 +179,21 @@ public class InventoryController {
 
 	@GetMapping("/listInventories")
 	public String listInventoryForm(Model model, @Param("keyword") String keyword) {
-		List<Inventory> listInventories = inservice.listAllInventories(keyword);
+//		List<Inventory> listInventories = inservice.listAllInventories(keyword);
+//		model.addAttribute("InventoryList", listInventories);
+//		model.addAttribute("keyword", keyword);
+		return findPaginatedSearch(1, model, keyword);
+	}
+	
+	@GetMapping("/page/{pageNo}/search")
+	public String findPaginatedSearch(@PathVariable(value = "pageNo") int pageNo, Model model, String keyword) {
+		int pageSize = 5;
+		Page<Inventory> page = inservice.findPaginatedSearch(pageNo, pageSize, keyword);
+		List<Inventory> listInventories = page.getContent();
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("InventoryList", listInventories);
-		model.addAttribute("keyword", keyword);
 		return "InventoryList";
 	}
 

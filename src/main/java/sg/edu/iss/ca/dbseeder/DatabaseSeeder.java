@@ -138,12 +138,12 @@ public class DatabaseSeeder {
 				"Window"));
 		
 		p1.setBrand(brands.get(0));
-		p2.setBrand(brands.get(1));
-		p3.setBrand(brands.get(2));	
+		p2.setBrand(brands.get(0));
+		p3.setBrand(brands.get(0));	
 		p4.setBrand(brands.get(0));	
 		p5.setBrand(brands.get(0));
-		p6.setBrand(brands.get(1));
-		p7.setBrand(brands.get(2));	
+		p6.setBrand(brands.get(0));
+		p7.setBrand(brands.get(0));	
 		
 		productSvc.updateProduct(p1);
 		productSvc.updateProduct(p2);

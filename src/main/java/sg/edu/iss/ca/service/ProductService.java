@@ -18,4 +18,6 @@ public interface ProductService {
 	public List<Product> findProductByNameLike(String name);
 	public Product findByProductName(String name);
 	public Page<Product> findPaginated(int pageNo,int pageSize);
+	public Page<Product> findPaginatedSearch(int pageNo,int pageSize, String keyword);
+
 }

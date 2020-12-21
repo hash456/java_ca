@@ -38,10 +38,10 @@ public class ProductController {
     
 	@GetMapping("/listproducts") 
 	public String listProductForm(Model model, @Param("keyword") String keyword) {
-	List<Product> listProducts = pservice.listAllProducts(keyword);
-	model.addAttribute("ProductList",listProducts);
-	model.addAttribute("keyword",keyword);
-	return "ProductList";
+//		List<Product> listProducts = pservice.listAllProducts(keyword);
+//		model.addAttribute("ProductList",listProducts);
+//		model.addAttribute("keyword",keyword);
+		return findPaginatedSearch(1, model, keyword);
 	}
 
 	
@@ -107,4 +107,16 @@ public class ProductController {
 		return "ProductList";
 	}
 
+	@GetMapping("/page/{pageNo}/search")
+	public String findPaginatedSearch(@PathVariable (value= "pageNo") int pageNo,Model model, String keyword)
+	{
+		int pageSize=5;
+		Page<Product> page=pservice.findPaginatedSearch(pageNo, pageSize, keyword);
+		List<Product> listProducts=page.getContent();
+		model.addAttribute("currentPage",pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems",page.getTotalElements());
+		model.addAttribute("ProductList", listProducts);
+		return "ProductList";
+	}
 }

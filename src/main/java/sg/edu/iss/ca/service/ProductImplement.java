@@ -68,6 +68,17 @@ public class ProductImplement implements ProductService {
 		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
 		return productRepo.findAll(pageable);
 	}
+	
+	@Override
+	public Page<Product> findPaginatedSearch(int pageNo, int pageSize, String keyword) {
+		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
+		System.out.println(keyword);
+		if(keyword!=null) {
+		return productRepo.searchPageable(keyword.trim(), pageable);
+		}
+		return productRepo.findAll(pageable);
+	}
+	
 	@Override
 	public List<Product> listAllProducts(String keyword) {
 		System.out.println(keyword);
@@ -75,7 +86,6 @@ public class ProductImplement implements ProductService {
 		return productRepo.search(keyword.trim());
 		}
 		return productRepo.findAll();
-
 	}
 	
 	

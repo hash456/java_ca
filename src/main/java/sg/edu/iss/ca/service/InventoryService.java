@@ -29,4 +29,7 @@ public interface InventoryService {
 	public File ReorderReportGenerate(int id);
 	
 	public List<Inventory> listAllInventories(String keyword);
+	
+	public Page<Inventory> findPaginatedSearch(int pageNo,int pageSize, String keyword);
+
 }
