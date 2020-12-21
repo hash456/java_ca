@@ -57,7 +57,7 @@ th, td {
 				<div class="quantitybtn">
 					<input type="button" value="-" class="minus"
 						th:attr="inventory_id = ${cart.inventory.id}" id="item_minus" /><input type="text" name="quantity" th:value="${cart.qty}"
-						id="item_input" min="1" max="" title="Qty" class="input-text" /><input type="button" value="+" class="plus"
+						th:attr="inventory_id = ${cart.inventory.id}" id="item_input" min="1" max="" title="Qty" class="input-text" /><input type="button" value="+" class="plus"
 						th:attr="inventory_id = ${cart.inventory.id}" id="item_plus" /> 
 						<input type="hidden" name="inventoryId" th:value="${cart.inventory.id}" />
 				</div>
@@ -115,22 +115,38 @@ th, td {
         for (plusButton of plusButtons) {
             plusButton.addEventListener("click", QtyPlus);
         }
+        
+        let inputTexts = document.getElementsByClassName("input-text");
+        for (inputText of inputTexts) {
+        	inputText.addEventListener("change", QtyChange);
+        }
     }
 
     function QtyMinus(event) {
         let elem = event.currentTarget;
         let inventoryId = elem.getAttribute("inventory_id");
-        ChangeCartQty(inventoryId, "minus");
+		let qty = 1;
+		let action = "minus";
+        ChangeCartQty(inventoryId, {action, qty});
     }
 
     function QtyPlus(event) {
         let elem = event.currentTarget;
         let inventoryId = elem.getAttribute("inventory_id");
-        ChangeCartQty(inventoryId, "plus");
+        let qty = 1;
+        let action = "plus";
+        ChangeCartQty(inventoryId, {action, qty});
     }
     
-    function ChangeCartQty(inventoryId, action) {
-        
+    function QtyChange(event) {
+    	let elem = event.currentTarget;
+        let inventoryId = elem.getAttribute("inventory_id");
+        let qty = elem.value;
+        let action = "change"
+        ChangeCartQty(inventoryId, {action , qty});
+    }
+    
+    function ChangeCartQty(inventoryId, { action, qty }) {
     	var xhr = new XMLHttpRequest();
 		var token = document.querySelector('meta[name="_csrf"]').content;
 		var header = document.querySelector('meta[name="_csrf_header"]').content;
@@ -139,6 +155,8 @@ th, td {
         xhr.setRequestHeader('Content-Type', 'application/json; charset=utf8')
         xhr.setRequestHeader(header, token);
         
+/*         let changeQty = document.getElementById("item_input").value;
+ */        
         xhr.onreadystatechange = function () {
             if (this.readyState === XMLHttpRequest.DONE) {
                 // receive response from server
@@ -161,7 +179,8 @@ th, td {
         
         xhr.send(JSON.stringify({
             "inventoryId": inventoryId,
-            "action": action
+            "action": action,
+            "changeQty": qty
         }));
     }
 

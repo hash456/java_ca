@@ -171,6 +171,19 @@ public class UsageFormController {
 			fc.setQty(qty + 1);
 			fcrepo.save(fc);
 		}
+		
+		else if (changeQtyInput.getAction().equals("change")) {
+			if(fc.getInventory().getQuantity() < changeQtyInput.getChangeQty()) {
+				fc.setQty(fc.getInventory().getQuantity());
+				fcrepo.save(fc);
+				return Collections.singletonMap("message", "Reached maximum stock");
+			}
+			else {
+				fc.setQty(changeQtyInput.getChangeQty());
+				fcrepo.save(fc);
+			}
+				
+		}
 
 		return Collections.singletonMap("status", "success");
 	}
