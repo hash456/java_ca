@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,11 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.edu.iss.ca.model.Brand;
-import sg.edu.iss.ca.model.Inventory;
 import sg.edu.iss.ca.model.Product;
-import sg.edu.iss.ca.service.ProductService;
 import sg.edu.iss.ca.service.BrandService;
 import sg.edu.iss.ca.service.ProductImplement;
+import sg.edu.iss.ca.service.ProductService;
 
 @Controller
 @RequestMapping("/product")
@@ -36,6 +36,15 @@ public class ProductController {
 		this.pservice = productImple;
 	}
     
+	@GetMapping("/listproducts") 
+	public String listProductForm(Model model, @Param("keyword") String keyword) {
+	List<Product> listProducts = pservice.listAllProducts(keyword);
+	model.addAttribute("ProductList",listProducts);
+	model.addAttribute("keyword",keyword);
+	return "ProductList";
+	}
+
+	
 	@RequestMapping(value = "/list")
 	public String list(Model model) {
 		return findPaginated(1,model);
@@ -84,6 +93,7 @@ public class ProductController {
 		pservice.deleteProduct(pservice.findProductById(id));
 		return "redirect:/product/list";
 	}
+	
 	@GetMapping("/page/{pageNo}")
 	public String findPaginated(@PathVariable (value= "pageNo") int pageNo,Model model)
 	{

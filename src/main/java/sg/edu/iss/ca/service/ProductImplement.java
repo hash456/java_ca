@@ -68,5 +68,16 @@ public class ProductImplement implements ProductService {
 		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
 		return productRepo.findAll(pageable);
 	}
+	@Override
+	public List<Product> listAllProducts(String keyword) {
+		System.out.println(keyword);
+		if(keyword!=null) {
+		return productRepo.search(keyword.trim());
+		}
+		return productRepo.findAll();
+
+	}
+	
+	
 
 }
