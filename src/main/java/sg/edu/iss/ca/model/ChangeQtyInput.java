@@ -1,17 +1,7 @@
 package sg.edu.iss.ca.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
-import org.hibernate.annotations.GenericGenerator;
-
-@Entity
 public class ChangeQtyInput {
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
 	private int id;
 	private int inventoryId;
 	private String action;

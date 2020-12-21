@@ -3,6 +3,7 @@ package sg.edu.iss.ca.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,17 +38,18 @@ public class ProductController {
 	}
     
 	@GetMapping("/listproducts") 
-	public String listProductForm(Model model, @Param("keyword") String keyword) {
+	public String listProductForm(Model model, @Param("keyword") String keyword, HttpSession session) {
 //		List<Product> listProducts = pservice.listAllProducts(keyword);
 //		model.addAttribute("ProductList",listProducts);
 //		model.addAttribute("keyword",keyword);
-		return findPaginatedSearch(1, model, keyword);
+		session.setAttribute("keyword", keyword);
+		return findPaginatedSearch(1, model, session);
 	}
 
 	
 	@RequestMapping(value = "/list")
-	public String list(Model model) {
-		return findPaginated(1,model);
+	public String list(Model model, HttpSession session) {
+		return findPaginated(1,model, session);
 	}
 	@RequestMapping(value = "/add")
 	public String addForm(Model model) {
@@ -95,7 +97,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/page/{pageNo}")
-	public String findPaginated(@PathVariable (value= "pageNo") int pageNo,Model model)
+	public String findPaginated(@PathVariable (value= "pageNo") int pageNo,Model model, HttpSession session)
 	{
 		int pageSize=5;
 		Page<Product> page=pservice.findPaginated(pageNo, pageSize);
@@ -104,12 +106,15 @@ public class ProductController {
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems",page.getTotalElements());
 		model.addAttribute("ProductList", listProducts);
+		session.setAttribute("search", null);
 		return "ProductList";
 	}
 
 	@GetMapping("/page/{pageNo}/search")
-	public String findPaginatedSearch(@PathVariable (value= "pageNo") int pageNo,Model model, String keyword)
+	public String findPaginatedSearch(@PathVariable (value= "pageNo") int pageNo,Model model, 
+			HttpSession session)
 	{
+		String keyword = (String) session.getAttribute("keyword");
 		int pageSize=5;
 		Page<Product> page=pservice.findPaginatedSearch(pageNo, pageSize, keyword);
 		List<Product> listProducts=page.getContent();
@@ -117,6 +122,7 @@ public class ProductController {
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems",page.getTotalElements());
 		model.addAttribute("ProductList", listProducts);
+		session.setAttribute("search", "true");
 		return "ProductList";
 	}
 }

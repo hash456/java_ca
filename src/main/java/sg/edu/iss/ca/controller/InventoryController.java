@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +59,8 @@ public class InventoryController {
 	}
 
 	@RequestMapping(value = "/list")
-	public String list(Model model) {
-		return findPaginated(1, model);
+	public String list(Model model, HttpSession session) {
+		return findPaginated(1, model, session);
 
 	}
 
@@ -137,10 +138,11 @@ public class InventoryController {
 	}
 
 	@GetMapping("/page/{pageNo}")
-	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model, HttpSession session) {
 		int pageSize = 5;
 		Page<Inventory> page = inservice.findPaginated(pageNo, pageSize);
 		List<Inventory> listInventories = page.getContent();
+		session.setAttribute("searchInv", null);
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems", page.getTotalElements());
@@ -178,15 +180,18 @@ public class InventoryController {
 	}
 
 	@GetMapping("/listInventories")
-	public String listInventoryForm(Model model, @Param("keyword") String keyword) {
+	public String listInventoryForm(Model model, @Param("keyword") String keyword, HttpSession session) {
 //		List<Inventory> listInventories = inservice.listAllInventories(keyword);
 //		model.addAttribute("InventoryList", listInventories);
 //		model.addAttribute("keyword", keyword);
-		return findPaginatedSearch(1, model, keyword);
+		session.setAttribute("searchInv", "true");
+		session.setAttribute("keyword", keyword);
+		return findPaginatedSearch(1, model, session);
 	}
 	
 	@GetMapping("/page/{pageNo}/search")
-	public String findPaginatedSearch(@PathVariable(value = "pageNo") int pageNo, Model model, String keyword) {
+	public String findPaginatedSearch(@PathVariable(value = "pageNo") int pageNo, Model model, HttpSession session) {
+		String keyword = (String) session.getAttribute("keyword");
 		int pageSize = 5;
 		Page<Inventory> page = inservice.findPaginatedSearch(pageNo, pageSize, keyword);
 		List<Inventory> listInventories = page.getContent();

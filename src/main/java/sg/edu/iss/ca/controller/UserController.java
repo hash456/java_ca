@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import sg.edu.iss.ca.email.AccountMail;
 import sg.edu.iss.ca.email.SimpleMail;
 import sg.edu.iss.ca.model.Product;
-import sg.edu.iss.ca.model.Role;
 import sg.edu.iss.ca.model.Staff;
 import sg.edu.iss.ca.service.MailSenderService;
 import sg.edu.iss.ca.service.UserImplement;
