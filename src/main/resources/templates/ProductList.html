@@ -12,7 +12,14 @@
   <header th:insert="layout/layout.html :: header"></header>
   <div th:replace="layout/layout.html :: menu" ></div>
 
-
+	<div style="padding-left: 50px">
+	<form th:action="@{/product/listproducts}" class="search"> 
+   <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" style="height: 33px"/>&nbsp;
+   <input type="submit" value="search" class="btn btn-primary"/>&nbsp;
+   <input type="button" value="clear" id="btnClear" onclick="clearSearch()" class="btn btn-danger"/>
+	</form>
+	</div>
+	
 	<div style="padding-left: 50px; padding-right: 50px;">
 	<h2>Catalogue</h2>
 	<br />
@@ -90,4 +97,11 @@ Total rows:[[${totalItems}]]
   <div th:replace="layout/layout.html :: footer"></div>
 
 </body>
+
+<script type = "text/javascript">
+function clearSearch(){
+window.location = "[[@{/product/listproducts}]]"
+}
+</script>
+
 </html>
