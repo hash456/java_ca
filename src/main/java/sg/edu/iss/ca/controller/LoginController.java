@@ -27,7 +27,7 @@ public class LoginController
         return "index";
     }
     
-    @GetMapping("/staffLogout")
+    @GetMapping("/logout")
     public String viewLogoutPage() {
     	return "CustomLogout";
     }
