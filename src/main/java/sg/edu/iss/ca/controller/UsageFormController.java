@@ -171,6 +171,19 @@ public class UsageFormController {
 			fc.setQty(qty + 1);
 			fcrepo.save(fc);
 		}
+		
+		else if (changeQtyInput.getAction().equals("change")) {
+			if(fc.getInventory().getQuantity() < changeQtyInput.getChangeQty()) {
+				fc.setQty(fc.getInventory().getQuantity());
+				fcrepo.save(fc);
+				return Collections.singletonMap("message", "Reached maximum stock");
+			}
+			else {
+				fc.setQty(changeQtyInput.getChangeQty());
+				fcrepo.save(fc);
+			}
+				
+		}
 
 		return Collections.singletonMap("status", "success");
 	}
@@ -223,7 +236,15 @@ public class UsageFormController {
 
 	@PostMapping(value = "cancel")
 	public String cancelForm(Model model, HttpSession session) {
-		return null;
+		UsageForm uf = (UsageForm) session.getAttribute("UsageForm");
+		int id = uf.getId();
+		List<FormCart> fcl = ufservice.listAllItems(ufrepo.findById(id).get());
+		for (FormCart fc : fcl) {
+			fcrepo.delete(fc);
+		}
+		ufrepo.delete(uf);
+		session.removeAttribute("UsageForm");
+		return "redirect:/inventory/list";
 	}
 
 	@RequestMapping(value = "/checkHistory/{id}")

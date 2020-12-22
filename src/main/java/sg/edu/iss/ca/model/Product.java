@@ -52,8 +52,8 @@ public class Product {
 		this.subCategory = subCategory;
 		this.type = type;
 	}
-	public Product(String partNumber, String name, String description, String color, String dimension, String category,
-			String subCategory, String type, Brand brand) {
+	public Product(String partNumber, String name, String description, String color, 
+			String dimension, String category,String subCategory, String type, Brand brand) {
 		super();
 		this.partNumber = partNumber;
 		this.name = name;

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" th:href="@{/styles/forms.css}"/> -->
+<style>
+.form-container {
+	padding-left: 50px; 
+	padding-right: 50px; 
+	display:flex; 
+	flex-direction: column;
+}
+
+.form-input-container {
+	display: flex;
+	width: 50%;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-top: 5px;
+}
+
+.form-input-container > input {
+	width: 70%;
+}
+
+.form-input-container > select {
+	width: 70%;
+}
+
+.button-container {
+	display:flex; 
+	flex-direction:row; 
+	width:30%; 
+	justify-content: space-between;
+}
+
+.button-container > div > a {
+	color: white; 
+	text-decoration:none; 
+}
+
+.readonly-input {
+	border:none;
+}
+</style>
+<title>Login</title>
+</head>
+<body>
+<div style="padding-bottom: 80px;">
+
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+	  	<div class="form-container">
+	  	<h1>Welcome to CIMS</h1>
+		<h2>Login</h2>
+		<br />
+		<form action="" th:action="@{/login}"
+			method="POST" class="form-horizontal">
+			<div th:if="${param.error}" class="alert alert-danger">
+            	[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
+        	</div>
+			<fieldset class="form-input-container">
+				<label>Username:</label>
+				<input type="text" name="username" placeholder="Username" required>
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Password:</label>
+				<input type="password" name="password" placeholder="Password" required>
+			</fieldset>
+			<br />
+			<fieldset class="button-container">
+				<button class="btn btn-primary" type="submit">Submit</button>
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+  <div th:replace="layout/layout.html :: footer"></div>
+
+</body>
+</html>

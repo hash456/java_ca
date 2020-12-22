@@ -6,13 +6,51 @@
 <title>IndexPage</title>
 </head>
 <body>
+<div style="padding-bottom: 80px;">
+
   <header th:insert="layout/layout.html :: header"></header>
   <div th:replace="layout/layout.html :: menu" ></div>
+  <div align="center"><h1><b>Inventory Management System</b></h1></div>
   <div style="padding-left: 50px; padding-right: 50px;">
-  	  <h1>INDEX page</h1>
-	  <h3 th:inline = "text">Welcome to hell, [[${#httpServletRequest.RemoteUser}]]!</h3>
-	  <p><h1 style="color: white;">I hate Thymeleaf. I have life.</h1></p>
+  	  
+	  <h3 th:inline = "text">Hello <b>[[${#httpServletRequest.RemoteUser}]]</b>!</h3>
+	  <p sec:authorize="hasRole('ADMIN')">Role: Admin</p>
+	  <p>System Time: <a th:text="${execInfo.now.time}"></a></p>
+	  
+	  
+	  <p sec:authorize="hasRole('MECHANIC')">Role: Mechanic</p>
+	  <p><h1 style="color: white;">End my suffering</h1></p>
   </div>
+  
+      
+    
+<div class="container" sec:authorize="hasRole('ADMIN')">
+	<div  style="display:flex; justify-content:space-around;">
+		<h2><b>Admin Quick Links</b></h2>
+	</div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info" style="">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-info-sign"></span> Shortcuts</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                       <div class="col-md-12" style="display:flex; justify-content:space-around; flex-wrap:wrap; max-width:100%;">
+                          <a href="#" style="width:100%; margin: 10px; flex:1;" class="btn btn-success btn-lg" role="button" th:href="@{/product/add}"><span class="glyphicon glyphicon-plus"></span> <br/>Add Catalog</a>
+                          <a href="#" style="width:100%; margin: 10px; flex:1;" class="btn btn-info btn-lg" role="button"th:href="@{/brand/create}"><span class="glyphicon glyphicon-globe"></span> <br/>Add Brand</a>
+                          <a href="#" style="width:100%; margin: 10px; flex:1;" class="btn btn-primary btn-lg" role="button" th:href="@{/supplier/create}"><span class="glyphicon glyphicon-plane"></span> <br/>Add Supplier</a>
+                          <a href="#" style="width:100%; margin: 10px; flex:1;" class="btn btn-primary btn-lg" role="button" th:href="@{/inventory/add}"><span class="glyphicon glyphicon-list-alt"></span> <br/>Add Invent Log</a>
+                          <a href="#" style="width:100%; margin: 10px; flex:1;" class="btn btn-warning btn-lg" role="button" th:href="@{/staff/add}"><span class="glyphicon glyphicon-user"></span> <br/>Add Staff</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
+</div>
   <div th:replace="layout/layout.html :: footer"></div>
 </body>
 </html>

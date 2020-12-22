@@ -1,4 +1,4 @@
-package sg.edu.iss.ca.model;
+package sg.edu.iss.ca.authentication;
 
 import javax.sql.DataSource;
 
@@ -29,9 +29,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 			.antMatchers("/inventory/add","/inventory/edit/**","/inventory/delete/**").hasRole("ADMIN")
 			.anyRequest().authenticated()
 			.and()
-			.formLogin().permitAll()
+			.formLogin()
+			.loginPage("/login")
+			.defaultSuccessUrl("/", true)
+			.permitAll()
 			.and()
-			.logout().permitAll()
+			.logout()
+			.permitAll()
 			.and()
 			.exceptionHandling().accessDeniedPage("/403")
 			;

@@ -13,8 +13,11 @@ public interface ProductService {
 	public Product updateProduct(Product product);
 	public void deleteProduct(Product product);
 	public List<Product> listAllProducts();
+	public List<Product> listAllProducts(String keyword);
 	public Product findProductById(Integer id);
 	public List<Product> findProductByNameLike(String name);
 	public Product findByProductName(String name);
 	public Page<Product> findPaginated(int pageNo,int pageSize);
+	public Page<Product> findPaginatedSearch(int pageNo,int pageSize, String keyword);
+
 }

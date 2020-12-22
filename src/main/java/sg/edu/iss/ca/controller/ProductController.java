@@ -3,10 +3,12 @@ package sg.edu.iss.ca.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,11 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.edu.iss.ca.model.Brand;
-import sg.edu.iss.ca.model.Inventory;
 import sg.edu.iss.ca.model.Product;
-import sg.edu.iss.ca.service.ProductService;
 import sg.edu.iss.ca.service.BrandService;
 import sg.edu.iss.ca.service.ProductImplement;
+import sg.edu.iss.ca.service.ProductService;
 
 @Controller
 @RequestMapping("/product")
@@ -36,9 +37,19 @@ public class ProductController {
 		this.pservice = productImple;
 	}
     
+	@GetMapping("/listproducts") 
+	public String listProductForm(Model model, @Param("keyword") String keyword, HttpSession session) {
+//		List<Product> listProducts = pservice.listAllProducts(keyword);
+//		model.addAttribute("ProductList",listProducts);
+//		model.addAttribute("keyword",keyword);
+		session.setAttribute("keyword", keyword);
+		return findPaginatedSearch(1, model, session);
+	}
+
+	
 	@RequestMapping(value = "/list")
-	public String list(Model model) {
-		return findPaginated(1,model);
+	public String list(Model model, HttpSession session) {
+		return findPaginated(1,model, session);
 	}
 	@RequestMapping(value = "/add")
 	public String addForm(Model model) {
@@ -84,8 +95,9 @@ public class ProductController {
 		pservice.deleteProduct(pservice.findProductById(id));
 		return "redirect:/product/list";
 	}
+	
 	@GetMapping("/page/{pageNo}")
-	public String findPaginated(@PathVariable (value= "pageNo") int pageNo,Model model)
+	public String findPaginated(@PathVariable (value= "pageNo") int pageNo,Model model, HttpSession session)
 	{
 		int pageSize=5;
 		Page<Product> page=pservice.findPaginated(pageNo, pageSize);
@@ -94,7 +106,23 @@ public class ProductController {
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems",page.getTotalElements());
 		model.addAttribute("ProductList", listProducts);
+		session.setAttribute("search", null);
 		return "ProductList";
 	}
 
+	@GetMapping("/page/{pageNo}/search")
+	public String findPaginatedSearch(@PathVariable (value= "pageNo") int pageNo,Model model, 
+			HttpSession session)
+	{
+		String keyword = (String) session.getAttribute("keyword");
+		int pageSize=5;
+		Page<Product> page=pservice.findPaginatedSearch(pageNo, pageSize, keyword);
+		List<Product> listProducts=page.getContent();
+		model.addAttribute("currentPage",pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems",page.getTotalElements());
+		model.addAttribute("ProductList", listProducts);
+		session.setAttribute("search", "true");
+		return "ProductList";
+	}
 }

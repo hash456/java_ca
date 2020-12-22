@@ -16,10 +16,10 @@ public interface InventoryService {
 	
 	public Inventory createInventory(Inventory inventory);
 	public Inventory updateInventory(Inventory inventory);
-	public List<Inventory> findInventoryByProductName(String name);
-	public List<Inventory> findInventoryByProductNameLike(String name);
-	public List<Inventory> findInventoryBySupplierName(String name);
-	public List<Inventory> findInventoryBySupplierNameLike(String name);
+//	public List<Inventory> findInventoryByProductName(String name);
+//	public List<Inventory> findInventoryByProductNameLike(String name);
+//	public List<Inventory> findInventoryBySupplierName(String name);
+//	public List<Inventory> findInventoryBySupplierNameLike(String name);
 	public Inventory findByInventoryId(Integer id);
 	public Inventory findInventoryById(Integer id);
 	public Page<Inventory> findPaginated(int pageNo,int pageSize);
@@ -27,4 +27,9 @@ public interface InventoryService {
 	public void withdrawInventory(Inventory inventory, HttpServletRequest httpServletRequest);
 	
 	public File ReorderReportGenerate(int id);
+	
+	public List<Inventory> listAllInventories(String keyword);
+	
+	public Page<Inventory> findPaginatedSearch(int pageNo,int pageSize, String keyword);
+
 }

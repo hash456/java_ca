@@ -7,10 +7,13 @@
 <title>Inventory Form</title>
 </head>
 <body>
+<div style="padding-bottom: 80px;">
+
   <header th:insert="layout/layout.html :: header"></header>
   <div th:replace="layout/layout.html :: menu" ></div>
   <div class="form-container">
 	<h2>Inventory Details</h2>
+	<br />
 	<form action="" th:object="${inventory}" th:action="@{/inventory/save}"
 		method="POST" class="form-horizontal">
 		<fieldset>
@@ -71,6 +74,7 @@
 		</fieldset>
 	</form>
 	</div>	
+	</div>
   <div th:replace="layout/layout.html :: footer"></div>
 
 </body>
