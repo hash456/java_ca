@@ -23,8 +23,17 @@
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
-     <li sec:authorize="isAuthenticated()"style="margin-right:120px;margin-top:15px;color:white"><b>Logged in as <span sec:authentication="name"></span></b></li> 
-    <li><a href="#" th:href="@{/logout}"><button class="btn btn-danger" style="margin-left:-90px; margin-top:-8px"><span class="glyphicon glyphicon-log-out"></span> Logout</button></a></li>
+     <li sec:authorize="isAuthenticated()" style="margin-right:120px;margin-top:15px;color:white"><b>Logged in as <span sec:authentication="name"></span></b></li> 
+     
+     <li sec:authorize="isAuthenticated()"><a href="#" th:href="@{/staffLogout}"><button class="btn btn-danger" style="margin-left:-90px; margin-top:-8px"><span class="glyphicon glyphicon-log-out"></span> Logout</button></a></li>
+    
+<!--  	<li sec:authorize="isAuthenticated()" style="margin-right: 20px; margin-top:15px;">
+ 		<form th:action="@{/logout}" method="post">
+    		<button type="submit" value="Logout" class="btn btn-danger" style="margin-left:-90px; margin-top:-8px">
+    			<span class="glyphicon glyphicon-log-out"></span> Logout
+    		</button>
+		</form>
+ 	</li> -->
     </ul>
   </div>
 </nav>

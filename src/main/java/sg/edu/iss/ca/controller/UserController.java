@@ -85,8 +85,8 @@ public class UserController {
 		@RequestMapping(value = "/change/{staffId}")
 		public String ChangeRole(@PathVariable("staffId") Integer staffId, HttpServletRequest httpServletRequest) {
 			Staff s = uservice.changeRole(uservice.findStaffById(staffId));
-			if(s.getRole().equals("ROLE_MECHANIC") && s.getUserName().equals(httpServletRequest.getRemoteUser()))
-				return "redirect:/logout";
+//			if(s.getRole().equals("ROLE_MECHANIC") && s.getUserName().equals(httpServletRequest.getRemoteUser()))
+//				return "redirect:/logout";
 			return "redirect:/staff/list";
 		}
 
