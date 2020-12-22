@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" th:href="@{/styles/forms.css}"/>
+ -->
+<title>Register</title>
+</head>
+<style>
+.form-container {
+	padding-left: 50px; 
+	padding-right: 50px; 
+	display:flex; 
+	flex-direction: column;
+}
+
+.form-input-container {
+	display: flex;
+	width: 50%;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-top: 5px;
+}
+
+.form-input-container > input {
+	width: 70%;
+}
+
+.form-input-container > select {
+	width: 70%;
+}
+
+.button-container {
+	display:flex; 
+	flex-direction:row; 
+	width:30%; 
+	justify-content: space-between;
+}
+
+.button-container > div > a {
+	color: white; 
+	text-decoration:none; 
+}
+
+.readonly-input {
+	border:none;
+}
+</style>
+
+<body>
+<div style="padding-bottom: 80px;">
+
+  <header th:insert="layout/layout.html :: header"></header>
+  <div th:replace="layout/layout.html :: menu" ></div>
+  <div class="form-container">
+		<h2>Register new account</h2>
+		<br />
+		<form name="register-form" action="" th:object="${staff}" th:action="@{/register}"
+			method="POST" onsubmit="return validateForm()" class="form-horizontal">
+			<div th:if="${session.usernameError}" class="alert alert-danger">
+            	Username is already taken.
+        	</div>
+        	<div th:if="${session.emailError}" class="alert alert-danger">
+            	An account with this email already exist.
+        	</div>
+			<fieldset>
+				<input type="hidden" th:field="*{enabled}" />
+			</fieldset>
+			<fieldset class="form-input-container">
+				<input type="hidden" th:field="*{role}" />
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Staff Name:</label> 
+				<input type="text" th:field="*{staffName}" required>
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>UserName:</label>
+				<input type="text" th:field="*{userName}" required>
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Email:</label>
+				<input type="text" th:field="*{email}" required>
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Password:</label>
+				<input type="password" name="password" th:field="*{password}" required>
+			</fieldset>
+			<fieldset class="form-input-container">
+				<label>Confirm Password:</label>
+				<input type="password" name="confirm-password" value="" required>
+			</fieldset>
+			<br />
+			<fieldset class="button-container">
+				<div class="btn btn-danger">
+					<a href="#" th:href="@{/}">Cancel</a>
+				</div>
+				<button class="btn btn-primary" type="submit">Submit</button>
+			</fieldset>
+		</form>
+	</div>
+	  <div th:replace="layout/layout.html :: footer"></div>
+	</div>
+</body>
+<script>
+function validateForm() {
+	const password = document.forms["register-form"]["password"].value;
+	const cfmPassword = document.forms["register-form"]["confirm-password"].value;
+	if(password !== cfmPassword) {
+		alert("Password and Confirm Password must match");
+		return false;
+	}
+	return true;
+}
+</script>
+</html>

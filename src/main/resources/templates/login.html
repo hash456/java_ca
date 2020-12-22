@@ -3,8 +3,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<!-- <link rel="stylesheet" th:href="@{/styles/forms.css}"/> -->
-<style>
+<!-- <link rel="stylesheet" th:href="@{/styles/forms.css}"/>
+ -->
+ <style>
 .form-container {
 	padding-left: 50px; 
 	padding-right: 50px; 
@@ -51,14 +52,18 @@
 
   <header th:insert="layout/layout.html :: header"></header>
   <div th:replace="layout/layout.html :: menu" ></div>
-	  	<div class="form-container">
+	<div class="form-container">
 	  	<h1>Welcome to CIMS</h1>
 		<h2>Login</h2>
 		<br />
 		<form action="" th:action="@{/login}"
 			method="POST" class="form-horizontal">
 			<div th:if="${param.error}" class="alert alert-danger">
-            	[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
+            	<!-- [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]  -->
+            	Wrong username or password
+        	</div>
+        	<div th:if="${session.registerSuccess}" class="alert alert-success">
+            	Registration Successful. Please login.
         	</div>
 			<fieldset class="form-input-container">
 				<label>Username:</label>
@@ -73,7 +78,10 @@
 				<button class="btn btn-primary" type="submit">Submit</button>
 			</fieldset>
 		</form>
+		<br>
+		<a th:href="@{/register}">Register Here</a>
 	</div>
+
 </div>
 
   <div th:replace="layout/layout.html :: footer"></div>

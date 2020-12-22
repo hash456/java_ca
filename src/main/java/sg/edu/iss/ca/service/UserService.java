@@ -15,4 +15,6 @@ public interface UserService {
 	public Staff changeRole(Staff staff);
 	public Staff findStaffByUsername(String username);
 	public Page<Staff> findPaginated(int pageNo,int pageSize);
+	
+	public Staff findStaffByEmail(String email);
 }
