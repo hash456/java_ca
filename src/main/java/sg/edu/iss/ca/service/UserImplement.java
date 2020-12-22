@@ -55,4 +55,9 @@ public class UserImplement implements UserService{
 		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
 		return staffrepo.findAll(pageable);
 	}
+	
+	@Override
+	public Staff findStaffByEmail(String email) {
+		return staffrepo.findStaffByemail(email);
+	}
 }

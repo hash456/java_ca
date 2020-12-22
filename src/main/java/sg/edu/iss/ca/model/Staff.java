@@ -19,6 +19,7 @@ public class Staff {
 	@Column(name="username", unique=true)
 	private String userName;
 	private String password;
+	@Column(unique=true)
 	private String email;
 	private Boolean enabled;
 	
